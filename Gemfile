@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-
+ruby '2.2.2'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.1.6'
 # Use postgresql as the database for Active Record
@@ -27,17 +27,30 @@ gem 'sdoc', '~> 0.4.0',          group: :doc
 gem 'spring',        group: :development
 gem 'haml'
 gem 'haml-rails'
-
+gem 'nokogiri'
+gem 'poltergeist'
+gem 'capybara'
+gem 'cucumber-rails', require: false
+gem 'devise', '~> 3.5'
+gem 'unicorn'
 
 group :development do
   gem 'bootstrap-generators'
-end
-
-group :test do
+  gem 'thin'
 end
 
 group :development, :test do
   gem 'byebug'
+  gem 'foreman'
+  gem 'annotate'
+end
+
+group :production do
+  # Makes running your Rails app easier. Based on the ideas behind 12factor.net
+  gem 'rails_12factor'
+
+  # See https://github.com/sstephenson/execjs#readme for more supported runtimes
+  gem 'therubyracer', platforms: :ruby
 end
 
 # Use ActiveModel has_secure_password
