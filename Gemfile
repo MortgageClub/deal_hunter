@@ -33,10 +33,12 @@ gem 'capybara'
 gem 'cucumber-rails', require: false
 gem 'devise', '~> 3.5'
 gem 'unicorn'
+gem 'awesome_print'
 
 group :development do
   gem 'bootstrap-generators'
   gem 'thin'
+  gem 'selenium-webdriver'
 end
 
 group :development, :test do
