@@ -35,6 +35,9 @@ gem 'devise', '~> 3.5'
 gem 'unicorn'
 gem 'awesome_print'
 
+gem 'mechanize', '~> 2.7.3'
+gem 'httparty'
+
 group :development do
   gem 'bootstrap-generators'
   gem 'thin'
