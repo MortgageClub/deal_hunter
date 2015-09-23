@@ -49,6 +49,7 @@ group :development, :test do
   gem 'byebug'
   gem 'foreman'
   gem 'annotate'
+  gem 'dotenv-rails'
 end
 
 group :production do
