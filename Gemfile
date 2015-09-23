@@ -38,6 +38,7 @@ gem 'awesome_print'
 gem 'mechanize', '~> 2.7.3'
 gem 'httparty'
 gem 'rollbar', '~> 2.2.1'
+gem 'plivo', '~> 0.3.17'
 
 group :development do
   gem 'bootstrap-generators'
