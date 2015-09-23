@@ -1,12 +1,13 @@
 module ZillowService
-  class GetPropertyInfo
+  class GetZestimate
     include HTTParty
     include ZillowService::ZillowApi
 
     def self.call(address, citystatezip)
       property_data = get_property_data(address, citystatezip)
       monthly_payments = get_monthly_payments_advanced(property_data)
-      parse_payments(monthly_payments, property_data)
+      data = parse_payments(monthly_payments, property_data)
+      get_zestimate(data)
     end
 
     private
@@ -36,7 +37,6 @@ module ZillowService
         }
 
         get('http://www.zillow.com/webservice/mortgage/CalculateMonthlyPaymentsAdvanced.htm', query: params)
-        #parse_payments(get('http://www.zillow.com/webservice/mortgage/CalculateMonthlyPaymentsAdvanced.htm', :query => params), property)
       end
     end
 
@@ -50,5 +50,10 @@ module ZillowService
         :monthlyInsurance => monthly_payments['paymentsdetails']['response']['monthlyhazardinsurance']
       })
     end
+
+    def self.get_zestimate(data)
+      zestimate = data.try(:[], 'zestimate').try(:[],'amount').try(:[], '__content__')
+      zestimate.present? ? zestimate.to_f : 0
+  end
   end
 end
