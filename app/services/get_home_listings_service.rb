@@ -52,12 +52,12 @@ class GetHomeListingsService
       address = tr.css("td")[4].text
       city = tr.css("td")[5].text
       zipcode = tr.css("td")[6].text
-      price = tr.css("td")[7].text.gsub(/[^0-9\.]/,'')
+      price = tr.css("td")[7].text.gsub(/[^0-9\.]/,'').to_f
       full_name = tr.css("td")[12].text.strip
       first_name = full_name.split(" ").first
       last_name = full_name.split(" ").last
       agent_email = tr.css("td")[13].text
-      agent_phone = tr.css("td")[14].text
+      agent_phone = tr.css("td")[14].text.gsub("-","")
       office_name = tr.css("td")[15].text
 
       result << {
@@ -87,34 +87,34 @@ class GetHomeListingsService
 end
 
 # [
-  # [19] {
-  #     :listing_id => "15049016",
-  #          :price => "160000",
-  #        :address => "1525 Katharine Ave",
-  #           :city => "Sacramento",
-  #        :zipcode => "95838",
-  #          :agent => {
-  #           :full_name => "Ron D Allen",
-  #          :first_name => "Ron",
-  #           :last_name => "Allen",
-  #               :phone => "916-807-1210",
-  #               :email => "drallenifbc@yahoo.com",
-  #         :office_name => "Ron Allen & Associates Real Estate"
-  #     }
-  # },
-  # [20] {
-  #     :listing_id => "15054201",
-  #          :price => "151900",
-  #        :address => "5626 Revelstok Dr",
-  #           :city => "Sacramento",
-  #        :zipcode => "95842",
-  #          :agent => {
-  #           :full_name => "Michael J Taylor",
-  #          :first_name => "Michael",
-  #           :last_name => "Taylor",
-  #               :phone => "916-878-1754",
-  #               :email => "mike@intrustrg.com",
-  #         :office_name => "HomeSmart Intrust Realty Group"
-  #     }
-  # }
+#     [ 0] {
+#         :listing_id => "15051142",
+#              :price => 130000.0,
+#            :address => "681 Las Palmas Ave",
+#               :city => "Sacramento",
+#            :zipcode => "95815",
+#              :agent => {
+#               :full_name => "Asia C Allen",
+#              :first_name => "Asia",
+#               :last_name => "Allen",
+#                   :phone => "9166286666",
+#                   :email => "asia.allen@bhghome.com",
+#             :office_name => "Better Homes and Gardens RE Mason-McDuffie"
+#         }
+#     },
+#     [ 1] {
+#         :listing_id => "15057801",
+#              :price => 134900.0,
+#            :address => "2635 Ensenada Way",
+#               :city => "Sacramento",
+#            :zipcode => "95815",
+#              :agent => {
+#               :full_name => "Asia C Allen",
+#              :first_name => "Asia",
+#               :last_name => "Allen",
+#                   :phone => "9166286666",
+#                   :email => "asia.allen@bhghome.com",
+#             :office_name => "Better Homes and Gardens RE Mason-McDuffie"
+#         }
+#     },
 # ]
