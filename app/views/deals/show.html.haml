@@ -1,0 +1,22 @@
+.page-header
+  = link_to deals_path, class: 'btn btn-default' do
+    %span.glyphicon.glyphicon-list-alt
+    Back
+  = link_to edit_deal_path(@deal), class: 'btn btn-primary' do
+    %span.glyphicon.glyphicon-pencil
+    Edit
+  %h1 Show deal
+
+%dl.dl-horizontal
+  %dt Listing:
+  %dd= @deal.listing_id
+  %dt Price:
+  %dd= @deal.price
+  %dt Address:
+  %dd= @deal.address
+  %dt City:
+  %dd= @deal.city
+  %dt Zipcode:
+  %dd= @deal.zipcode
+  %dt Agent:
+  %dd= @deal.agent

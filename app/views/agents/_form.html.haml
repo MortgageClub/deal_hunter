@@ -1,0 +1,39 @@
+= form_for @agent, html: { class: "form-horizontal", role: "form" } do |f|
+  -if @agent.errors.any?
+    .alert.alert-danger.alert-dismissable{role: "alert"}
+      %button.close{type: "button", data: {dismiss: "alert"} }
+        %span{aria: {hidden: "true"} } &times;
+        %span.sr-only Close
+      %h4= "#{pluralize(@agent.errors.count, "error")} prohibited this agent from being saved:"
+
+      %ul
+        - @agent.errors.full_messages.each do |msg|
+          %li= msg
+
+  .form-group
+    = f.label :full_name, class: 'col-sm-2 control-label'
+    .col-sm-10
+      = f.text_field :full_name, class: 'form-control'
+  .form-group
+    = f.label :first_name, class: 'col-sm-2 control-label'
+    .col-sm-10
+      = f.text_field :first_name, class: 'form-control'
+  .form-group
+    = f.label :last_name, class: 'col-sm-2 control-label'
+    .col-sm-10
+      = f.text_field :last_name, class: 'form-control'
+  .form-group
+    = f.label :phone, class: 'col-sm-2 control-label'
+    .col-sm-10
+      = f.text_field :phone, class: 'form-control'
+  .form-group
+    = f.label :email, class: 'col-sm-2 control-label'
+    .col-sm-10
+      = f.text_field :email, class: 'form-control'
+  .form-group
+    = f.label :office_name, class: 'col-sm-2 control-label'
+    .col-sm-10
+      = f.text_field :office_name, class: 'form-control'
+  .form-group
+    .col-sm-offset-2.col-sm-10
+      = f.submit class: 'btn btn-primary'

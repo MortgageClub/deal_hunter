@@ -1,0 +1,39 @@
+= form_for @deal, html: { class: "form-horizontal", role: "form" } do |f|
+  -if @deal.errors.any?
+    .alert.alert-danger.alert-dismissable{role: "alert"}
+      %button.close{type: "button", data: {dismiss: "alert"} }
+        %span{aria: {hidden: "true"} } &times;
+        %span.sr-only Close
+      %h4= "#{pluralize(@deal.errors.count, "error")} prohibited this deal from being saved:"
+
+      %ul
+        - @deal.errors.full_messages.each do |msg|
+          %li= msg
+
+  .form-group
+    = f.label :listing_id, class: 'col-sm-2 control-label'
+    .col-sm-4
+      = f.text_field :listing_id, class: 'form-control'
+  .form-group
+    = f.label :price, class: 'col-sm-2 control-label'
+    .col-sm-4
+      = f.text_field :price, class: 'form-control'
+  .form-group
+    = f.label :address, class: 'col-sm-2 control-label'
+    .col-sm-4
+      = f.text_field :address, class: 'form-control'
+  .form-group
+    = f.label :city, class: 'col-sm-2 control-label'
+    .col-sm-4
+      = f.text_field :city, class: 'form-control'
+  .form-group
+    = f.label :zipcode, class: 'col-sm-2 control-label'
+    .col-sm-4
+      = f.text_field :zipcode, class: 'form-control'
+  .form-group
+    = f.label :agent, class: 'col-sm-2 control-label'
+    .col-sm-4
+      = f.select(:agent, options_for_select(@agents, (@deal.agent.present? ? @deal.agent : nil)), {}, {class: 'form-control'})
+  .form-group
+    .col-sm-offset-2.col-sm-4
+      = f.submit class: 'btn btn-primary'
