@@ -1,11 +1,5 @@
 class CompareHomeValueService
   def self.call
-    call_zillow
-  end
-
-  private
-
-  def self.call_zillow
     data = {
         :price => 130000,
         :address => "681 Las Palmas Ave",
@@ -16,9 +10,24 @@ class CompareHomeValueService
         :agent_phone => "916-628-6666",
         :agent_email => "asia.allen@bhghome.com"
     }
+    compare_home_value(data)
+  end
+
+  private
+
+  def self.compare_home_value(data)
+    price = data[:price].to_f
+    zestimate = get_zestimate(data)
+    result = (price <= (0.8 * zestimate)) ? zestimate : 0
+    p "price: #{price}, zestimate: #{zestimate}"
+    p "result: #{result}"
+  end
+
+  def self.get_zestimate(data)
     response = ZillowService::GetPropertyInfo.call(data[:address], data[:zipcode])
-    puts "Listing Price: #{data[:price]}"
-    puts "Zestimate: #{response["zestimate"]["amount"]["__content__"]}"
+    zestimate = response["zestimate"]["amount"]["__content__"].to_f
+    return 0 if zestimate < 1
+    zestimate
   end
 
 end
