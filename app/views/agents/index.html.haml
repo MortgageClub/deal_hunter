@@ -1,0 +1,32 @@
+.page-header
+  = link_to new_agent_path, class: 'btn btn-primary' do
+    %span.glyphicon.glyphicon-plus
+    New Agent
+  %h1 Listing agents
+
+.table-responsive
+  %table.table.table-striped.table-bordered.table-hover
+    %thead
+      %tr
+        %th Full name
+        %th First name
+        %th Last name
+        %th Phone
+        %th Email
+        %th Office name
+        %th
+        %th
+        %th
+
+    %tbody
+      - @agents.each do |agent|
+        %tr
+          %td= agent.full_name
+          %td= agent.first_name
+          %td= agent.last_name
+          %td= agent.phone
+          %td= agent.email
+          %td= agent.office_name
+          %td= link_to 'Show', agent
+          %td= link_to 'Edit', edit_agent_path(agent)
+          %td= link_to 'Destroy', agent, data: { confirm: 'Are you sure?' }, method: :delete

@@ -21,5 +21,4 @@ class CompareHomeValueService
     p "price: #{price}, zestimate: #{zestimate}"
     (price <= (0.8 * zestimate)) ? zestimate : -1
   end
-
 end

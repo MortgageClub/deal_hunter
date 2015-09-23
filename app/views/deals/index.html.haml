@@ -1,0 +1,32 @@
+.page-header
+  = link_to new_deal_path, class: 'btn btn-primary' do
+    %span.glyphicon.glyphicon-plus
+    New Deal
+  %h1 Listing deals
+
+.table-responsive
+  %table.table.table-striped.table-bordered.table-hover
+    %thead
+      %tr
+        %th Listing
+        %th Price
+        %th Address
+        %th City
+        %th Zipcode
+        %th Agent
+        %th
+        %th
+        %th
+
+    %tbody
+      - @deals.each do |deal|
+        %tr
+          %td= deal.listing_id
+          %td= deal.price
+          %td= deal.address
+          %td= deal.city
+          %td= deal.zipcode
+          %td= link_to deal.agent.full_name, agent_path(deal.agent)
+          %td= link_to 'Show', deal
+          %td= link_to 'Edit', edit_deal_path(deal)
+          %td= link_to 'Destroy', deal, data: { confirm: 'Are you sure?' }, method: :delete
