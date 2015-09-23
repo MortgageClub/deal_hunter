@@ -37,6 +37,7 @@ gem 'awesome_print'
 
 gem 'mechanize', '~> 2.7.3'
 gem 'httparty'
+gem 'rollbar', '~> 2.2.1'
 
 group :development do
   gem 'bootstrap-generators'
