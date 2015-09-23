@@ -16,6 +16,7 @@ namespace :crawler do
 
   desc "Test send sms to agent"
   task :sms => :environment do
+    # SendSmsService.call('16507877799', 'Asia C Allen', "681 Las Palmas Ave")
     SendSmsService.call('84989651186', 'Asia C Allen', "681 Las Palmas Ave")
   end
 end
