@@ -2,8 +2,7 @@ class CompareHomeValueService
   def self.call
     data = {
         :price => 130000,
-        # :address => "681 Las Palmas Ave",
-        :address => "xxx",
+        :address => "681 Las Palmas Ave",
         :city => "Sacramento",
         :zipcode => "95815",
         :office_name => "Better Homes and Gardens RE Mason-McDuffie",
@@ -20,7 +19,7 @@ class CompareHomeValueService
     price = data[:price].to_f
     zestimate = ZillowService::GetZestimate.call(data[:address], data[:zipcode])
     p "price: #{price}, zestimate: #{zestimate}"
-    (price <= (0.8 * zestimate)) ? zestimate : 0
+    (price <= (0.8 * zestimate)) ? zestimate : -1
   end
 
 end
