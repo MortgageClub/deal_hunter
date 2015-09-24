@@ -10,5 +10,4 @@ class OfferMailer < ActionMailer::Base
       subject: "Offer for #{@property_address}"
     )
   end
-
 end

@@ -9,5 +9,7 @@ Bundler.require(*Rails.groups)
 module DealHunter
   class Application < Rails::Application
     config.autoload_paths += Dir[Rails.root.join('app', 'services', '{**}')]
+    config.generators.assets = false
+    config.generators.helper = false
   end
 end
