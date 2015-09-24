@@ -5,7 +5,7 @@ workers 1
 threads 1, 6
 
 app_dir = File.expand_path("../..", __FILE__)
-shared_dir = "#{app_dir}/shared"
+shared_dir = "#{app_dir}/tmp"
 
 # Default to production
 rails_env = ENV['RAILS_ENV'] || "production"
@@ -25,5 +25,5 @@ activate_control_app
 on_worker_boot do
   require "active_record"
   ActiveRecord::Base.connection.disconnect! rescue ActiveRecord::ConnectionNotEstablished
-  ActiveRecord::Base.establish_connection(YAML.load_file("#{shared_dir}/config/database.yml")[rails_env])
+  ActiveRecord::Base.establish_connection(YAML.load_file("#{app_dir}/config/database.yml")[rails_env])
 end
