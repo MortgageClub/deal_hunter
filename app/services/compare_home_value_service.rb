@@ -8,6 +8,6 @@ class CompareHomeValueService
   def self.compare_home_value(home)
     price = home[:price].to_f
     zestimate = ZillowService::GetZestimate.call(home[:address], home[:zipcode])
-    (price <= (0.8 * zestimate)) ? zestimate : -1
+    (price <= (0.95 * zestimate)) ? zestimate : -1
   end
 end
