@@ -40,6 +40,9 @@ gem 'httparty'
 gem 'rollbar', '~> 2.2.1'
 gem 'bootstrap-generators'
 
+# Mina tasks for handle with Puma.
+gem 'mina-puma', :require => false
+
 group :development do
   gem 'thin'
   gem 'selenium-webdriver'
