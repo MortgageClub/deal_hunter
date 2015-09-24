@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 
 ruby '2.2.2'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '4.1.6'
+gem 'rails', '~> 4.2'
 # Use postgresql as the database for Active Record
 gem 'pg'
 # Use SCSS for stylesheets
@@ -42,6 +42,7 @@ gem 'bootstrap-generators'
 
 # Mina tasks for handle with Puma.
 gem 'mina-puma', :require => false
+gem 'plivo', '~> 0.3.17'
 
 group :development do
   gem 'thin'
@@ -52,6 +53,7 @@ group :development, :test do
   gem 'byebug'
   gem 'foreman'
   gem 'annotate'
+  gem 'dotenv-rails'
 end
 
 group :production do

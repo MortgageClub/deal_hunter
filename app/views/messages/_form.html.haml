@@ -1,0 +1,31 @@
+= form_for @message, html: { class: "form-horizontal", role: "form" } do |f|
+  -if @message.errors.any?
+    .alert.alert-danger.alert-dismissable{role: "alert"}
+      %button.close{type: "button", data: {dismiss: "alert"} }
+        %span{aria: {hidden: "true"} } &times;
+        %span.sr-only Close
+      %h4= "#{pluralize(@message.errors.count, "error")} prohibited this message from being saved:"
+
+      %ul
+        - @message.errors.full_messages.each do |msg|
+          %li= msg
+
+  .form-group
+    = f.label :content, class: 'col-sm-2 control-label'
+    .col-sm-10
+      = f.text_area :content, class: 'form-control'
+  .form-group
+    = f.label :reply, class: 'col-sm-2 control-label'
+    .col-sm-10
+      = f.text_area :reply, class: 'form-control'
+  .form-group
+    = f.label :phone_number, class: 'col-sm-2 control-label'
+    .col-sm-10
+      = f.text_field :phone_number, class: 'form-control'
+  .form-group
+    = f.label :status, class: 'col-sm-2 control-label'
+    .col-sm-10
+      = f.text_field :status, class: 'form-control'
+  .form-group
+    .col-sm-offset-2.col-sm-10
+      = f.submit class: 'btn btn-primary'

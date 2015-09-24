@@ -27,7 +27,7 @@ class SaveDataService
   end
 
   def save_agent
-    agent = Agent.new(
+    agent = Agent.find_or_initialize_by(
       full_name: contact[:full_name],
       first_name: contact[:first_name],
       last_name: contact[:last_name],

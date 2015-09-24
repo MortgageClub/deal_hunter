@@ -1,0 +1,23 @@
+.page-header
+  = link_to messages_path, class: 'btn btn-default' do
+    %span.glyphicon.glyphicon-list-alt
+    Back
+  = link_to edit_message_path(@message), class: 'btn btn-primary' do
+    %span.glyphicon.glyphicon-pencil
+    Edit
+  %h1 Show message
+
+%dl.dl-horizontal
+  %dt Content:
+  %dd= @message.content
+  %dt Reply:
+  %dd= @message.reply
+  - if @message.messageable_id
+    %dt Sender:
+    %dd= link_to @message.messageable.to_s, polymorphic_path(@message.messageable)
+  - else
+    %dt N/A
+  %dt Phone number:
+  %dd= @message.phone_number
+  %dt Status:
+  %dd= @message.status
