@@ -14,8 +14,8 @@ require 'mina/puma'
 set :domain, 'dh.mortgageclub.io'
 set :deploy_to, '/var/www/dh'
 set :repository, 'git@github.com:MortgageClub/deal_hunter.git'
-# set :branch, 'master'
-set :branch, 'feature/deploy_to_production'
+set :branch, 'master'
+# set :branch, 'feature/deploy_to_production'
 
 # For system-wide RVM install.
 #   set :rvm_path, '/usr/local/rvm/bin/rvm'
