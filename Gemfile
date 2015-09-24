@@ -45,6 +45,7 @@ gem 'mina-puma', :require => false
 gem 'plivo', '~> 0.3.17'
 gem 'delayed_job_active_record'
 gem 'whenever', :require => false
+gem 'daemons'
 
 group :development do
   gem 'thin'

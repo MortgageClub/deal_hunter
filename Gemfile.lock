@@ -298,6 +298,7 @@ DEPENDENCIES
   capybara
   coffee-rails (~> 4.0.0)
   cucumber-rails
+  daemons
   delayed_job_active_record
   devise (~> 3.5)
   dotenv-rails
