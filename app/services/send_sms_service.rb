@@ -16,14 +16,6 @@ class SendSmsService
       'dst' => phone_number,        # Receiver's phone Number with country code
       'text' => "Hello #{agent_name}, My name is Billy and I'm a buyer interested in #{property_address}. Is it still available? Can you show me the house and help me make an offer? I'm going to send u an email as well. Thank you."
     }
-    response = plivo.send_message(params)
-    uuid = response[1]['message_uuid'][0]
-
-    params1 = {
-        'record_id' => uuid
-    }
-    response = plivo.get_message(params1)
-    p response
+    plivo.send_message(params)
   end
-
 end

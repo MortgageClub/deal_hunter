@@ -74,6 +74,9 @@ task :deploy => :environment do
     # Put things to run locally before ssh
   end
   deploy do
+    to :prepare do
+      queue "cd #{deploy_to}/#{current_path} && RAILS_ENV=production bin/delayed_job stop"
+    end
     # Put things that will set up an empty directory into a fully set-up
     # instance of your project.
     invoke :'git:clone'
@@ -88,6 +91,16 @@ task :deploy => :environment do
       queue "touch #{deploy_to}/#{current_path}/tmp/restart.txt"
       invoke :'puma:phased_restart'
       invoke :'deploy:cleanup'
+
+      # Stop cron
+      queue  %[echo "-----> Stop cron."]
+      queue "crontab -r || true"
+
+      # Install cron
+      queue  %[echo "-----> Install cron."]
+      queue "cd #{deploy_to}/#{current_path} && RAILS_ENV=production bundle exec whenever --update-crontab"
+
+      queue "cd #{deploy_to}/#{current_path} && RAILS_ENV=production bin/delayed_job start"
     end
   end
 end
