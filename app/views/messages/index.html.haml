@@ -10,8 +10,7 @@
       %tr
         %th Content
         %th Reply
-        %th Messageable
-        %th Messageable type
+        %th Sender
         %th Phone number
         %th Status
         %th
@@ -23,8 +22,10 @@
         %tr
           %td= message.content
           %td= message.reply
-          %td= message.messageable_id
-          %td= message.messageable_type
+          - if message.messageable_id
+            %td= link_to message.messageable.to_s, polymorphic_path(message.messageable)
+          - else
+            %td= 'N/A'
           %td= message.phone_number
           %td= message.status
           %td= link_to 'Show', message

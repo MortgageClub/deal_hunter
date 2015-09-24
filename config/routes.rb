@@ -1,7 +1,11 @@
 Rails.application.routes.draw do
   devise_for :users
   resources :users
-  resources :messages
+
+  resources :messages do
+    get 'receive_sms', on: :collection
+  end
+
   resources :deals
 
   resources :agents
@@ -12,7 +16,7 @@ Rails.application.routes.draw do
   # You can have the root of your site routed with "root"
   root 'deals#index'
 
-  post 'receive_sms', to: 'messages#destroy'
+  get 'receive_sms', to: 'messages#receive_sms'
 
   resources :home do
   end

@@ -62,8 +62,16 @@ class MessagesController < ApplicationController
   end
 
   def receive_sms
-    from_number = params[:From]
-    content = params[:Text]
+    agent = Agent.find_by_phone(params[:From])
+    message = Message.new(
+      content: params[:Text],
+      phone_number: params[:From],
+      messageable: agent,
+      status: 'new'
+    )
+    message.save
+
+    render nothing: true
   end
 
   private

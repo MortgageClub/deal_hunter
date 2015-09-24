@@ -6,4 +6,8 @@ class User < ActiveRecord::Base
   has_many :messages, as: :messageable
 
   validates :email, :name, presence: true
+
+  def to_s
+    name
+  end
 end

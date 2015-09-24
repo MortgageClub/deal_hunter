@@ -12,10 +12,11 @@
   %dd= @message.content
   %dt Reply:
   %dd= @message.reply
-  %dt Messageable:
-  %dd= @message.messageable_id
-  %dt Messageable type:
-  %dd= @message.messageable_type
+  - if @message.messageable_id
+    %dt Sender:
+    %dd= link_to @message.messageable.to_s, polymorphic_path(@message.messageable)
+  - else
+    %dt N/A
   %dt Phone number:
   %dd= @message.phone_number
   %dt Status:
