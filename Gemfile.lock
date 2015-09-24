@@ -142,6 +142,7 @@ GEM
       cliver (~> 0.3.1)
       multi_json (~> 1.0)
       websocket-driver (>= 0.2.0)
+    puma (2.14.0)
     rack (1.5.5)
     rack-test (0.6.3)
       rack (>= 1.0)
@@ -256,6 +257,7 @@ DEPENDENCIES
   nokogiri
   pg
   poltergeist
+  puma
   rails (= 4.1.6)
   rails_12factor
   rollbar (~> 2.2.1)

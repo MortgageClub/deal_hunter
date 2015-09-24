@@ -57,6 +57,8 @@ group :production do
 
   # See https://github.com/sstephenson/execjs#readme for more supported runtimes
   gem 'therubyracer', platforms: :ruby
+
+  gem 'puma'
 end
 
 # Use ActiveModel has_secure_password
