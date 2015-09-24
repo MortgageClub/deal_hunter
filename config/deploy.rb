@@ -13,7 +13,8 @@ require 'mina/rvm'    # for rvm support. (http://rvm.io)
 set :domain, 'dh.mortgageclub.io'
 set :deploy_to, '/var/www/dh'
 set :repository, 'git@github.com:MortgageClub/deal_hunter.git'
-set :branch, 'master'
+# set :branch, 'master'
+set :branch, 'feature/deploy_to_production'
 
 # For system-wide RVM install.
 #   set :rvm_path, '/usr/local/rvm/bin/rvm'
@@ -73,11 +74,12 @@ task :deploy => :environment do
     invoke :'bundle:install'
     invoke :'rails:db_migrate'
     invoke :'rails:assets_precompile'
-    invoke :'deploy:cleanup'
+    # invoke :'deploy:cleanup'
 
     to :launch do
       queue "mkdir -p #{deploy_to}/#{current_path}/tmp/"
       queue "touch #{deploy_to}/#{current_path}/tmp/restart.txt"
+      invoke :'deploy:cleanup'
     end
   end
 end

@@ -1,3 +1,5 @@
+.env
+/log/*.log
 *.gem
 *.rbc
 /.config
