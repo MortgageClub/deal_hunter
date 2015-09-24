@@ -88,6 +88,14 @@ task :deploy => :environment do
       queue "touch #{deploy_to}/#{current_path}/tmp/restart.txt"
       invoke :'puma:phased_restart'
       invoke :'deploy:cleanup'
+
+      # Stop cron
+      queue  %[echo "-----> Stop cron."]
+      queue "crontab -r || true"
+
+      # Install cron
+      queue  %[echo "-----> Install cron."]
+      queue "cd #{deploy_to}/#{current_path} && RAILS_ENV=production bundle exec whenever --update-crontab"
     end
   end
 end
