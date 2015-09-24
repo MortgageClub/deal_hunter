@@ -11,5 +11,6 @@ module DealHunter
     config.autoload_paths += Dir[Rails.root.join('app', 'services', '{**}')]
     config.generators.assets = false
     config.generators.helper = false
+    config.active_job.queue_adapter = :delayed_job
   end
 end

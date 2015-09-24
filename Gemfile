@@ -43,6 +43,7 @@ gem 'bootstrap-generators'
 # Mina tasks for handle with Puma.
 gem 'mina-puma', :require => false
 gem 'plivo', '~> 0.3.17'
+gem 'delayed_job_active_record'
 
 group :development do
   gem 'thin'
