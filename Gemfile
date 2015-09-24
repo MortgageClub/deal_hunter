@@ -38,10 +38,13 @@ gem 'awesome_print'
 gem 'mechanize', '~> 2.7.3'
 gem 'httparty'
 gem 'rollbar', '~> 2.2.1'
+gem 'bootstrap-generators'
+
+# Mina tasks for handle with Puma.
+gem 'mina-puma', :require => false
 gem 'plivo', '~> 0.3.17'
 
 group :development do
-  gem 'bootstrap-generators'
   gem 'thin'
   gem 'selenium-webdriver'
 end
@@ -59,6 +62,8 @@ group :production do
 
   # See https://github.com/sstephenson/execjs#readme for more supported runtimes
   gem 'therubyracer', platforms: :ruby
+
+  gem 'puma'
 end
 
 # Use ActiveModel has_secure_password
