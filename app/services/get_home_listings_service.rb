@@ -19,7 +19,7 @@ class GetHomeListingsService
     @session.execute_script("$('#password').val('Blackdawn1')")
     @session.execute_script("$('#j_password').val('Blackdawn1')")
     @session.click_on("SIGN IN")
-    sleep(10)
+    sleep(15)
   end
 
   def self.go_to_metro_list
