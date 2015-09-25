@@ -9,10 +9,9 @@ class HuntUndervalueHomesService
       SaveDataService.new(home).call
       # SendSmsService.delay.call(home[:agent][:phone], home[:agent][:first_name], home[:address])
       # OfferMailer.notify_agent(home[:agent][:first_name], home[:agent][:email], home[:address]).deliver_later
-      # SendSmsService.delay.call('16507877799', home[:agent][:first_name], home[:address])
-      # OfferMailer.notify_agent(home[:agent][:first_name], 'billytran1222@gmail.com', home[:address], home[:city]).deliver_later
+      SendSmsService.delay.call('16507877799', home[:agent][:first_name], home[:address])
+      OfferMailer.notify_agent(home[:agent][:first_name], 'billytran1222@gmail.com', home[:address], home[:city]).deliver_later
     end
-    byebug
     GenerateReportService.delay.call(count, homes.size, homes)
   end
 
