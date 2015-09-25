@@ -30,7 +30,7 @@ set :shared_paths, ['config/database.yml', 'config/secrets.yml', 'log', 'tmp/pid
 #   set :port, '30000'     # SSH port number.
   set :forward_agent, true     # SSH forward_agent.
 
-set_default :delayed_job_pid_dir, lambda { "#{deploy_to}/#{shared_path}/pids" }
+set_default :delayed_job_pid_dir, lambda { "#{deploy_to}/#{shared_path}/tmp/pids" }
 
 # This task is the environment that is loaded for most commands, such as
 # `mina deploy` or `mina rake`.
@@ -77,10 +77,6 @@ task :deploy => :environment do
     # Put things to run locally before ssh
   end
   deploy do
-    to :prepare do
-      invoke :'puma:stop'
-      # queue "cd #{deploy_to}/#{current_path} && RAILS_ENV=production bin/delayed_job stop --pid-dir=#{delayed_job_pid_dir}"
-    end
     # Put things that will set up an empty directory into a fully set-up
     # instance of your project.
     invoke :'git:clone'
@@ -88,34 +84,20 @@ task :deploy => :environment do
     invoke :'bundle:install'
     invoke :'rails:db_migrate'
     invoke :'rails:assets_precompile'
-    # invoke :'deploy:cleanup'
 
     to :launch do
       queue "mkdir -p #{deploy_to}/#{current_path}/tmp/"
       queue "touch #{deploy_to}/#{current_path}/tmp/restart.txt"
-      invoke :'puma:phased_restart'
 
       # Stop delayed_job
       queue "ps aux | grep delayed_job | grep -v grep| awk {'print $2'} | xargs -r kill -s QUIT"
       queue "cd #{deploy_to}/#{current_path} && RAILS_ENV=production bin/delayed_job start --pid-dir=#{delayed_job_pid_dir}"
 
-      # Stop cron
-      # queue  %[echo "-----> Stop cron."]
-      # queue "crontab -r || true"
-
-      # # Install cron
-      # queue  %[echo "-----> Install cron."]
-      # queue "cd #{deploy_to}/#{current_path} && RAILS_ENV=production bundle exec whenever --update-crontab"
       invoke :'whenever:clear'
       invoke :'whenever:update'
       invoke :'deploy:cleanup'
+
+      invoke :'puma:phased_restart'
     end
   end
 end
-
-# For help in making your deploy script, see the Mina documentation:
-#
-#  - http://nadarei.co/mina
-#  - http://nadarei.co/mina/tasks
-#  - http://nadarei.co/mina/settings
-#  - http://nadarei.co/mina/helpers
