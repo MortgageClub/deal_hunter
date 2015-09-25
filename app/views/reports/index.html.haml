@@ -1,0 +1,24 @@
+.page-header
+  = link_to new_report_path, class: 'btn btn-primary' do
+    %span.glyphicon.glyphicon-plus
+    New Report
+  %h1 Listing reports
+
+.table-responsive
+  %table.table.table-striped.table-bordered.table-hover
+    %thead
+      %tr
+        %th Result
+        %th Raw data
+        %th Created at
+        %th
+        %th
+
+    %tbody
+      - @reports.each do |report|
+        %tr
+          %td= report.result
+          %td= report.raw_data
+          %td= report.created_at.to_date
+          %td= link_to 'Show', report
+          %td= link_to 'Destroy', report, data: { confirm: 'Are you sure?' }, method: :delete
