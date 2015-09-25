@@ -18,7 +18,7 @@ class GetHomeListingsService
     @session.execute_script("$('#j_username').val('01972404')")
     @session.execute_script("$('#password').val('Blackdawn1')")
     @session.execute_script("$('#j_password').val('Blackdawn1')")
-    @session.click_on("SIGN IN")
+    @session.execute_script("$('#login').trigger('click')")
     sleep(15)
   end
 
@@ -37,7 +37,7 @@ class GetHomeListingsService
       @session.visit("http://search.metrolist.net/ListingGridDisplay.aspx?hidMLS=SACM&GRID=137130&PTYPE=RESI&SRC=HS&SRID=211618742&PRINT=0&SAS=0&ARCH=0&HIDD=0&REMO=0&SNAME=Sacramento+Hotsheet&CARTID=&SPLISTINGRID=0&STYPE=HS&SID=#{session_id}")
       data = Nokogiri::HTML.parse(@session.html)
       count += 1
-      sleep(5)
+      sleep(4)
     end
 
     return if data.css(".subject-list-grid").empty?
@@ -49,10 +49,16 @@ class GetHomeListingsService
       next if tr.css("td").size < 2
 
       listing_id = tr.css("td")[1].text
+      home_type = tr.css("td")[2].text.strip
+      home_status = tr.css("td")[3].text.strip
       address = tr.css("td")[4].text
       city = tr.css("td")[5].text
       zipcode = tr.css("td")[6].text
       price = tr.css("td")[7].text.gsub(/[^0-9\.]/,'').to_f
+      bedroom = tr.css("td")[8].text.to_i
+      bathroom = tr.css("td")[9].text
+      dom_cdom = tr.css("td")[10].text
+      remark = tr.css("td")[11].text.strip
       full_name = tr.css("td")[12].text.strip
       first_name = full_name.split(" ").first
       last_name = full_name.split(" ").last
@@ -63,13 +69,16 @@ class GetHomeListingsService
       result << {
         listing_id: listing_id, price: price, address: address,
         city: city, zipcode: zipcode,
+        home_type: home_type, home_status: home_status,
+        bedroom: bedroom, bathroom: bathroom, dom_cdom: dom_cdom,
         agent: {
           full_name: full_name,
           first_name: first_name,
           last_name: last_name,
           phone: agent_phone,
           email: agent_email,
-          office_name: office_name
+          office_name: office_name,
+          remark: remark
         }
       }
     end
