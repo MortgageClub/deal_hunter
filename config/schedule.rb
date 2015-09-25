@@ -19,6 +19,6 @@
 
 # Learn more: http://github.com/javan/whenever
 
-every 30.minutes do
+every 15.minutes do
   runner "HuntUndervalueHomesService.call"
 end
