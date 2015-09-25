@@ -33,7 +33,7 @@
   .form-group
     = f.label :agent, class: 'col-sm-2 control-label'
     .col-sm-4
-      = f.select(:agent, options_for_select(@agents, (@deal.agent.present? ? @deal.agent : nil)), {}, {class: 'form-control'})
+      = f.select(:agent, options_for_select(@agents.pluck(:id), (@deal.agent.present? ? @deal.agent.id : nil)), {}, {class: 'form-control'})
   .form-group
     .col-sm-offset-2.col-sm-4
       = f.submit class: 'btn btn-primary'

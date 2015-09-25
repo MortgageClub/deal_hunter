@@ -69,7 +69,9 @@ class MessagesController < ApplicationController
       messageable: agent,
       status: 'new'
     )
-    message.save
+    if message.save
+      forward_sms(agent, message)
+    end
 
     render nothing: true
   end
@@ -83,5 +85,15 @@ class MessagesController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def message_params
       params.require(:message).permit(:content, :reply, :messageable_id, :messageable_type, :phone_number, :status)
+    end
+
+    def forward_sms(agent, message)
+      deals = Deal.where(agent_id: agent.id)
+      deal_address = ''
+      deals.each do |d|
+        deal_address += "#{d.address}, #{d.city}. "
+      end
+      content = "#{message.content} - #{agent.to_s}: #{message.phone_number}. address: #{deal_address}"
+      SendSmsService.forward(content)
     end
 end

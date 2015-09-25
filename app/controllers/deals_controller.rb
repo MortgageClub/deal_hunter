@@ -25,11 +25,13 @@ class DealsController < ApplicationController
   def create
     @deal = Deal.new(deal_params)
     @deal.save
+    @agents = Agent.all
     respond_with(@deal)
   end
 
   def update
     @deal.update(deal_params)
+    @agents = Agent.all
     respond_with(@deal)
   end
 
