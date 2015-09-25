@@ -21,6 +21,11 @@ class SaveDataService
       address: data[:address],
       city: data[:city],
       zipcode: data[:zipcode],
+      home_type: data[:home_type],
+      home_status: data[:home_status],
+      bedroom: data[:bedroom],
+      bathroom: data[:bathroom],
+      dom_cdom: data[:dom_cdom],
       agent_id: agent.id
     )
     deal.save
@@ -33,7 +38,8 @@ class SaveDataService
       last_name: contact[:last_name],
       phone: contact[:phone],
       email: contact[:email],
-      office_name: contact[:office_name]
+      office_name: contact[:office_name],
+      remark: contact[:remark]
     )
     agent.save and agent
   end
