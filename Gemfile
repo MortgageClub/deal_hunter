@@ -67,6 +67,8 @@ group :production do
   gem 'therubyracer', platforms: :ruby
 
   gem 'puma'
+
+  gem 'remote_syslog_logger'
 end
 
 # Use ActiveModel has_secure_password
