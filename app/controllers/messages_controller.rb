@@ -91,10 +91,9 @@ class MessagesController < ApplicationController
       deals = Deal.where(agent_id: agent.id)
       deal_address = ''
       deals.each do |d|
-        deal_address += "#{d.address}. "
+        deal_address += "#{d.address}, #{d.city}. "
       end
-      content = "#{message.content}. #{agent.to_s}: #{message.phone_number}. address: #{deal_address}"
-      p content
+      content = "#{message.content} - #{agent.to_s}: #{message.phone_number}. address: #{deal_address}"
       SendSmsService.forward(content)
     end
 end
