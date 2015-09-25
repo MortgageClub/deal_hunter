@@ -97,7 +97,8 @@ task :deploy => :environment do
       invoke :'whenever:update'
       invoke :'deploy:cleanup'
 
-      invoke :'puma:phased_restart'
+      invoke :'puma:stop'
+      invoke :'puma:start'
     end
   end
 end
