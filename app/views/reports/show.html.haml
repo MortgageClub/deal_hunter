@@ -1,0 +1,14 @@
+.page-header
+  = link_to reports_path, class: 'btn btn-default' do
+    %span.glyphicon.glyphicon-list-alt
+    Back
+  = link_to edit_report_path(@report), class: 'btn btn-primary' do
+    %span.glyphicon.glyphicon-pencil
+    Edit
+  %h1 Show report
+
+%dl.dl-horizontal
+  %dt Result:
+  %dd= @report.result
+  %dt Raw data:
+  %dd= @report.raw_data
