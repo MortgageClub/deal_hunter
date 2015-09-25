@@ -38,9 +38,9 @@ class SaveDataService
       last_name: contact[:last_name],
       phone: contact[:phone],
       email: contact[:email],
-      office_name: contact[:office_name],
-      remark: contact[:remark]
+      office_name: contact[:office_name]
     )
+    agent.remark = contact[:remark]
     agent.save and agent
   end
 end

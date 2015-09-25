@@ -88,13 +88,13 @@ class MessagesController < ApplicationController
     end
 
     def forward_sms(agent, message)
-      deals = Agent.where(agent_id: agent.id)
+      deals = Deal.where(agent_id: agent.id)
       deal_address = ''
       deals.each do |d|
         deal_address += "#{d.address}. "
       end
       content = "#{message.content}. #{agent.to_s}: #{message.phone_number}. address: #{deal_address}"
       p content
-      SendSmsService.delay.forward(content)
+      SendSmsService.forward(content)
     end
 end

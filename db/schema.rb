@@ -17,25 +17,25 @@ ActiveRecord::Schema.define(version: 20150925025132) do
   enable_extension "plpgsql"
 
   create_table "agents", force: :cascade do |t|
-    t.string   "full_name",   limit: 255
-    t.string   "first_name",  limit: 255
-    t.string   "last_name",   limit: 255
-    t.string   "phone",       limit: 255
-    t.string   "email",       limit: 255
-    t.string   "office_name", limit: 255
+    t.string   "full_name"
+    t.string   "first_name"
+    t.string   "last_name"
+    t.string   "phone"
+    t.string   "email"
+    t.string   "office_name"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.text     "remark"
   end
 
   create_table "deals", force: :cascade do |t|
-    t.string   "listing_id",  limit: 255
-    t.decimal  "price",                   precision: 15, scale: 2
-    t.decimal  "zestimate",               precision: 15, scale: 2
-    t.string   "address",     limit: 255
-    t.string   "city",        limit: 255
-    t.string   "zipcode",     limit: 255
-    t.string   "status",      limit: 255
+    t.string   "listing_id"
+    t.decimal  "price",       precision: 15, scale: 2
+    t.decimal  "zestimate",   precision: 15, scale: 2
+    t.string   "address"
+    t.string   "city"
+    t.string   "zipcode"
+    t.string   "status"
     t.integer  "agent_id"
     t.datetime "created_at"
     t.datetime "updated_at"
