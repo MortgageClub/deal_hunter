@@ -4,7 +4,7 @@ class DealsController < ApplicationController
   respond_to :html
 
   def index
-    @deals = Deal.all
+    @deals = Deal.order('created_at DESC').limit(25)
     respond_with(@deals)
   end
 

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150924093948) do
+ActiveRecord::Schema.define(version: 20150925025132) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -25,19 +25,25 @@ ActiveRecord::Schema.define(version: 20150924093948) do
     t.string   "office_name", limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.text     "remark"
   end
 
   create_table "deals", force: :cascade do |t|
-    t.string   "listing_id", limit: 255
-    t.decimal  "price",                  precision: 15, scale: 2
-    t.decimal  "zestimate",              precision: 15, scale: 2
-    t.string   "address",    limit: 255
-    t.string   "city",       limit: 255
-    t.string   "zipcode",    limit: 255
-    t.string   "status",     limit: 255
+    t.string   "listing_id",  limit: 255
+    t.decimal  "price",                   precision: 15, scale: 2
+    t.decimal  "zestimate",               precision: 15, scale: 2
+    t.string   "address",     limit: 255
+    t.string   "city",        limit: 255
+    t.string   "zipcode",     limit: 255
+    t.string   "status",      limit: 255
     t.integer  "agent_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "home_type"
+    t.string   "home_status"
+    t.integer  "bedroom"
+    t.string   "bathroom"
+    t.string   "dom_cdom"
   end
 
   add_index "deals", ["agent_id"], name: "index_deals_on_agent_id", using: :btree

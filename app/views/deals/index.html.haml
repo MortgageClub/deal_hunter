@@ -8,14 +8,19 @@
   %table.table.table-striped.table-bordered.table-hover
     %thead
       %tr
-        %th Listing
+        %th Listing ID
         %th Price
+        %th Zestimate
         %th Address
         %th City
         %th Zipcode
+        %th Type
+        %th Home Status
+        %th Bedroom
+        %th Bathroom
+        %th DOM/CDOM
         %th Agent
-        %th
-        %th
+        %th Date
         %th
 
     %tbody
@@ -23,10 +28,17 @@
         %tr
           %td= deal.listing_id
           %td= deal.price
+          %td= deal.zestimate
           %td= deal.address
           %td= deal.city
           %td= deal.zipcode
+          %td= deal.home_type
+          %td= deal.home_status
+          %td= deal.bedroom
+          %td= deal.bathroom
+          %td= deal.dom_cdom
           %td= link_to deal.agent.full_name, agent_path(deal.agent)
+          %td= deal.created_at.to_date
           %td= link_to 'Show', deal
-          %td= link_to 'Edit', edit_deal_path(deal)
-          %td= link_to 'Destroy', deal, data: { confirm: 'Are you sure?' }, method: :delete
+          / %td= link_to 'Edit', edit_deal_path(deal)
+          / %td= link_to 'Destroy', deal, data: { confirm: 'Are you sure?' }, method: :delete
