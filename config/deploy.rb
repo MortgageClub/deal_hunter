@@ -4,6 +4,7 @@ require 'mina/git'
 # require 'mina/rbenv'  # for rbenv support. (http://rbenv.org)
 require 'mina/rvm'    # for rvm support. (http://rvm.io)
 require 'mina/puma'
+require 'mina/whenever'
 
 # Basic settings:
 #   domain       - The hostname to SSH to.
@@ -28,6 +29,8 @@ set :shared_paths, ['config/database.yml', 'config/secrets.yml', 'log', 'tmp/pid
   set :user, 'deploy'    # Username in the server to SSH to.
 #   set :port, '30000'     # SSH port number.
   set :forward_agent, true     # SSH forward_agent.
+
+set_default :delayed_job_pid_dir, lambda { "#{deploy_to}/#{shared_path}/pids" }
 
 # This task is the environment that is loaded for most commands, such as
 # `mina deploy` or `mina rake`.
@@ -75,7 +78,8 @@ task :deploy => :environment do
   end
   deploy do
     to :prepare do
-      queue "cd #{deploy_to}/#{current_path} && RAILS_ENV=production bin/delayed_job stop"
+      invoke :'puma:stop'
+      # queue "cd #{deploy_to}/#{current_path} && RAILS_ENV=production bin/delayed_job stop --pid-dir=#{delayed_job_pid_dir}"
     end
     # Put things that will set up an empty directory into a fully set-up
     # instance of your project.
@@ -90,17 +94,21 @@ task :deploy => :environment do
       queue "mkdir -p #{deploy_to}/#{current_path}/tmp/"
       queue "touch #{deploy_to}/#{current_path}/tmp/restart.txt"
       invoke :'puma:phased_restart'
-      invoke :'deploy:cleanup'
+
+      # Stop delayed_job
+      queue "ps aux | grep delayed_job | grep -v grep| awk {'print $2'} | xargs -r kill -s QUIT"
+      queue "cd #{deploy_to}/#{current_path} && RAILS_ENV=production bin/delayed_job start --pid-dir=#{delayed_job_pid_dir}"
 
       # Stop cron
-      queue  %[echo "-----> Stop cron."]
-      queue "crontab -r || true"
+      # queue  %[echo "-----> Stop cron."]
+      # queue "crontab -r || true"
 
-      # Install cron
-      queue  %[echo "-----> Install cron."]
-      queue "cd #{deploy_to}/#{current_path} && RAILS_ENV=production bundle exec whenever --update-crontab"
-
-      queue "cd #{deploy_to}/#{current_path} && RAILS_ENV=production bin/delayed_job start"
+      # # Install cron
+      # queue  %[echo "-----> Install cron."]
+      # queue "cd #{deploy_to}/#{current_path} && RAILS_ENV=production bundle exec whenever --update-crontab"
+      invoke :'whenever:clear'
+      invoke :'whenever:update'
+      invoke :'deploy:cleanup'
     end
   end
 end
