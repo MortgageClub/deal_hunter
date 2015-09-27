@@ -69,7 +69,7 @@ class MessagesController < ApplicationController
       messageable: agent,
       status: 'new'
     )
-    if message.save
+    if message.save and agent.present?
       forward_sms(agent, message)
     end
 
