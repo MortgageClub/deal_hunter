@@ -1,7 +1,7 @@
 require 'rubygems'
 require 'plivo'
 
-class SendSmsService
+class SendSmsToAgentService
   include Plivo
 
   AUTH_ID = ENV["PLIVO_AUTH_ID"]
@@ -17,16 +17,6 @@ class SendSmsService
       'src' => PLIVO_SENDER, # Sender's phone number with country code
       'dst' => phone_number, # Receiver's phone Number with country code
       'text' => "Hello #{agent_name}, My name is Billy and I'm a buyer interested in #{property_address}. Is it still available? Can you show me the house and help me make an offer? I'm going to send u an email as well. Thank you."
-    }
-    plivo.send_message(params)
-  end
-
-  def self.forward(content)
-    plivo = RestAPI.new(AUTH_ID, AUTH_TOKEN)
-    params = {
-      'src' => PLIVO_SENDER,
-      'dst' => BILLY_PHONE_NUMBER,
-      'text' => content
     }
     plivo.send_message(params)
   end

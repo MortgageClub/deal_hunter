@@ -27,13 +27,13 @@
           = link_to "Deal Hunter", root_path, class: "navbar-brand"
         #navbar.collapse.navbar-collapse
           %ul.nav.navbar-nav
-            %li.active
-              = link_to "Deals", deals_path
-            %li
+            %li{:class => active_class(root_path)}
+              = link_to "Deals", root_path
+            %li{:class => active_class(agents_path)}
               = link_to "Agents", agents_path
-            %li
+            %li{:class => active_class(messages_path)}
               = link_to "Messages", messages_path
-            %li
+            %li{:class => active_class(reports_path)}
               = link_to "Reports", reports_path
           %ul.nav.navbar-nav.pull-right
             %li.dropdown

@@ -9,7 +9,6 @@
     %thead
       %tr
         %th Result
-        %th Raw data
         %th Created at
         %th
         %th
@@ -18,7 +17,6 @@
       - @reports.each do |report|
         %tr
           %td= report.result
-          %td= report.raw_data
-          %td= report.created_at.to_date
+          %td= report.created_at
           %td= link_to 'Show', report
           %td= link_to 'Destroy', report, data: { confirm: 'Are you sure?' }, method: :delete

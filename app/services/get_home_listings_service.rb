@@ -71,14 +71,14 @@ class GetHomeListingsService
         city: city, zipcode: zipcode,
         home_type: home_type, home_status: home_status,
         bedroom: bedroom, bathroom: bathroom, dom_cdom: dom_cdom,
+        remark: remark,
         agent: {
           full_name: full_name,
           first_name: first_name,
           last_name: last_name,
           phone: agent_phone,
           email: agent_email,
-          office_name: office_name,
-          remark: remark
+          office_name: office_name
         }
       }
     end

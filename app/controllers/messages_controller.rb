@@ -42,7 +42,11 @@ class MessagesController < ApplicationController
   def update
     respond_to do |format|
       if @message.update(message_params)
-        format.html { redirect_to @message, notice: 'Message was successfully updated.' }
+        if @message.reply.present?
+          ReplySmsService.call(@message)
+          @message.update(status: 'replied')
+        end
+        format.html { redirect_to @message, notice: 'Message was successfully sent.' }
         format.json { render :show, status: :ok, location: @message }
       else
         format.html { render :edit }
@@ -69,31 +73,19 @@ class MessagesController < ApplicationController
       messageable: agent,
       status: 'new'
     )
-    if message.save and agent.present?
-      forward_sms(agent, message)
-    end
+    ForwardSmsService.new(agent, message).call if message.save and agent.present?
 
     render nothing: true
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_message
-      @message = Message.find(params[:id])
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_message
+    @message = Message.find(params[:id])
+  end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def message_params
-      params.require(:message).permit(:content, :reply, :messageable_id, :messageable_type, :phone_number, :status)
-    end
-
-    def forward_sms(agent, message)
-      deals = Deal.where(agent_id: agent.id)
-      deal_address = ''
-      deals.each do |d|
-        deal_address += "#{d.address}, #{d.city}. "
-      end
-      content = "#{message.content} - #{agent.to_s}: #{message.phone_number}. address: #{deal_address}"
-      SendSmsService.forward(content)
-    end
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def message_params
+    params.require(:message).permit(:content, :reply, :messageable_id, :messageable_type, :phone_number, :status)
+  end
 end

@@ -5,11 +5,9 @@
         %span{aria: {hidden: "true"} } &times;
         %span.sr-only Close
       %h4= "#{pluralize(@report.errors.count, "error")} prohibited this report from being saved:"
-
       %ul
         - @report.errors.full_messages.each do |msg|
           %li= msg
-
   .form-group
     = f.label :result, class: 'col-sm-2 control-label'
     .col-sm-10
@@ -17,7 +15,7 @@
   .form-group
     = f.label :raw_data, class: 'col-sm-2 control-label'
     .col-sm-10
-      = f.text_field :raw_data, class: 'form-control'
+      = f.text_area :raw_data, class: 'form-control'
   .form-group
     .col-sm-offset-2.col-sm-10
       = f.submit class: 'btn btn-primary'

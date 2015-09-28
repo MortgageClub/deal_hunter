@@ -26,6 +26,7 @@ class SaveDataService
       bedroom: data[:bedroom],
       bathroom: data[:bathroom],
       dom_cdom: data[:dom_cdom],
+      remark: data[:remark],
       agent_id: agent.id
     )
     deal.save
@@ -35,12 +36,11 @@ class SaveDataService
     agent = Agent.find_or_initialize_by(
       full_name: contact[:full_name],
       first_name: contact[:first_name],
-      last_name: contact[:last_name],
-      phone: contact[:phone],
-      email: contact[:email],
-      office_name: contact[:office_name]
+      last_name: contact[:last_name]
     )
-    agent.remark = contact[:remark]
+    agent.phone = contact[:phone]
+    agent.email = contact[:email]
+    agent.office_name = contact[:office_name]
     agent.save and agent
   end
 end

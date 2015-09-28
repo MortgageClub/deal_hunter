@@ -1,19 +1,16 @@
 .page-header
-  = link_to new_message_path, class: 'btn btn-primary' do
-    %span.glyphicon.glyphicon-plus
-    New Message
   %h1 Listing messages
 
 .table-responsive
   %table.table.table-striped.table-bordered.table-hover
     %thead
       %tr
-        %th Content
-        %th Reply
+        %th Incoming
+        %th Outgoing
         %th Sender
         %th Phone number
         %th Status
-        %th
+        %th Created at
         %th
         %th
 
@@ -28,6 +25,6 @@
             %td= 'N/A'
           %td= message.phone_number
           %td= message.status
-          %td= link_to 'Show', message
-          %td= link_to 'Edit', edit_message_path(message)
+          %td= message.created_at
+          %td= link_to 'Reply', edit_message_path(message)
           %td= link_to 'Destroy', message, data: { confirm: 'Are you sure?' }, method: :delete
