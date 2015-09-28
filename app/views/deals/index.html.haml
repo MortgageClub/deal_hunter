@@ -16,10 +16,11 @@
         %th Zipcode
         %th Type
         %th Home Status
-        %th Bedroom
-        %th Bathroom
-        %th DOM/CDOM
+        %th Bed
+        %th Bath
+        %th DOM
         %th Agent
+        %th Remark
         %th Date
         %th
 
@@ -27,8 +28,8 @@
       - @deals.each do |deal|
         %tr
           %td= deal.listing_id
-          %td= deal.price
-          %td= deal.zestimate
+          %td= format_currency(deal.price)
+          %td= format_currency(deal.zestimate)
           %td= deal.address
           %td= deal.city
           %td= deal.zipcode
@@ -38,6 +39,7 @@
           %td= deal.bathroom
           %td= deal.dom_cdom
           %td= link_to deal.agent.full_name, agent_path(deal.agent)
+          %td= deal.remark
           %td= deal.created_at.to_date
           %td= link_to 'Show', deal
           / %td= link_to 'Edit', edit_deal_path(deal)

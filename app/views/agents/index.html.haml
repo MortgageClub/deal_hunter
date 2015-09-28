@@ -13,7 +13,6 @@
         %th Phone
         %th Email
         %th Office name
-        %th Remark
         %th
         %th
         / %th
@@ -26,7 +25,6 @@
           %td= agent.phone
           %td= agent.email
           %td= agent.office_name
-          %td= agent.remark
           %td= link_to 'Show', agent
           %td= link_to 'Edit', edit_agent_path(agent)
           / %td= link_to 'Destroy', agent, data: { confirm: 'Are you sure?' }, method: :delete
