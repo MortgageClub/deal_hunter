@@ -63,7 +63,7 @@ class GetHomeListingsService
       first_name = full_name.split(" ").first
       last_name = full_name.split(" ").last
       agent_email = tr.css("td")[13].text
-      agent_phone = tr.css("td")[14].text.gsub("-","")
+      agent_phone = "1" + tr.css("td")[14].text.gsub("-","")
       office_name = tr.css("td")[15].text
 
       result << {
