@@ -3,14 +3,15 @@ class HuntUndervalueHomesService
     homes = GetHomeListingsService.call
     count = 0
     homes.each do |home|
-      next unless lower_price?(home) && was_not_hunted?(home)
+      SaveDataService.new(home).call if was_not_hunted?(home)
+      next unless lower_price?(home)
       count += 1
 
-      SaveDataService.new(home).call
+
       SendSmsToAgentService.delay.call(home[:agent][:phone], home[:agent][:first_name], home[:address])
       OfferMailer.notify_agent(home[:agent][:first_name], home[:agent][:email], home[:address], home[:city]).deliver_later
     end
-    GenerateReportService.delay.call(count, homes.size, homes)
+    GenerateReportService.call(count, homes.size, homes)
   end
 
   private
