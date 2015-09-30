@@ -8,8 +8,10 @@
   %table.table.table-striped.table-bordered.table-hover
     %thead
       %tr
+        %th Hot Deal?
         %th Listing ID
         %th Price
+        %th Comp Score
         %th Zestimate
         %th Address
         %th City
@@ -27,8 +29,14 @@
     %tbody
       - @deals.each do |deal|
         %tr
+          - if deal.hot_deal
+            %td
+              %b= deal.hot_deal
+          - else
+            %td= deal.hot_deal
           %td= deal.listing_id
           %td= format_currency(deal.price)
+          %td= format_currency(deal.comp)
           %td= format_currency(deal.zestimate)
           %td= deal.address
           %td= deal.city

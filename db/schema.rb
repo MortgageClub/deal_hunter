@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150928033137) do
+ActiveRecord::Schema.define(version: 20150930090750) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -44,6 +44,8 @@ ActiveRecord::Schema.define(version: 20150928033137) do
     t.string   "bathroom"
     t.string   "dom_cdom"
     t.text     "remark"
+    t.boolean  "hot_deal",                                         default: false
+    t.decimal  "comp",                    precision: 15, scale: 2
   end
 
   add_index "deals", ["agent_id"], name: "index_deals_on_agent_id", using: :btree
