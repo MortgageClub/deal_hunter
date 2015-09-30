@@ -1,9 +1,10 @@
 class SaveDataService
-  attr_reader :data, :contact
+  attr_reader :data, :contact, :hot_deal
 
-  def initialize(data)
+  def initialize(data, hot_deal)
     @data = data
     @contact = data[:agent]
+    @hot_deal = hot_deal
   end
 
   def call
@@ -27,7 +28,9 @@ class SaveDataService
       bathroom: data[:bathroom],
       dom_cdom: data[:dom_cdom],
       remark: data[:remark],
-      agent_id: agent.id
+      agent_id: agent.id,
+      hot_deal: hot_deal,
+      comp: data[:comp]
     )
     deal.save
   end
