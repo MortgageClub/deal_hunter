@@ -28,9 +28,14 @@ module ZillowService
 
     def self.get_average_score(comp)
       comparables = comp['response'].try(:[], 'properties').try(:[], 'comparables').try(:[], 'comp')
+      sum, max = 0, 0
 
-      total = comparables.inject(0) { |total, comp| total += comp['lastSoldPrice']['__content__'].to_f }
-      total / NUMBER_OF_RESULTS
+      comparables.each do |comp|
+        sum += comp['lastSoldPrice']['__content__'].to_f
+        max = comp['lastSoldPrice']['__content__'].to_f if comp['lastSoldPrice']['__content__'].to_f > max
+      end
+      sum -= max
+      sum / (NUMBER_OF_RESULTS - 1)
     end
 
     def self.ok?(response)

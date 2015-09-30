@@ -9,7 +9,7 @@ class HuntUndervalueHomesService
       home[:comp] = scores[:avg_score]
 
       if hot_deal?(home, scores[:avg_score])
-        SendSmsToAgentService.call(home[:agent][:phone], home[:agent][:first_name], home[:address])
+        SendSmsToAgentService.call(home[:agent][:phone], home[:agent][:first_name], home[:address]) if home[:agent][:phone].present?
         OfferMailer.notify_agent(home[:agent][:first_name], home[:agent][:email], home[:address], home[:city]).deliver_now
         number_of_deal += 1
       end
