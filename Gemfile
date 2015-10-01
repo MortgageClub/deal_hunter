@@ -46,6 +46,7 @@ gem 'plivo', '~> 0.3.17'
 gem 'delayed_job_active_record'
 gem 'whenever', :require => false
 gem 'daemons'
+gem 'skylight'
 
 group :development do
   gem 'thin'
