@@ -93,8 +93,8 @@ task :deploy => :environment do
       queue "touch #{deploy_to}/#{current_path}/tmp/restart.txt"
 
       # Stop delayed_job
-      queue "ps aux | grep delayed_job | grep -v grep| awk {'print $2'} | xargs -r kill -s QUIT"
-      queue "cd #{deploy_to}/#{current_path} && RAILS_ENV=production bin/delayed_job start --pid-dir=#{delayed_job_pid_dir}"
+      # queue "ps aux | grep delayed_job | grep -v grep| awk {'print $2'} | xargs -r kill -s QUIT"
+      # queue "cd #{deploy_to}/#{current_path} && RAILS_ENV=production bin/delayed_job start --pid-dir=#{delayed_job_pid_dir}"
 
       invoke :'whenever:clear'
       invoke :'whenever:update'
