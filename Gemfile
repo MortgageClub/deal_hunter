@@ -33,8 +33,6 @@ gem 'capybara'
 gem 'cucumber-rails', require: false
 gem 'devise', '~> 3.5'
 gem 'unicorn'
-gem 'awesome_print'
-
 gem 'mechanize', '~> 2.7.3'
 gem 'httparty'
 gem 'rollbar', '~> 2.2.1'
@@ -43,7 +41,6 @@ gem 'bootstrap-generators'
 # Mina tasks for handle with Puma.
 gem 'mina-puma', :require => false
 gem 'plivo', '~> 0.3.17'
-gem 'delayed_job_active_record'
 gem 'whenever', :require => false
 gem 'daemons'
 gem 'skylight'
@@ -51,6 +48,8 @@ gem 'skylight'
 group :development do
   gem 'thin'
   gem 'selenium-webdriver'
+  gem 'derailed'
+  gem 'awesome_print'
 end
 
 group :development, :test do

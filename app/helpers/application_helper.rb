@@ -1,6 +1,6 @@
 module ApplicationHelper
   def active_class(link_path)
-    current_page?(link_path) ? "active" : ""
+    current_page?(link_path) ? "active".freeze : "".freeze
   end
 
   def format_currency(money)
