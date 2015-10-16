@@ -44,6 +44,7 @@ gem 'plivo', '~> 0.3.17'
 gem 'whenever', :require => false
 gem 'daemons'
 gem 'skylight'
+gem 'puma_worker_killer'
 
 group :development do
   gem 'thin'
