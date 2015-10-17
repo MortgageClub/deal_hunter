@@ -40,7 +40,7 @@ class GetHomeListingsService
       sleep(4)
     end
 
-    return if data.css(".subject-list-grid").empty?
+    return [] if data.css(".subject-list-grid").empty?
 
     data = Nokogiri::HTML.parse(@session.html)
     result = []
