@@ -1,5 +1,5 @@
 PumaWorkerKiller.config do |config|
-  config.percent_usage = 0.92
-  config.rolling_restart_frequency = 12 * 3600 # 12 hours in seconds
+  config.ram           = 490
+  config.percent_usage = 0.96
 end
-PumaWorkerKiller.enable_rolling_restart
+PumaWorkerKiller.enable_rolling_restart(12 * 3600)
