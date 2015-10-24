@@ -3,6 +3,9 @@ require 'capybara/poltergeist'
 
 class GetHomeListingsService
   include Capybara::DSL
+  TD_COLUMN    = "td".freeze
+  BLANK_SPACE  = "".freeze
+  WHITE_SPACE  = " ".freeze
 
   def self.call
     set_up_crawler
@@ -19,7 +22,7 @@ class GetHomeListingsService
     @session.execute_script("$('#password').val('Blackdawn1')")
     @session.execute_script("$('#j_password').val('Blackdawn1')")
     @session.execute_script("$('#login').trigger('click')")
-    sleep(15)
+    sleep(20)
   end
 
   def self.go_to_metro_list
@@ -46,25 +49,25 @@ class GetHomeListingsService
     result = []
     table = data.css(".subject-list-grid")
     table.css("tr").each do |tr|
-      next if tr.css("td").size < 2
+      next if tr.css(TD_COLUMN).size < 2
 
-      listing_id = tr.css("td")[1].text
-      home_type = tr.css("td")[2].text.strip
-      home_status = tr.css("td")[3].text.strip
-      address = tr.css("td")[4].text
-      city = tr.css("td")[5].text
-      zipcode = tr.css("td")[6].text
-      price = tr.css("td")[7].text.gsub(/[^0-9\.]/,'').to_f
-      bedroom = tr.css("td")[8].text.to_i
-      bathroom = tr.css("td")[9].text
-      dom_cdom = tr.css("td")[10].text
-      remark = tr.css("td")[11].text.strip
-      full_name = tr.css("td")[12].text.strip
-      first_name = full_name.split(" ").first
-      last_name = full_name.split(" ").last
-      agent_email = tr.css("td")[13].text
-      agent_phone = "1" + tr.css("td")[14].text.gsub("-","")
-      office_name = tr.css("td")[15].text
+      listing_id = tr.css(TD_COLUMN)[1].text
+      home_type = tr.css(TD_COLUMN)[2].text.strip
+      home_status = tr.css(TD_COLUMN)[3].text.strip.freeze
+      address = tr.css(TD_COLUMN)[4].text
+      city = tr.css(TD_COLUMN)[5].text.freeze
+      zipcode = tr.css(TD_COLUMN)[6].text
+      price = tr.css(TD_COLUMN)[7].text.gsub(/[^0-9\.]/, BLANK_SPACE).to_f
+      bedroom = tr.css(TD_COLUMN)[8].text.to_i
+      bathroom = tr.css(TD_COLUMN)[9].text
+      dom_cdom = tr.css(TD_COLUMN)[10].text
+      remark = tr.css(TD_COLUMN)[11].text.strip
+      full_name = tr.css(TD_COLUMN)[12].text.strip
+      first_name = full_name.split(WHITE_SPACE).first
+      last_name = full_name.split(WHITE_SPACE).last
+      agent_email = tr.css(TD_COLUMN)[13].text
+      agent_phone = "1".freeze + tr.css(TD_COLUMN)[14].text.gsub("-".freeze, BLANK_SPACE)
+      office_name = tr.css(TD_COLUMN)[15].text
 
       result << {
         listing_id: listing_id, price: price, address: address,
