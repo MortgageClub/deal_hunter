@@ -49,6 +49,6 @@
           %td= link_to deal.agent.full_name, agent_path(deal.agent)
           %td= deal.remark
           %td= deal.created_at.to_date
-          %td= link_to 'Show', deal
+          %td= link_to 'Show'.freeze, deal
           / %td= link_to 'Edit', edit_deal_path(deal)
           / %td= link_to 'Destroy', deal, data: { confirm: 'Are you sure?' }, method: :delete

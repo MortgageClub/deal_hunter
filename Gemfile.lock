@@ -253,8 +253,6 @@ GEM
       rubyzip (~> 1.0)
       websocket (~> 1.0)
     sexp_processor (4.6.0)
-    skylight (0.4.3)
-      activesupport (>= 3.0.0)
     spring (1.4.0)
     sprockets (2.12.4)
       hike (~> 1.2)
@@ -336,7 +334,6 @@ DEPENDENCIES
   sass-rails (~> 4.0.3)
   sdoc (~> 0.4.0)
   selenium-webdriver
-  skylight
   spring
   therubyracer
   thin
