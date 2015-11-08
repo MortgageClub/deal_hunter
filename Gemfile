@@ -45,7 +45,6 @@ gem 'whenever', :require => false
 gem 'daemons'
 
 gem 'puma_worker_killer'
-gem 'delayed_job_active_record'
 
 group :development do
   gem 'thin'

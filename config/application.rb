@@ -12,6 +12,5 @@ module DealHunter
     config.generators.assets = false
     config.generators.helper = false
     config.time_zone = 'Pacific Time (US & Canada)'
-    config.active_job.queue_adapter = :delayed_job
   end
 end
