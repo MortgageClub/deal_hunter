@@ -8,6 +8,8 @@ class GetAgentsService
   WHITE_SPACE  = " ".freeze
 
   def self.call
+    @start_time = Time.now
+    p @start_time
     set_up_crawler
     login
     go_to_metro_list
@@ -37,65 +39,60 @@ class GetAgentsService
     count = 0
     data = Nokogiri::HTML.parse(@session.html)
     key = data.search('a[key="V"]')[0].attr('url').split('-')[1].delete(',')
-    user_id = "5002811"
 
-    while data.css("#OuterTable").empty? && count < 5
-      agent_info_url = "http://search.metrolist.net/LookUpWindow.aspx"\
-        "?hidMLS=SACM&SID=72b7f77b-cffa-418c-8671-b55c803d029d&MLS=SACM&"\
-        "URL=http%3A%2F%2Fprospector.metrolist.net%2Fscripts%2Fmgrqispi."\
-        "dll%3FAPPNAME%3DMetrolist%26PRGNAME%3DMLSListingAgentDetail%26ARGUMENTS%3D-"\
-        "N#{user_id}%2C-#{key}"\
-        "%26openDetailInNewWindow%3Dtrue&showNavigation="
+    user_id = Setting.i(:crawler_last_agent_id) + 1
+    p "last id: #{user_id}"
+    (user_id..150000).each do |id|
+      break if Time.now > (@start_time + 4.minutes) # break after 4 minutes
+      Setting[:crawler_last_agent_id] = id
+      p id
+
+      agent_info_url = "http://prospector.metrolist.net/scripts/mgrqispi.dll?APPNAME=Metrolist&PRGNAME=MLSListingAgentDetail&ARGUMENTS=-N#{id},-#{key}"
       @session.visit(agent_info_url)
-      data = Nokogiri::HTML.parse(@session.html)
-      byebug
-      count += 1
-      sleep(4)
+      agent_data = Nokogiri::HTML.parse(@session.html).at_css('#Workspace')
+      next if agent_data.blank?
+
+      full_name = agent_data.at_css('.bBlackTextB').children.first.to_s.strip
+      next if full_name.blank?
+      first_name = full_name.split(WHITE_SPACE).first
+      last_name = full_name.split(WHITE_SPACE).last
+
+      office_name = agent_data.at_css('#aOfficeInfo').text.strip
+
+      email_data = agent_data.search("[text()*='E-mail']")
+      email = email_data.first.parent.parent.css('a').last.text if email_data.present?
+
+      phone_data = agent_data.search("[text()*='Office']")
+      phone =  "1".freeze + phone_data.first.parent.parent.css('.mBlackText').last.text.gsub("-".freeze, BLANK_SPACE) if phone_data.present?
+
+      contact_data = agent_data.search("[text()*='Contact']")
+      contact = contact_data.first.parent.parent.css('.mBlackText').last.text if contact_data.present?
+
+      fax_data = agent_data.search("[text()*='Fax']")
+      fax = fax_data.first.parent.parent.css('.mBlackText').last.text if fax_data.present?
+
+      lic_data = agent_data.search("[text()*='Lic:']")
+      lic = lic_data.first.parent.parent.css('.mBlackText').last.text if lic_data.present?
+
+      web_page_data = agent_data.search("[text()*='Web Page']")
+      web_page = web_page_data.first.parent.parent.css('a').last.text if web_page_data.present?
+
+      # Save agent
+      p full_name
+      agent = Agent.find_or_initialize_by(
+        full_name: full_name,
+        first_name: first_name,
+        last_name: last_name
+      )
+      agent.phone = phone
+      agent.email = email
+      agent.office_name = office_name
+      agent.contact = contact
+      agent.fax = fax
+      agent.lic = lic
+      agent.web_page = web_page
+      agent.save
     end
-
-    # return [] if data.css(".subject-list-grid").empty?
-
-    # data = Nokogiri::HTML.parse(@session.html)
-    # result = []
-    # table = data.css(".subject-list-grid")
-    # table.css("tr").each do |tr|
-    #   next if tr.css(TD_COLUMN).size < 2
-
-    #   listing_id = tr.css(TD_COLUMN)[1].text
-    #   home_type = tr.css(TD_COLUMN)[2].text.strip
-    #   home_status = tr.css(TD_COLUMN)[3].text.strip.freeze
-    #   address = tr.css(TD_COLUMN)[4].text
-    #   city = tr.css(TD_COLUMN)[5].text.freeze
-    #   zipcode = tr.css(TD_COLUMN)[6].text
-    #   price = tr.css(TD_COLUMN)[7].text.gsub(/[^0-9\.]/, BLANK_SPACE).to_f
-    #   bedroom = tr.css(TD_COLUMN)[8].text.to_i
-    #   bathroom = tr.css(TD_COLUMN)[9].text
-    #   dom_cdom = tr.css(TD_COLUMN)[10].text
-    #   remark = tr.css(TD_COLUMN)[11].text.strip
-    #   full_name = tr.css(TD_COLUMN)[12].text.strip
-    #   first_name = full_name.split(WHITE_SPACE).first
-    #   last_name = full_name.split(WHITE_SPACE).last
-    #   agent_email = tr.css(TD_COLUMN)[13].text
-    #   agent_phone = "1".freeze + tr.css(TD_COLUMN)[14].text.gsub("-".freeze, BLANK_SPACE)
-    #   office_name = tr.css(TD_COLUMN)[15].text
-
-    #   result << {
-    #     listing_id: listing_id, price: price, address: address,
-    #     city: city, zipcode: zipcode,
-    #     home_type: home_type, home_status: home_status,
-    #     bedroom: bedroom, bathroom: bathroom, dom_cdom: dom_cdom,
-    #     remark: remark,
-    #     agent: {
-    #       full_name: full_name,
-    #       first_name: first_name,
-    #       last_name: last_name,
-    #       phone: agent_phone,
-    #       email: agent_email,
-    #       office_name: office_name
-    #     }
-    #   }
-    # end
-    # result
   end
 
   def self.set_up_crawler
