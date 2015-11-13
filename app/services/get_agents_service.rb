@@ -41,11 +41,12 @@ class GetAgentsService
     key = data.search('a[key="V"]')[0].attr('url').split('-')[1].delete(',')
 
     user_id = Setting.i(:crawler_last_agent_id) + 1
-    p "last id: #{user_id}"
-    (user_id..150000).each do |id|
+    puts "last id: #{user_id}"
+
+    (user_id..Setting.i(:crawler_max_agent_id)).each do |id|
       break if Time.now > (@start_time + 4.minutes) # break after 4 minutes
       Setting[:crawler_last_agent_id] = id
-      p id
+      puts "--- #{id} ---"
 
       agent_info_url = "http://prospector.metrolist.net/scripts/mgrqispi.dll?APPNAME=Metrolist&PRGNAME=MLSListingAgentDetail&ARGUMENTS=-N#{id},-#{key}"
       @session.visit(agent_info_url)
@@ -78,7 +79,7 @@ class GetAgentsService
       web_page = web_page_data.first.parent.parent.css('a').last.text if web_page_data.present?
 
       # Save agent
-      p full_name
+      puts "#{full_name}, #{phone}, #{email}, #{office_name}, #{contact}, #{fax}, #{lic}, #{web_page}"
       agent = Agent.find_or_initialize_by(
         full_name: full_name,
         first_name: first_name,

@@ -7,3 +7,4 @@
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
 Setting[:crawler_last_agent_id]  ||= 0
+Setting[:crawler_max_agent_id]  ||= 200000
