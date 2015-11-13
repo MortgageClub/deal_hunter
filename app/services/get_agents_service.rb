@@ -63,8 +63,8 @@ class GetAgentsService
       email_data = agent_data.search("[text()*='E-mail']")
       email = email_data.first.parent.parent.css('a').last.text if email_data.present?
 
-      phone_data = agent_data.search("[text()*='Office']")
-      phone =  "1".freeze + phone_data.first.parent.parent.css('.mBlackText').last.text.gsub("-".freeze, BLANK_SPACE) if phone_data.present?
+      phone_data = agent_data.search("[text()*='Office']").first.parent.parent.css('.mBlackText').last
+      phone =  "1".freeze + phone_data.text.gsub("-".freeze, BLANK_SPACE) if phone_data.present?
 
       contact_data = agent_data.search("[text()*='Contact']")
       contact = contact_data.first.parent.parent.css('.mBlackText').last.text if contact_data.present?
