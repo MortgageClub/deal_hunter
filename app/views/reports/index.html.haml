@@ -20,3 +20,5 @@
           %td= report.created_at
           %td= link_to 'Show', report
           %td= link_to 'Destroy', report, data: { confirm: 'Are you sure?' }, method: :delete
+
+= will_paginate @reports, renderer: BootstrapPagination::Rails

@@ -52,3 +52,4 @@
           %td= link_to 'Show'.freeze, deal
           / %td= link_to 'Edit', edit_deal_path(deal)
           / %td= link_to 'Destroy', deal, data: { confirm: 'Are you sure?' }, method: :delete
+= will_paginate @deals, renderer: BootstrapPagination::Rails
