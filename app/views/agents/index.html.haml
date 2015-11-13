@@ -28,3 +28,5 @@
           %td= link_to 'Show', agent
           %td= link_to 'Edit', edit_agent_path(agent)
           / %td= link_to 'Destroy', agent, data: { confirm: 'Are you sure?' }, method: :delete
+
+= will_paginate @agents, renderer: BootstrapPagination::Rails

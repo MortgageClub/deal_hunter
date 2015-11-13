@@ -4,7 +4,7 @@ class AgentsController < ApplicationController
   respond_to :html
 
   def index
-    @agents = Agent.all
+    @agents = Agent.order(:first_name).paginate(:page => params[:page], :per_page => Setting.i(:default_per_page))
     respond_with(@agents)
   end
 
