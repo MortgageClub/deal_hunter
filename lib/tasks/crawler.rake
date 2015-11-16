@@ -24,4 +24,10 @@ namespace :crawler do
   task :agents => :environment do
     GetAgentsService.call
   end
+
+
+  desc "Get matrix agents"
+  task :matrix_agents => :environment do
+    GetMatrixAgentsService.call
+  end
 end
