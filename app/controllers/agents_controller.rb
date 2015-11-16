@@ -1,7 +1,7 @@
 class AgentsController < ApplicationController
   before_action :set_agent, only: [:show, :edit, :update, :destroy]
 
-  respond_to :html, :xlsx
+  respond_to :html
 
   def index
     @agents = Agent.order(:first_name).paginate(:page => params[:page], :per_page => Setting.i(:default_per_page))
