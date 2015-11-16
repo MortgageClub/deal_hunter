@@ -4,7 +4,7 @@ class MessagesController < ApplicationController
   # GET /messages
   # GET /messages.json
   def index
-    @messages = Message.all.order('created_at DESC')
+    @messages = Message.order('created_at DESC').paginate(:page => params[:page], :per_page => Setting.i(:default_per_page))
   end
 
   # GET /messages/1

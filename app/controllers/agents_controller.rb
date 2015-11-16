@@ -4,7 +4,7 @@ class AgentsController < ApplicationController
   respond_to :html
 
   def index
-    @agents = Agent.all
+    @agents = Agent.order(:first_name).paginate(:page => params[:page], :per_page => Setting.i(:default_per_page))
     respond_with(@agents)
   end
 
@@ -34,6 +34,14 @@ class AgentsController < ApplicationController
   def destroy
     @agent.destroy
     respond_with(@agent)
+  end
+
+  def download
+    @agents = Agent.select(:id, :first_name, :last_name, :full_name, :email, :phone, :office_name, :contact, :fax, :lic, :web_page).order(:first_name)
+    respond_to do |format|
+      format.html
+      format.csv { send_data @agents.to_csv }
+    end
   end
 
   private

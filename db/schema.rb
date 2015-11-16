@@ -11,30 +11,35 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150930090750) do
+ActiveRecord::Schema.define(version: 20151113041738) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "agents", force: :cascade do |t|
-    t.string   "full_name",   limit: 255
-    t.string   "first_name",  limit: 255
-    t.string   "last_name",   limit: 255
-    t.string   "phone",       limit: 255
-    t.string   "email",       limit: 255
-    t.string   "office_name", limit: 255
+    t.text     "full_name"
+    t.string   "first_name"
+    t.string   "last_name"
+    t.string   "phone"
+    t.string   "email"
+    t.text     "office_name"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.text     "contact"
+    t.text     "fax"
+    t.text     "lic"
+    t.text     "web_page"
+    t.text     "address"
   end
 
   create_table "deals", force: :cascade do |t|
-    t.string   "listing_id",  limit: 255
-    t.decimal  "price",                   precision: 15, scale: 2
-    t.decimal  "zestimate",               precision: 15, scale: 2
-    t.string   "address",     limit: 255
-    t.string   "city",        limit: 255
-    t.string   "zipcode",     limit: 255
-    t.string   "status",      limit: 255
+    t.string   "listing_id"
+    t.decimal  "price",       precision: 15, scale: 2
+    t.decimal  "zestimate",   precision: 15, scale: 2
+    t.string   "address"
+    t.string   "city"
+    t.string   "zipcode"
+    t.string   "status"
     t.integer  "agent_id"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -44,8 +49,8 @@ ActiveRecord::Schema.define(version: 20150930090750) do
     t.string   "bathroom"
     t.string   "dom_cdom"
     t.text     "remark"
-    t.boolean  "hot_deal",                                         default: false
-    t.decimal  "comp",                    precision: 15, scale: 2
+    t.boolean  "hot_deal",                             default: false
+    t.decimal  "comp",        precision: 15, scale: 2
   end
 
   add_index "deals", ["agent_id"], name: "index_deals_on_agent_id", using: :btree
@@ -82,6 +87,13 @@ ActiveRecord::Schema.define(version: 20150930090750) do
     t.text     "raw_data"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "settings", force: :cascade do |t|
+    t.string   "alias"
+    t.string   "value"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "users", force: :cascade do |t|

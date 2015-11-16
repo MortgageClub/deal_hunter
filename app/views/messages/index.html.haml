@@ -28,3 +28,5 @@
           %td= message.created_at
           %td= link_to 'Reply', edit_message_path(message)
           %td= link_to 'Destroy', message, data: { confirm: 'Are you sure?' }, method: :delete
+
+= will_paginate @messages, renderer: BootstrapPagination::Rails

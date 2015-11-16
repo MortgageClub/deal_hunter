@@ -4,7 +4,7 @@ class DealsController < ApplicationController
   respond_to :html
 
   def index
-    @deals = Deal.order('created_at DESC').includes(:agent).limit(25)
+    @deals = Deal.order('created_at DESC').includes(:agent).paginate(:page => params[:page], :per_page => Setting.i(:default_per_page))
     respond_with(@deals)
   end
 

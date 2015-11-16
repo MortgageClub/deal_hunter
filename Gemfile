@@ -45,6 +45,8 @@ gem 'whenever', :require => false
 gem 'daemons'
 
 gem 'puma_worker_killer'
+gem 'will_paginate'
+gem 'will_paginate-bootstrap'
 
 group :development do
   gem 'thin'
