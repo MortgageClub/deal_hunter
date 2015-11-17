@@ -3,21 +3,14 @@ require 'capybara/poltergeist'
 
 class GetMatrixAgentsService
   include Capybara::DSL
-  TD_COLUMN    = "td".freeze
-  BLANK_SPACE  = "".freeze
-  WHITE_SPACE  = " ".freeze
 
   def self.call
-    @start_time = Time.now
-    p @start_time
     set_up_crawler
     login
     go_to_matrix_search
-    # crawl_data
   end
 
   private
-
 
   def self.login
     @session.visit("http://search.mlslistings.com/Matrix/Directory/Agent")
@@ -25,80 +18,64 @@ class GetMatrixAgentsService
     @session.execute_script("$('#password').val('Blackdawn1')")
     @session.execute_script("$('#j_password').val('Blackdawn1')")
     @session.execute_script("$('#login').trigger('click')")
-    byebug
-    sleep(20)
+    sleep(10)
   end
 
   def self.go_to_matrix_search
-    @session.click_link("MainContent_NavigationLinks1_rpOtherApplications_NewMatrixUrl_0")
-    @session.visit("http://search.mlslistings.com/Matrix/Directory/Agent")
-    @session.execute_script("$('#btnContinue').trigger('click')")
-    byebug
-    sleep(5)
+    @session.click_link("m_ucSearchButtons_m_lbSearch")
+    sleep(3)
+    @session.select("100", :from => "m_ucDisplayPicker$m_ddlPageSize")
+    sleep(3)
+
+    page = 0
+    while page < 50  do
+      page += 1
+      if page > 1
+        @session.find("a[href=\"javascript:__doPostBack('m_DisplayCore','Redisplay|,#{(page-1)*100}')\"]", match: :first).click
+        sleep(3)
+      end
+      puts "--- page: #{page}"
+      parse_agents(@session.html)
+    end
   end
 
-  # def self.crawl_data
-  #   session_id = @session.current_url.split("&SID=").last
-  #   count = 0
-  #   data = Nokogiri::HTML.parse(@session.html)
-  #   key = data.search('a[key="V"]')[0].attr('url').split('-')[1].delete(',')
+  def self.parse_agents(html)
+    data = Nokogiri::HTML.parse(html, nil, 'utf-8')
+    data.css("#wrapperTable").each do |row|
+      row_info = row.css('.d13m1')
+      next if row_info.blank?
 
-  #   user_id = Setting.i(:crawler_last_agent_id) + 1
-  #   puts "last id: #{user_id}"
+      full_name = row_info[1].children.text
+      next if full_name.blank?
+      email = row_info[7].children.attr('href').text.gsub('mailto:', '') if row_info[7].children.present?
+      next if email.blank?
+      first_name = full_name.split(' ').first
+      last_name = full_name.split(' ').last
 
-  #   (user_id..Setting.i(:crawler_max_agent_id)).each do |id|
-  #     break if Time.now > (@start_time + 4.minutes) # break after 4 minutes
-  #     Setting[:crawler_last_agent_id] = id
-  #     puts "--- #{id} ---"
+      broker_code = row_info[2].children.text
+      office_name = row_info[3].children.text
+      phone = '1' + row_info[4].children.text.gsub('(', '').gsub(')', '').gsub('-', '').gsub(' ', '') if !row_info[4].children.text.blank?
+      fax = '1' + row_info[5].children.text.gsub('(', '').gsub(')', '').gsub('-', '').gsub(' ', '') if !row_info[5].children.text.blank?
+      lic = row_info[6].children.text
+      web_page = row_info[8].at_css('a').attr('href') if row_info[8].at_css('a').present?
 
-  #     agent_info_url = "http://prospector.metrolist.net/scripts/mgrqispi.dll?APPNAME=Metrolist&PRGNAME=MLSListingAgentDetail&ARGUMENTS=-N#{id},-#{key}"
-  #     @session.visit(agent_info_url)
-  #     agent_data = Nokogiri::HTML.parse(@session.html).at_css('#Workspace')
-  #     next if agent_data.blank?
-
-  #     full_name = agent_data.at_css('.bBlackTextB').children.first.to_s.strip
-  #     next if full_name.blank?
-  #     first_name = full_name.split(WHITE_SPACE).first
-  #     last_name = full_name.split(WHITE_SPACE).last
-
-  #     office_name = agent_data.at_css('#aOfficeInfo').text.strip
-
-  #     email_data = agent_data.search("[text()*='E-mail']").first.parent.parent.css('a').last
-  #     email = email_data.text if email_data.present?
-  #     next if email.blank?
-
-  #     phone_data = agent_data.search("[text()*='Office']").first.parent.parent.css('.mBlackText').last
-  #     phone =  "1".freeze + phone_data.text.gsub("-".freeze, BLANK_SPACE) if phone_data.present?
-
-  #     contact_data = agent_data.search("[text()*='Contact']")
-  #     contact = contact_data.first.parent.parent.css('.mBlackText').last.text if contact_data.present?
-
-  #     fax_data = agent_data.search("[text()*='Fax']")
-  #     fax = fax_data.first.parent.parent.css('.mBlackText').last.text if fax_data.present?
-
-  #     lic_data = agent_data.search("[text()*='Lic:']")
-  #     lic = lic_data.first.parent.parent.css('.mBlackText').last.text if lic_data.present?
-
-  #     web_page_data = agent_data.search("[text()*='Web Page']")
-  #     web_page = web_page_data.first.parent.parent.css('a').last.text if web_page_data.present?
-
-  #     # Save agent
-  #     puts "#{full_name}, #{phone}, #{email}, #{office_name}, #{contact}, #{fax}, #{lic}, #{web_page}"
-  #     agent = Agent.find_or_initialize_by(
-  #       full_name: full_name,
-  #       first_name: first_name,
-  #       last_name: last_name
-  #     )
-  #     agent.phone = phone
-  #     agent.email = email
-  #     agent.office_name = office_name
-  #     agent.contact = contact
-  #     agent.fax = fax
-  #     agent.lic = lic
-  #     agent.web_page = web_page
-  #     agent.save
-  #   end
-  # end
+      puts "#{full_name}, #{phone}, #{email}, #{office_name}, #{fax}, #{lic}, #{web_page}"
+      agent = Agent.find_or_initialize_by(
+        email: email,
+        full_name: full_name,
+        first_name: first_name,
+        last_name: last_name,
+        agent_type: 'matrix'
+      )
+      agent.broker_code = broker_code
+      agent.phone = phone
+      agent.office_name = office_name
+      agent.fax = fax
+      agent.lic = lic
+      agent.web_page = web_page
+      agent.save
+    end
+  end
 
   def self.set_up_crawler
     Capybara.register_driver :poltergeist do |app|
