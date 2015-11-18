@@ -37,7 +37,12 @@ class AgentsController < ApplicationController
   end
 
   def download
-    @agents = Agent.select(:id, :first_name, :last_name, :full_name, :email, :phone, :office_name, :contact, :fax, :lic, :web_page).order(:first_name)
+    if params[:type] == 'matrix'
+      @agents = Agent.where(agent_type: 'matrix').select(:id, :first_name, :last_name, :full_name, :email, :phone, :office_name, :contact, :fax, :lic, :web_page, :broker_code).order(:first_name)
+    else
+      @agents = Agent.select(:id, :first_name, :last_name, :full_name, :email, :phone, :office_name, :contact, :fax, :lic, :web_page).order(:first_name)
+    end
+
     respond_to do |format|
       format.html
       format.csv { send_data @agents.to_csv }
