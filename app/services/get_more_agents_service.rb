@@ -39,9 +39,10 @@ class GetMoreAgentsService
 
   def self.go_to_sfar_mls
     @session.click_link("MainContent_OtherMLS1_rpOtherApplications_SFO_5")
-    @session.visit("https://connect.mlslistings.com/QuattroAuthRequestConsumerService.ashx")
+    @session.visit("http://qtrosso.rapmls.com/sp/startSSO.ping?PartnerIdpId=MLSListingsIdentityProvider&TargetResource=http%3a%2f%2fportal.rapmls.com%2fSFAR%2fSpSSOHandler.aspx%3furl%3dhttp%3a%2f%2flogin.rapmls.com%2fSFAR%2fhomepage.aspx")
     @session.execute_script("$('#MainContent_btnContinue').trigger('click')")
     sleep(10)
+    @session.execute_script("$('#btnContinue').trigger('click')")
     byebug
   end
 
