@@ -25,12 +25,10 @@ class GetMoreAgentsService
     @session.visit("https://connect.mlslistings.com/SAML/CSAuthnRequestIssuer.ashx?RelayUrl=http://pro.mlslistings.com/")
     sleep(5)
     fill_login_form
-    sleep(5)
+    sleep(10)
   end
 
   def self.fill_login_form
-    # @session.execute_script("$('#MainContent_UCLogin_ibtnSignIn').trigger('click')")
-    # sleep(5)
     @session.execute_script("$('#j_username').val('01972404')")
     @session.execute_script("$('#password').val('Blackdawn1')")
     @session.execute_script("$('#j_password').val('Blackdawn1')")
@@ -41,9 +39,23 @@ class GetMoreAgentsService
     @session.click_link("MainContent_OtherMLS1_rpOtherApplications_SFO_5")
     @session.visit("http://qtrosso.rapmls.com/sp/startSSO.ping?PartnerIdpId=MLSListingsIdentityProvider&TargetResource=http%3a%2f%2fportal.rapmls.com%2fSFAR%2fSpSSOHandler.aspx%3furl%3dhttp%3a%2f%2flogin.rapmls.com%2fSFAR%2fhomepage.aspx")
     @session.execute_script("$('#MainContent_btnContinue').trigger('click')")
-    sleep(10)
+    sleep(20)
     @session.execute_script("$('#btnContinue').trigger('click')")
+    sleep(5)
+    p agent_office_link
     byebug
+  end
+
+  def self.agent_office_link
+    data = Nokogiri::HTML.parse(@session.html, nil, 'utf-8')
+    link = ''
+    data.css('a').each do |a|
+      if a.attr('key') == "G"
+        link = a.attr('url')
+        break
+      end
+    end
+    link
   end
 
   def self.set_up_crawler
