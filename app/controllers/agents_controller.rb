@@ -38,7 +38,7 @@ class AgentsController < ApplicationController
 
   def download
     if params[:type] == 'better_way'
-      @agents = Agent.where(agent_type: 'better_way').select(:id, :first_name, :last_name, :full_name, :email, :phone, :office_name, :contact, :fax, :lic, :web_page, :country).order(:first_name)
+      @agents = Agent.where(agent_type: 'better_way').select(:id, :first_name, :last_name, :full_name, :email, :phone, :office_name, :contact, :fax, :lic, :web_page, :address, :country).order(:first_name)
     elsif params[:type] == 'matrix'
       @agents = Agent.where(agent_type: 'matrix').select(:id, :first_name, :last_name, :full_name, :email, :phone, :office_name, :contact, :fax, :lic, :web_page, :broker_code).order(:first_name)
     else
