@@ -1,3 +1,4 @@
+# http://dh.mortgageclub.io/agents/download.csv?type=better_way
 require 'capybara'
 require 'capybara/poltergeist'
 
@@ -91,12 +92,13 @@ class GetMoreAgentsService
 
   def self.save_agent(data, country)
     begin
-      full_name = data.css('td')[3].text
+      full_name = data.css('td')[3].text.gsub("\u00a0", '')
       return if full_name.blank?
       first_name = full_name.split(',').first.strip
       last_name = full_name.split(',').last.strip
-      office_name = data.css('td')[4].text
-      address = data.css('td')[5].text
+
+      office_name = data.css('td')[4].text.gsub("\u00a0", '')
+      address = data.css('td')[5].text.gsub("\u00a0", '')
       phone = '1' + data.css('td')[6].text.gsub('-', '').gsub("\u00a0", '') if data.css('td')[6].text.present?
 
       agent_id = data.css('td')[3].at_css('.mBlueLink').attr('href').gsub('javascript:ViewAgent(', '').gsub(')', '')
@@ -123,10 +125,10 @@ class GetMoreAgentsService
       agent = Agent.find_or_initialize_by(
         email: email,
         full_name: full_name,
+        first_name: first_name,
+        last_name: last_name,
         agent_type: 'better_way'
       )
-      agent.first_name = first_name,
-      agent.last_name = last_name,
       agent.phone = phone
       agent.office_name = office_name
       agent.fax = fax
