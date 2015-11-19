@@ -11,3 +11,7 @@ end
 # every 5.minutes do
 #   rake "crawler:agents", output: "./log/crawler_agents.log"
 # end
+
+every 7.days, :at => '6:40 am' do
+  rake "crawler:better_way", output: "./log/crawler_better_way.log"
+end

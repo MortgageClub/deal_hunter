@@ -119,7 +119,7 @@ class GetMoreAgentsService
       web_page_data = agent_data.search("[text()*='Web Page']")
       web_page = web_page_data.first.parent.parent.css('a').last.text if web_page_data.present?
 
-      puts "#{full_name}, #{phone}, #{email}, #{office_name}, #{fax}, #{lic}, #{web_page}"
+      puts "#{full_name}, #{email}"
       agent = Agent.find_or_initialize_by(
         email: email,
         full_name: full_name,
@@ -131,7 +131,9 @@ class GetMoreAgentsService
       agent.office_name = office_name
       agent.fax = fax
       agent.lic = lic
+      agent.contact = contact
       agent.web_page = web_page
+      agent.address = address
       agent.country = country
       agent.save
     rescue Exception => error
