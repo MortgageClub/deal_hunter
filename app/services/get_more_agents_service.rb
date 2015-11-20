@@ -72,7 +72,7 @@ class GetMoreAgentsService
 
   def self.fill_search_form (last_name, country)
     # ---
-    @session.visit("http://sfarmls.rapmls.com/scripts/mgrqispi.dll?APPNAME=Sanfrancisco&PRGNAME=MLSAgentsandOffices&ARGUMENTS=-N167345231&SID=6177e444-6ef4-4db3-9d3e-5b9497e12622")
+    @session.visit("http://sfarmls.rapmls.com/scripts/mgrqispi.dll?APPNAME=Sanfrancisco&PRGNAME=MLSAgentsandOffices&ARGUMENTS=-N183169234&SID=4fbe19a2-ed6e-4b3f-9845-d560b41a159f")
     # -----
     # @session.visit(agent_office_link)
     # p agent_office_link
@@ -103,25 +103,33 @@ class GetMoreAgentsService
 
       agent_id = data.css('td')[3].at_css('.mBlueLink').attr('href').gsub('javascript:ViewAgent(', '').gsub(')', '')
 
-      @session.visit("http://sfarmls.rapmls.com/scripts/mgrqispi.dll?APPNAME=Sanfrancisco&PRGNAME=MLSListingAgentDetail&ARGUMENTS=-N#{agent_id},-N167345231&from_List=Y")
+      @session.visit("http://sfarmls.rapmls.com/scripts/mgrqispi.dll?APPNAME=Sanfrancisco&PRGNAME=MLSListingAgentDetail&ARGUMENTS=-N#{agent_id},-N183169234&from_List=Y")
       agent_data = Nokogiri::HTML.parse(@session.html).at_css('#Workspace')
 
       email_data = agent_data.search("[text()*='E-mail']").first.parent.parent.css('a').last
       email = email_data.text if email_data.present?
       return if email.blank?
 
-      # contact_data = agent_data.search("[text()*='Contact']").first.parent.parent.css('.mBlackText').last
-      # contact = contact_data.text if contact_data.present?
+      contact = ''
+      fax = ''
+      lic = ''
+      web_page = ''
 
-      # fax_data = agent_data.search("[text()*='Fax']")
-      # fax = '1' + fax_data.first.parent.parent.css('.mBlackText').last.text.gsub('(', '').gsub(')', '').gsub('-', '').gsub(' ', '') if fax_data.present?
+      begin
+        contact_data = agent_data.search("[text()*='Contact']").first.parent.parent.css('.mBlackText').last
+        contact = contact_data.text if contact_data.present?
 
-      # lic_data = agent_data.search("[text()*='Lic:']")
-      # lic = lic_data.first.parent.parent.css('.mBlackText').last.text if lic_data.present?
+        fax_data = agent_data.search("[text()*='Fax']")
+        fax = '1' + fax_data.first.parent.parent.css('.mBlackText').last.text.gsub('(', '').gsub(')', '').gsub('-', '').gsub(' ', '') if fax_data.present?
 
-      # web_page_data = agent_data.search("[text()*='Web Page']")
-      # web_page = web_page_data.first.parent.parent.css('a').last.text if web_page_data.present?
+        lic_data = agent_data.search("[text()*='Lic:']")
+        lic = lic_data.first.parent.parent.css('.mBlackText').last.text if lic_data.present?
 
+        web_page_data = agent_data.search("[text()*='Web Page']")
+        web_page = web_page_data.first.parent.parent.css('a').last.text if web_page_data.present?
+      rescue Exception => e
+        puts ">>> error: #{e}"
+      end
       puts "#{full_name}, #{email}"
       agent = Agent.find_or_initialize_by(
         email: email,
