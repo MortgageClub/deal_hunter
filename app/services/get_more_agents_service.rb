@@ -109,17 +109,18 @@ class GetMoreAgentsService
       email_data = agent_data.search("[text()*='E-mail']").first.parent.parent.css('a').last
       email = email_data.text if email_data.present?
       return if email.blank?
-      contact_data = agent_data.search("[text()*='Contact']").first.parent.parent.css('.mBlackText').last
-      contact = contact_data.text if contact_data.present?
 
-      fax_data = agent_data.search("[text()*='Fax']")
-      fax = '1' + fax_data.first.parent.parent.css('.mBlackText').last.text.gsub('(', '').gsub(')', '').gsub('-', '').gsub(' ', '') if fax_data.present?
+      # contact_data = agent_data.search("[text()*='Contact']").first.parent.parent.css('.mBlackText').last
+      # contact = contact_data.text if contact_data.present?
 
-      lic_data = agent_data.search("[text()*='Lic:']")
-      lic = lic_data.first.parent.parent.css('.mBlackText').last.text if lic_data.present?
+      # fax_data = agent_data.search("[text()*='Fax']")
+      # fax = '1' + fax_data.first.parent.parent.css('.mBlackText').last.text.gsub('(', '').gsub(')', '').gsub('-', '').gsub(' ', '') if fax_data.present?
 
-      web_page_data = agent_data.search("[text()*='Web Page']")
-      web_page = web_page_data.first.parent.parent.css('a').last.text if web_page_data.present?
+      # lic_data = agent_data.search("[text()*='Lic:']")
+      # lic = lic_data.first.parent.parent.css('.mBlackText').last.text if lic_data.present?
+
+      # web_page_data = agent_data.search("[text()*='Web Page']")
+      # web_page = web_page_data.first.parent.parent.css('a').last.text if web_page_data.present?
 
       puts "#{full_name}, #{email}"
       agent = Agent.find_or_initialize_by(
