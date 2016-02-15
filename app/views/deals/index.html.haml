@@ -6,7 +6,7 @@
   = form_tag deals_path, method: "get" do
     = check_box_tag 'hot_deal_only', 'true', @show_hotdeals_option
     %label Show only hot deals
-    = submit_tag "Submit"
+    = submit_tag "Submit", class: "btn btn-primary"
 
 
 %div#dealsContent
