@@ -60,6 +60,7 @@ group :development, :test do
   gem 'foreman'
   gem 'annotate'
   gem 'dotenv-rails'
+  gem 'launchy'
 end
 
 group :production do
