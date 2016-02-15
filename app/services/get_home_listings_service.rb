@@ -9,9 +9,14 @@ class GetHomeListingsService
 
   def self.call
     set_up_crawler
-    login
-    go_to_metro_list
-    crawl_data
+
+    begin
+      login
+      go_to_metro_list
+      crawl_data
+    ensure
+      close_crawler
+    end
   end
 
   private
@@ -19,13 +24,14 @@ class GetHomeListingsService
   def self.login
     @session.visit("https://connect.mlslistings.com/SAML/CSAuthnRequestIssuer.ashx?RelayUrl=http://pro.mlslistings.com/")
     @session.execute_script("$('#j_username').val('01972404')")
-    @session.execute_script("$('#password').val('Blackdawn1')")
-    @session.execute_script("$('#j_password').val('Blackdawn1')")
+    @session.execute_script("$('#password').val('P29CF91')")
+    @session.execute_script("$('#j_password').val('P29CF91')")
     @session.execute_script("$('#login').trigger('click')")
     sleep(20)
   end
 
   def self.go_to_metro_list
+    login
     @session.click_link("MainContent_OtherMLS1_rpOtherApplications_SACM_3")
     @session.visit("http://qtrosso.rapmls.com/sp/startSSO.ping?PartnerIdpId=MLSListingsIdentityProvider&TargetResource=http://login.rapmls.com/SACM/','SACM'")
     @session.execute_script("$('#btnContinue').trigger('click')")
@@ -36,11 +42,12 @@ class GetHomeListingsService
     session_id = @session.current_url.split("&SID=").last
     count = 0
     data = Nokogiri::HTML.parse(@session.html)
+
     while data.css(".subject-list-grid").empty? && count < 5
-      @session.visit("http://search.metrolist.net/ListingGridDisplay.aspx?hidMLS=SACM&GRID=137130&PTYPE=RESI&SRC=HS&SRID=211618742&PRINT=0&SAS=0&ARCH=0&HIDD=0&REMO=0&SNAME=Sacramento+Hotsheet&CARTID=&SPLISTINGRID=0&STYPE=HS&SID=#{session_id}")
+      @session.visit("http://search.metrolist.net/ListingGridDisplay.aspx?hidMLS=SACM&GRID=137130&PTYPE=RESI&SRC=HS&SRID=218452559&PRINT=0&SAS=0&ARCH=0&HIDD=0&REMO=0&SNAME=Sacramento+County&CARTID=&SPLISTINGRID=0&STYPE=HS&SID=#{session_id}")
+      sleep(4)
       data = Nokogiri::HTML.parse(@session.html)
       count += 1
-      sleep(4)
     end
 
     return [] if data.css(".subject-list-grid").empty?
@@ -90,10 +97,17 @@ class GetHomeListingsService
 
   def self.set_up_crawler
     Capybara.register_driver :poltergeist do |app|
-      Capybara::Poltergeist::Driver.new(app, {js_errors: false, timeout: 60})
+      Capybara::Poltergeist::Driver.new(app, {
+        js_errors: false, timeout: 60, phantomjs_options: ["--ignore-ssl-errors=yes", "--ssl-protocol=any"]
+      })
     end
+    Capybara.default_max_wait_time = 30
     @session = Capybara::Session.new(:poltergeist)
-    # @session.driver.headers = { "User-Agent" => "Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2228.0 Safari/537.36" }
+    @session.driver.headers = { "User-Agent" => "Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2228.0 Safari/537.36" }
     # @session = Capybara::Session.new(:selenium)
+  end
+
+  def self.close_crawler
+    @session.driver.quit
   end
 end
