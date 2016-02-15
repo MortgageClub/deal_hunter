@@ -4,7 +4,14 @@ class DealsController < ApplicationController
   respond_to :html
 
   def index
-    @deals = Deal.order('created_at DESC').includes(:agent).paginate(:page => params[:page], :per_page => Setting.i(:default_per_page))
+    @show_hotdeals_option = false
+    if show_hotdeal_params.present?
+      @show_hotdeals_option = show_hotdeal_params == "true"
+      @deals = Deal.where(hot_deal: @show_hotdeals_option).order('created_at DESC').includes(:agent).paginate(:page => params[:page], :per_page => Setting.i(:default_per_page))
+    else
+      @deals = Deal.order('created_at DESC').includes(:agent).paginate(:page => params[:page], :per_page => Setting.i(:default_per_page))
+    end
+
     respond_with(@deals)
   end
 
@@ -47,5 +54,9 @@ class DealsController < ApplicationController
 
     def deal_params
       params.require(:deal).permit(:listing_id, :price, :address, :city, :zipcode, :agent_id)
+    end
+
+    def show_hotdeal_params
+      params[:hot_deal_only]
     end
 end
