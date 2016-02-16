@@ -1,7 +1,7 @@
 namespace :crawler do
   desc "Test crawler"
   task :hunt => :environment do
-    HuntUndervalueHomesService.call
+    HuntUndervalueHomesService.delay.call
   end
 
   desc "Test Zillow api"

@@ -28,8 +28,6 @@ class ForwardSmsService
   end
 
   def forward(content)
-    Rails.logger.info "#{AUTH_ID}"
-    Rails.logger.info "#{AUTH_TOKEN}"
     plivo = RestAPI.new(AUTH_ID, AUTH_TOKEN)
     params = {
       'src' => PLIVO_SENDER,

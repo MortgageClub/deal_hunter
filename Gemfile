@@ -47,6 +47,7 @@ gem 'daemons'
 gem 'puma_worker_killer'
 gem 'will_paginate'
 gem 'will_paginate-bootstrap'
+gem 'delayed_job_active_record'
 
 group :development do
   gem 'thin'
