@@ -1,7 +1,9 @@
 Rails.application.routes.draw do
   resources :reports
   devise_for :users
-  resources :users, path: 'admins'
+  scope "/admin" do
+    resources :users
+  end
 
   resources :messages do
     get 'receive_sms', on: :collection
