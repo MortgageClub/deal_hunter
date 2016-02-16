@@ -43,7 +43,7 @@
                   %b.caret
                 %ul.dropdown-menu
                   %li
-                    = link_to user_path(current_user) do
+                    = link_to edit_user_registration_path do
                       %i.icon-cog
                       Profile
                   %li.divider
@@ -53,8 +53,6 @@
                       Logout
               - else
                 %ul.nav.navbar-nav
-                  %li
-                    = link_to "Sign up", new_user_registration_path
                   %li
                     = link_to "Log in", new_user_session_path
     .container

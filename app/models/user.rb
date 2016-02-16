@@ -8,7 +8,7 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable
   has_many :messages, as: :messageable, dependent: :destroy
 
-  validates :email, :name, presence: true
+  validates :email, presence: true
 
   def to_s
     name
