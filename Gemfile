@@ -37,6 +37,7 @@ gem 'mechanize', '~> 2.7.3'
 gem 'httparty'
 gem 'rollbar', '~> 2.2.1'
 gem 'bootstrap-generators'
+gem 'pundit'
 
 # Mina tasks for handle with Puma.
 gem 'mina-puma', :require => false
