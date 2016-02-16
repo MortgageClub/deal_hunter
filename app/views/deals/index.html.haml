@@ -1,7 +1,4 @@
 .page-header
-  = link_to new_deal_path, class: 'btn btn-primary' do
-    %span.glyphicon.glyphicon-plus
-    New Deal
   %h1 Listing deals
   = form_tag deals_path, method: "get" do
     = check_box_tag 'hot_deal_only', 'true', @show_hotdeals_option

@@ -1,4 +1,5 @@
 class DealsController < ApplicationController
+  before_action :authenticate_user!
   before_action :set_deal, only: [:show, :edit, :update, :destroy]
 
   respond_to :html
