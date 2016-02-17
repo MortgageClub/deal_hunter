@@ -47,6 +47,11 @@
                     = link_to edit_user_registration_path do
                       %i.icon-cog
                       Profile
+                  - if current_user.admin?
+                    %li
+                      = link_to new_user_path do
+                        %i.icon-user
+                        Create new user
                   %li.divider
                   %li
                     = link_to destroy_user_session_path, method: :delete do

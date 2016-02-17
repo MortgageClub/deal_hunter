@@ -49,15 +49,16 @@ class DealsController < ApplicationController
   end
 
   private
-    def set_deal
-      @deal = Deal.find(params[:id])
-    end
 
-    def deal_params
-      params.require(:deal).permit(:listing_id, :price, :address, :city, :zipcode, :agent_id)
-    end
+  def set_deal
+    @deal = Deal.find(params[:id])
+  end
 
-    def show_hotdeal_params
-      params[:hot_deal_only]
-    end
+  def deal_params
+    params.require(:deal).permit(:listing_id, :price, :address, :city, :zipcode, :agent_id)
+  end
+
+  def show_hotdeal_params
+    params[:hot_deal_only]
+  end
 end
