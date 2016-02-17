@@ -21,8 +21,6 @@ class HuntUndervalueHomesService
     GenerateReportService.call(number_of_deal, homes.size, homes)
   end
 
-  private
-
   def self.get_scores(home)
     ZillowService::GetDeepComps.call(home[:address], home[:zipcode])
   end
@@ -32,6 +30,6 @@ class HuntUndervalueHomesService
   end
 
   def self.hot_deal?(home, compscore)
-    home[:price] <= 0.75 * compscore
+    home[:price] <= 0.75 * [compscore, home[:zestimate]].min
   end
 end
