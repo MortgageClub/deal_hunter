@@ -13,7 +13,7 @@ class HuntUndervalueHomesService
         # SendSmsToAgentService.call(home[:agent][:phone], home[:agent][:first_name], home[:address]) if home[:agent][:phone].present?
         # OfferMailer.notify_agent(home[:agent][:first_name], home[:agent][:email], home[:address], home[:city]).deliver_now
         SendSmsToAgentService.call("16507877799", home[:agent][:first_name], home[:address]) if home[:agent][:phone].present?
-        OfferMailer.notify_agent(home[:agent][:first_name], "billy@mortgageclub.co", home[:address], home[:city]).deliver_later
+        OfferMailer.notify_agent(home[:agent][:first_name], "andrew.luong.realtor@gmail.com", home[:address], home[:city]).deliver_later
         number_of_deal += 1
       end
       SaveDataService.new(home, hot_deal?(home, scores[:avg_score])).call
