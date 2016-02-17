@@ -9,23 +9,25 @@ class GetHomeListingsService
 
   def self.call
     set_up_crawler
+    @result = []
 
     begin
       login
       go_to_metro_list
-      crawl_data
+      @result = crawl_data
+      log_off
     ensure
       close_crawler
     end
-  end
 
-  private
+    @result
+  end
 
   def self.login
     @session.visit("https://connect.mlslistings.com/SAML/CSAuthnRequestIssuer.ashx?RelayUrl=http://pro.mlslistings.com/")
     @session.execute_script("$('#j_username').val('01972404')")
-    @session.execute_script("$('#password').val('P29CF91')")
-    @session.execute_script("$('#j_password').val('P29CF91')")
+    @session.execute_script("$('#password').val('mortgage123')")
+    @session.execute_script("$('#j_password').val('mortgage123')")
     @session.execute_script("$('#login').trigger('click')")
     sleep(20)
   end
@@ -39,12 +41,12 @@ class GetHomeListingsService
   end
 
   def self.crawl_data
-    session_id = @session.current_url.split("&SID=").last
+    @session_id = @session.current_url.split("&SID=").last
     count = 0
     data = Nokogiri::HTML.parse(@session.html)
 
     while data.css(".subject-list-grid").empty? && count < 5
-      @session.visit("http://search.metrolist.net/ListingGridDisplay.aspx?hidMLS=SACM&GRID=137130&PTYPE=RESI&SRC=HS&SRID=218452559&PRINT=0&SAS=0&ARCH=0&HIDD=0&REMO=0&SNAME=Sacramento+County&CARTID=&SPLISTINGRID=0&STYPE=HS&SID=#{session_id}")
+      @session.visit("http://search.metrolist.net/ListingGridDisplay.aspx?hidMLS=SACM&GRID=137130&PTYPE=RESI&SRC=HS&SRID=218452559&PRINT=0&SAS=0&ARCH=0&HIDD=0&REMO=0&SNAME=Sacramento+County&CARTID=&SPLISTINGRID=0&STYPE=HS&SID=#{@session_id}")
       sleep(4)
       data = Nokogiri::HTML.parse(@session.html)
       count += 1
@@ -75,13 +77,14 @@ class GetHomeListingsService
       agent_email = tr.css(TD_COLUMN)[13].text
       agent_phone = "1".freeze + tr.css(TD_COLUMN)[14].text.gsub("-".freeze, BLANK_SPACE)
       office_name = tr.css(TD_COLUMN)[15].text
+      sq_ft = tr.css(TD_COLUMN)[16].text.to_f
 
       result << {
         listing_id: listing_id, price: price, address: address,
         city: city, zipcode: zipcode,
         home_type: home_type, home_status: home_status,
         bedroom: bedroom, bathroom: bathroom, dom_cdom: dom_cdom,
-        remark: remark,
+        remark: remark, sq_ft: sq_ft,
         agent: {
           full_name: full_name,
           first_name: first_name,
@@ -105,6 +108,12 @@ class GetHomeListingsService
     @session = Capybara::Session.new(:poltergeist)
     @session.driver.headers = { "User-Agent" => "Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2228.0 Safari/537.36" }
     # @session = Capybara::Session.new(:selenium)
+  end
+
+  def self.log_off
+    @session.visit("http://login.metrolist.net/Menu.aspx?hidMLS=SACM&SID=#{@session_id}")
+    @session.find("#LogOff1_btnLogOff").click
+    sleep(5)
   end
 
   def self.close_crawler

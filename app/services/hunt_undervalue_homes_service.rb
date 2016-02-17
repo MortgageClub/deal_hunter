@@ -1,7 +1,5 @@
 class HuntUndervalueHomesService
   def self.call
-    return true
-
     homes = GetHomeListingsService.call
     number_of_deal = 0
 

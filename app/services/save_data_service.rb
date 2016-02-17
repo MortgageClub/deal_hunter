@@ -15,8 +15,9 @@ class SaveDataService
   private
 
   def save_deal(agent)
-    deal = Deal.new(
-      listing_id: data[:listing_id],
+    deal = Deal.find_or_initialize_by(listing_id: data[:listing_id])
+
+    deal.assign_attributes({
       price: data[:price],
       zestimate: data[:zestimate],
       address: data[:address],
@@ -30,8 +31,9 @@ class SaveDataService
       remark: data[:remark],
       agent_id: agent.id,
       hot_deal: hot_deal,
-      comp: data[:comp]
-    )
+      comp: data[:comp],
+      sq_ft: data[:sq_ft]
+    })
     deal.save
   end
 
