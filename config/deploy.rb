@@ -12,7 +12,7 @@ require 'mina/whenever'
 #   repository   - Git repo to clone from. (needed by mina/git)
 #   branch       - Branch name to deploy. (needed by mina/git)
 
-set :domain, 'dh.mortgageclub.io'
+set :domain, 'dealhunter.mortgageclub.co'
 set :deploy_to, '/var/www/dh'
 set :repository, 'git@github.com:MortgageClub/deal_hunter.git'
 set :branch, 'master'
@@ -86,6 +86,7 @@ task :deploy => :environment do
     invoke :'deploy:link_shared_paths'
     invoke :'bundle:install'
     invoke :'rails:db_migrate'
+    mina "rake[db:seed]"
     invoke :'rails:assets_precompile'
 
     to :launch do
