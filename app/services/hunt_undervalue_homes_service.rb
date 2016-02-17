@@ -1,5 +1,7 @@
 class HuntUndervalueHomesService
   def self.call
+    return true
+
     homes = GetHomeListingsService.call
     number_of_deal = 0
 
@@ -10,10 +12,8 @@ class HuntUndervalueHomesService
       home[:comp] = scores[:avg_score]
 
       if hot_deal?(home, scores[:avg_score])
-        # SendSmsToAgentService.call(home[:agent][:phone], home[:agent][:first_name], home[:address]) if home[:agent][:phone].present?
-        # OfferMailer.notify_agent(home[:agent][:first_name], home[:agent][:email], home[:address], home[:city]).deliver_now
-        SendSmsToAgentService.call("16507877799", home[:agent][:first_name], home[:address]) if home[:agent][:phone].present?
-        OfferMailer.notify_agent(home[:agent][:first_name], "andrew.luong.realtor@gmail.com", home[:address], home[:city]).deliver_later
+        SendSmsToAgentService.call(home[:agent][:phone], home[:agent][:first_name], home[:address]) if home[:agent][:phone].present?
+        OfferMailer.notify_agent(home[:agent][:first_name], home[:agent][:email], home[:address], home[:city]).deliver_now
         number_of_deal += 1
       end
       SaveDataService.new(home, hot_deal?(home, scores[:avg_score])).call
