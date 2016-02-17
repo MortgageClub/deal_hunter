@@ -16,7 +16,7 @@ class SendSmsToAgentService
     params = {
       'src' => PLIVO_SENDER, # Sender's phone number with country code
       'dst' => phone_number, # Receiver's phone Number with country code
-      'text' => "Hello #{agent_name}, my name is Billy and I'm a buyer interested in #{property_address}. Can you show me the house and help me make an offer? Thanks."
+      'text' => "Hello #{agent_name}, my name is Billy and I'm a buyer interested in #{property_address}. Can you show me the house and help me make a cash offer? Thanks."
     }
     plivo.send_message(params)
   end
