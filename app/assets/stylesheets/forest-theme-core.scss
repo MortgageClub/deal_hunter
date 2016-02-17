@@ -27,7 +27,7 @@
 .navbar-inverse .navbar-nav > .active > a:focus {
   color: #176b83;
   background-color: #fff;
-  border: #fff 1px solid;
+  border-bottom: #fff 1px solid;
 }
 .navbar-inverse .navbar-nav > .open > a,
 .navbar-inverse .navbar-nav > .open > a:hover,
@@ -303,4 +303,17 @@ th {
 .panel[class*=bg-] .panel-body > .table-responsive > .table td.active,
 .table[class*=bg-] td.active {
   background-color: rgba(0, 0, 0, 0.15);
+}
+
+/*
+  Form controls
+*/
+.btn {
+  background-color: #15c0f1;
+  border-color: #15c0f1;
+  &:hover {
+    background-color: #fff;
+    border-color: #15c0f1;
+    color: #15c0f1;
+  }
 }
