@@ -11,17 +11,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151117073157) do
+ActiveRecord::Schema.define(version: 20160216103254) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "agents", force: :cascade do |t|
     t.text     "full_name"
-    t.string   "first_name"
-    t.string   "last_name"
-    t.string   "phone"
-    t.string   "email"
+    t.string   "first_name",  limit: 255
+    t.string   "last_name",   limit: 255
+    t.string   "phone",       limit: 255
+    t.string   "email",       limit: 255
     t.text     "office_name"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -35,13 +35,13 @@ ActiveRecord::Schema.define(version: 20151117073157) do
   end
 
   create_table "deals", force: :cascade do |t|
-    t.string   "listing_id"
-    t.decimal  "price",       precision: 15, scale: 2
-    t.decimal  "zestimate",   precision: 15, scale: 2
-    t.string   "address"
-    t.string   "city"
-    t.string   "zipcode"
-    t.string   "status"
+    t.string   "listing_id",  limit: 255
+    t.decimal  "price",                   precision: 15, scale: 2
+    t.decimal  "zestimate",               precision: 15, scale: 2
+    t.string   "address",     limit: 255
+    t.string   "city",        limit: 255
+    t.string   "zipcode",     limit: 255
+    t.string   "status",      limit: 255
     t.integer  "agent_id"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -51,8 +51,9 @@ ActiveRecord::Schema.define(version: 20151117073157) do
     t.string   "bathroom"
     t.string   "dom_cdom"
     t.text     "remark"
-    t.boolean  "hot_deal",                             default: false
-    t.decimal  "comp",        precision: 15, scale: 2
+    t.boolean  "hot_deal",                                         default: false
+    t.decimal  "comp",                    precision: 15, scale: 2
+    t.float    "sq_ft"
   end
 
   add_index "deals", ["agent_id"], name: "index_deals_on_agent_id", using: :btree
@@ -112,6 +113,11 @@ ActiveRecord::Schema.define(version: 20151117073157) do
     t.datetime "last_sign_in_at"
     t.inet     "current_sign_in_ip"
     t.inet     "last_sign_in_ip"
+    t.integer  "role"
+    t.string   "confirmation_token"
+    t.datetime "confirmed_at"
+    t.datetime "confirmation_sent_at"
+    t.string   "unconfirmed_email"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
