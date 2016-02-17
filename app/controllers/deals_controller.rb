@@ -1,10 +1,17 @@
 class DealsController < ApplicationController
+  before_action :authenticate_user!
   before_action :set_deal, only: [:show, :edit, :update, :destroy]
 
   respond_to :html
 
   def index
-    @deals = Deal.order('created_at DESC').includes(:agent).paginate(:page => params[:page], :per_page => 10)
+    @show_hotdeals_option = false
+    if show_hotdeal_params.present?
+      @show_hotdeals_option = show_hotdeal_params == "true"
+      @deals = Deal.where(hot_deal: @show_hotdeals_option).order('created_at DESC').includes(:agent).paginate(:page => params[:page], :per_page => Setting.i(:default_per_page))
+    else
+      @deals = Deal.order('created_at DESC').includes(:agent).paginate(:page => params[:page], :per_page => Setting.i(:default_per_page))
+    end
 
     respond_with(@deals)
   end
@@ -42,11 +49,16 @@ class DealsController < ApplicationController
   end
 
   private
-    def set_deal
-      @deal = Deal.find(params[:id])
-    end
 
-    def deal_params
-      params.require(:deal).permit(:listing_id, :price, :address, :city, :zipcode, :agent_id)
-    end
+  def set_deal
+    @deal = Deal.find(params[:id])
+  end
+
+  def deal_params
+    params.require(:deal).permit(:listing_id, :price, :address, :city, :zipcode, :agent_id)
+  end
+
+  def show_hotdeal_params
+    params[:hot_deal_only]
+  end
 end
