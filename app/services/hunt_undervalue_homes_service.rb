@@ -32,6 +32,6 @@ class HuntUndervalueHomesService
   end
 
   def self.hot_deal?(home, compscore)
-    home[:price] <= 0.85 * compscore
+    home[:price] <= 0.75 * compscore
   end
 end

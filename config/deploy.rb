@@ -86,7 +86,7 @@ task :deploy => :environment do
     invoke :'deploy:link_shared_paths'
     invoke :'bundle:install'
     invoke :'rails:db_migrate'
-    mina "rake[db:seed]"
+    invoke :db_seed
     invoke :'rails:assets_precompile'
 
     to :launch do
@@ -114,4 +114,10 @@ task :env do
     echo "-----> Loading environment"
     #{echo_cmd %[source ~/.bash_profile]}
   }
+end
+
+task :db_seed do
+  queue "cd #{deploy_to}/#{current_path}/"
+  queue "bundle exec rake db:seed RAILS_ENV=production"
+  queue  %[echo "-----> Rake Seeding Completed."]
 end
