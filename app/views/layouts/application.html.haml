@@ -48,6 +48,12 @@
                       %i.icon-cog
                       Profile
                   %li.divider
+                  - if current_user && current_user.admin?
+                    %li
+                      = link_to users_path do
+                        %i.icon-cog
+                        Users Management
+                    %li.divider
                   %li
                     = link_to destroy_user_session_path, method: :delete do
                       %i.icon-off
