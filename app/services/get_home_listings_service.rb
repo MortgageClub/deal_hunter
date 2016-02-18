@@ -16,6 +16,8 @@ class GetHomeListingsService
       go_to_metro_list
       @result = crawl_data
       log_off
+    rescue Capybara::ElementNotFound => error
+      Rails.logger.error(error)
     ensure
       close_crawler
     end

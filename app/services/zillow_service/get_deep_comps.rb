@@ -22,12 +22,13 @@ module ZillowService
       { zestimate: get_zestimate(response['comps']), avg_score: self.get_average_score(response['comps']) }
     end
 
-    def self.get_zestimate(comp)
-      comp['response'].try(:[], 'properties').try(:[], 'principal').try(:[], 'zestimate').try(:[], 'amount')['__content__'].to_f
+    def self.get_zestimate(comps)
+      comps['response'].try(:[], 'properties').try(:[], 'principal').try(:[], 'zestimate').try(:[], 'amount')['__content__'].to_f
     end
 
-    def self.get_average_score(comp)
-      comparables = comp['response'].try(:[], 'properties').try(:[], 'comparables').try(:[], 'comp')
+    def self.get_average_score(comps)
+      comparables = comps['response'].try(:[], 'properties').try(:[], 'comparables').try(:[], 'comp')
+      comparables = [comparables] if comparables.is_a? Hash
       sum, max = 0, 0
 
       comparables.each do |comp|
