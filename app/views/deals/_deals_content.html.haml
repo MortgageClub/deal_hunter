@@ -1,48 +1,34 @@
-.datatable-scroll
-  %table.table
-    %thead
-      %tr
-        %th Hot Deal?
-        %th Listing ID
-        %th Price
-        %th Comps
-        %th Zestimate
-        %th Address
-        %th City
-        %th Zipcode
-        %th Type
-        %th Home Status
-        %th SqFt
-        %th Bed
-        %th Bath
-        %th DOM
-        %th Agent
-        %th Remark
-        %th Date
-        %th
+#DataTables_Table_2_wrapper.dataTables_wrapper.no-footer
+  .datatable-scroll
+    %table#DataTables_Table_2.table.table-responsive.datatable-save-state.dataTable.no-footer{"aria-describedby" => "DataTables_Table_2_info", :role => "grid"}
+      %thead
+        %tr{:role => "row"}
+          %th.sorting_asc{"aria-controls" => "DataTables_Table_2", "aria-label" => "First Name: activate to sort column descending", "aria-sort" => "ascending", :colspan => "1", :rowspan => "1", :tabindex => "0"} Hot Deal
+          %th.sorting{"aria-controls" => "DataTables_Table_2", "aria-label" => "Last Name: activate to sort column ascending", :colspan => "1", :rowspan => "1", :tabindex => "0"} Price
+          %th.sorting{"aria-controls" => "DataTables_Table_2", "aria-label" => "Job Title: activate to sort column ascending", :colspan => "1", :rowspan => "1", :tabindex => "0"} Comps
+          %th.sorting{"aria-controls" => "DataTables_Table_2", "aria-label" => "DOB: activate to sort column ascending", :colspan => "1", :rowspan => "1", :tabindex => "0"} Zestimate
+          %th.sorting{"aria-controls" => "DataTables_Table_2", "aria-label" => "Status: activate to sort column ascending", :colspan => "1", :rowspan => "1", :tabindex => "0"} Adress
+          %th.sorting{"aria-controls" => "DataTables_Table_2", "aria-label" => "Status: activate to sort column ascending", :colspan => "1", :rowspan => "1", :tabindex => "0"} City
+          %th.sorting{"aria-controls" => "DataTables_Table_2", "aria-label" => "Status: activate to sort column ascending", :colspan => "1", :rowspan => "1", :tabindex => "0"} Bed
+          %th.sorting{"aria-controls" => "DataTables_Table_2", "aria-label" => "Status: activate to sort column ascending", :colspan => "1", :rowspan => "1", :tabindex => "0"} Bath
+          %th.text-center.sorting_disabled{"aria-label" => "Actions", :colspan => "1", :rowspan => "1", :style => "width: 100px;"} Action
+      %tbody
+        - @deals.each do |deal|
+          %tr{ role: "row" }
+            - if deal.hot_deal
+              %td
+                %span.label.label-danger= "Hot Deal"
+            - else
+              %td
+                %span
 
-    %tbody
-      - @deals.each do |deal|
-        %tr
-          - if deal.hot_deal
-            %td
-              %b= deal.hot_deal
-          - else
-            %td= deal.hot_deal
-          %td= deal.listing_id
-          %td= format_currency(deal.price)
-          %td= format_currency(deal.comp)
-          %td= format_currency(deal.zestimate)
-          %td= deal.address
-          %td= deal.city
-          %td= deal.zipcode
-          %td= deal.home_type
-          %td= deal.home_status
-          %td= deal.sq_ft
-          %td= deal.bedroom
-          %td= deal.bathroom
-          %td= deal.dom_cdom
-          %td= link_to deal.agent.full_name, agent_path(deal.agent)
-          %td= deal.remark
-          %td= deal.created_at.to_date
-          %td= link_to 'Show'.freeze, deal
+            %td= format_currency(deal.price)
+            %td= format_currency(deal.comp)
+            %td= format_currency(deal.zestimate)
+            %td= deal.address
+            %td= deal.city
+            %td= deal.bedroom
+            %td= deal.bathroom
+            %td= link_to 'Show'.freeze, deal
+
+      / Scrollable datatable

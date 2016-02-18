@@ -1,22 +1,28 @@
-.page-header
-  = link_to deals_path, class: 'btn btn-default' do
-    %span.glyphicon.glyphicon-list-alt
-    Back
-  = link_to edit_deal_path(@deal), class: 'btn btn-primary' do
-    %span.glyphicon.glyphicon-pencil
-    Edit
-  %h1 Show deal
+.panel.panel-flat
+  .panel-heading
+    %h5.panel-title Deal Information
 
-%dl.dl-horizontal
-  %dt Listing:
-  %dd= @deal.listing_id
-  %dt Price:
-  %dd= @deal.price
-  %dt Address:
-  %dd= @deal.address
-  %dt City:
-  %dd= @deal.city
-  %dt Zipcode:
-  %dd= @deal.zipcode
-  %dt Agent:
-  %dd= @deal.agent
+  .panel-body
+    .row
+      = link_to deals_path do
+        %button.btn.btn-primary.pull-right.back-btn
+          Back
+    .table-responsive.content-group
+      %table.table.table-framed
+        %thead
+          %tr
+            %th.col-xs-3 Deal information
+
+            %th Value
+        %tbody
+          - @deal.attributes.each do |attr_name, attr_value|
+            %tr
+              - if attr_name == "agent_id"
+                %td
+                  %span.text-semibold= "Agent"
+                %td
+                  = link_to @deal.agent.full_name, agent_path(@deal.agent)
+              - else
+                %td
+                  %span.text-semibold= attr_name.humanize
+                %td= attr_value
