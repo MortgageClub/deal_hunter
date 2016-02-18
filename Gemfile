@@ -38,6 +38,7 @@ gem 'httparty'
 gem 'rollbar', '~> 2.2.1'
 gem 'bootstrap-generators'
 gem 'pundit'
+gem 'icomoon-rails'
 
 # Mina tasks for handle with Puma.
 gem 'mina-puma', :require => false
