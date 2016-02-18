@@ -1,10 +1,48 @@
-.page-header
-  %h3 Listing deals
-  = form_tag deals_path, method: "get" do
-    = check_box_tag 'hot_deal_only', 'true', @show_hotdeals_option
-    %label Show only hot deals
-    = submit_tag "Submit", class: "btn btn-primary"
+.page-container{:style => "min-height:237px"}
+  / Page content
+  .page-content
+    / Main sidebar
+    .content-wrapper
+      / Page header
+      .page-header
+        .page-header-content
 
-%div#dealsContent
-  = render "deals_content"
+      / /page header
+      / Content area
+      .content
+        / Basic datatable
+        .panel.panel-flat
+          .panel-heading
+            %h5.panel-title Listing deals
+            .heading-elements
+              %ul.icons-list
+                %li
+                  %a{"data-action" => "collapse"}
+                %li
+                  %a{"data-action" => "reload"}
+                %li
+                  %a{"data-action" => "close"}
+            %a.heading-elements-toggle
+              %i.icon-menu
+          .panel-body
+            The
+            %code Deals
+            = form_tag deals_path, method: "get" do
+              = check_box_tag 'hot_deal_only', 'true', @show_hotdeals_option
+              %label Show only hot deals
+              = submit_tag "Submit", class: "btn btn-primary"
+          %div#dealsContent
+            = render "deals_content"
+        / Pagination types
+
+        / Footer
+        .footer.text-muted
+          © 2015.
+          %a{:href => "#"} Deal Hunter
+          by
+          %a{:href => "#", :target => "_blank"} MortgageClub
+        / /footer
+      / /content area
+    / /main content
+  / /page content
 = will_paginate @deals, renderer: BootstrapPagination::Rails
