@@ -13,7 +13,9 @@
         / Basic datatable
         .panel.panel-flat
           .panel-heading
-            %h5.panel-title Listing deals
+            %h5.panel-title
+              Listing
+              %code deals
             .heading-elements
               %ul.icons-list
                 %li
@@ -35,7 +37,7 @@
         / Footer
         .footer.text-muted
           © 2015.
-          %a{:href => "#"} Deal Hunter
+          = link_to "Deal Hunter", root_path
           by
           %a{:href => "#", :target => "_blank"} MortgageClub
         / /footer

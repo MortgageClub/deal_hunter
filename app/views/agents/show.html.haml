@@ -16,19 +16,26 @@
             %h5.panel-title Agent Information
 
           .panel-body
-            = link_to agents_path, class: 'btn btn-default pull-right' do
-              %span.glyphicon.glyphicon-list-alt
-              Back
-            %dl.dl-horizontal
-              %dt Full name:
-              %dd= @agent.full_name
-              %dt First name:
-              %dd= @agent.first_name
-              %dt Last name:
-              %dd= @agent.last_name
-              %dt Phone:
-              %dd= @agent.phone
-              %dt Email:
-              %dd= @agent.email
-              %dt Office name:
-              %dd= @agent.office_name
+            .row
+              = link_to agents_path do
+                %button.btn.btn-primary.pull-right.back-btn
+                  Back
+            .table-responsive.content-group
+              %table.table.table-framed
+                %thead
+                  %tr
+                    %th.col-xs-3 Agent information
+
+                    %th Value
+                %tbody
+                  - @agent.attributes.each do |attr_name, attr_value|
+                    %tr
+                      %td
+                        %span.text-semibold= attr_name.humanize
+                      %td= attr_value
+
+        .footer.text-muted
+          © 2015.
+          = link_to "Deal Hunter", root_path
+          by
+          %a{:href => "#", :target => "_blank"} MortgageClub
