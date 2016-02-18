@@ -1,5 +1,5 @@
 .page-header
-  %h1 Listing deals
+  %h3 Listing deals
   = form_tag deals_path, method: "get" do
     = check_box_tag 'hot_deal_only', 'true', @show_hotdeals_option
     %label Show only hot deals

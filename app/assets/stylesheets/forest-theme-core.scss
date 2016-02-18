@@ -1,0 +1,322 @@
+/*
+  Navbar
+*/
+.navbar-inverse {
+  background-color: #15c0f1;
+  border-color: transparent;
+}
+.navbar-inverse .navbar-brand {
+  color: #fff;
+}
+.navbar-inverse .navbar-brand:hover,
+.navbar-inverse .navbar-brand:focus {
+  color: #fff;
+}
+.navbar-inverse .navbar-text {
+  color: #f7fdff;
+}
+.navbar-inverse .navbar-nav > li > a {
+  color: #f7fdff;
+}
+.navbar-inverse .navbar-nav > li > a:hover,
+.navbar-inverse .navbar-nav > li > a:focus {
+  color: #fff;
+}
+.navbar-inverse .navbar-nav > .active > a,
+.navbar-inverse .navbar-nav > .active > a:hover,
+.navbar-inverse .navbar-nav > .active > a:focus {
+  color: #176b83;
+  background-color: #fff;
+  border-bottom: #fff 1px solid;
+}
+.navbar-inverse .navbar-nav > .open > a,
+.navbar-inverse .navbar-nav > .open > a:hover,
+.navbar-inverse .navbar-nav > .open > a:focus {
+  color: #fff;
+  background-color: #15c0f1;
+}
+.navbar-inverse .navbar-toggle {
+  border-color: #176b83;
+}
+.navbar-inverse .navbar-toggle:hover,
+.navbar-inverse .navbar-toggle:focus {
+  background-color: #176b83;
+}
+.navbar-inverse .navbar-toggle .icon-bar {
+  background-color: #f7fdff;
+}
+.navbar-inverse .navbar-collapse,
+.navbar-inverse .navbar-form {
+  border-color: #f7fdff;
+}
+.navbar-inverse .navbar-link {
+  color: #f7fdff;
+}
+.navbar-inverse .navbar-link:hover {
+  color: #fff;
+}
+
+@media (max-width: 767px) {
+  .navbar-inverse .navbar-nav .open .dropdown-menu > li > a {
+    color: #f7fdff;
+  }
+  .navbar-inverse .navbar-nav .open .dropdown-menu > li > a:hover,
+  .navbar-inverse .navbar-nav .open .dropdown-menu > li > a:focus {
+    color: #fff;
+  }
+  .navbar-inverse .navbar-nav .open .dropdown-menu > .active > a,
+  .navbar-inverse .navbar-nav .open .dropdown-menu > .active > a:hover,
+  .navbar-inverse .navbar-nav .open .dropdown-menu > .active > a:focus {
+    color: #fff;
+    background-color: #176b83;
+  }
+}
+
+/* ------------------------------------------------------------------------------
+*
+*  # Tables component
+*
+*  Overrides for tables bootstrap component
+*
+*  Version: 1.1
+*  Latest update: Oct 20, 2015
+*
+* ---------------------------------------------------------------------------- */
+th {
+  font-weight: 500;
+}
+.table {
+  margin-bottom: 0;
+}
+.table > thead > tr > th,
+.table > tbody > tr > th,
+.table > tfoot > tr > th,
+.table > thead > tr > td,
+.table > tbody > tr > td,
+.table > tfoot > tr > td {
+  vertical-align: middle;
+}
+.panel[class*=bg-] .table > thead > tr > th,
+.table[class*=bg-] > thead > tr > th,
+.panel[class*=bg-] .table > tbody > tr > th,
+.table[class*=bg-] > tbody > tr > th,
+.panel[class*=bg-] .table > tfoot > tr > th,
+.table[class*=bg-] > tfoot > tr > th,
+.panel[class*=bg-] .table > thead > tr > td,
+.table[class*=bg-] > thead > tr > td,
+.panel[class*=bg-] .table > tbody > tr > td,
+.table[class*=bg-] > tbody > tr > td,
+.panel[class*=bg-] .table > tfoot > tr > td,
+.table[class*=bg-] > tfoot > tr > td {
+  border-color: rgba(255, 255, 255, 0.2);
+}
+.table tr[class*=bg-] > td,
+.table tr[class*=bg-] > th {
+  border-color: #fff;
+}
+.table tr > td[class*=bg-],
+.table tr > th[class*=bg-] {
+  border-color: #fff;
+}
+.table > thead > tr[class*=border-bottom-] > th,
+.table > thead > tr[class*=border-bottom-] > td {
+  border-bottom-color: inherit;
+}
+.table > tbody > tr[class*=border-top-] > th,
+.table > tfoot > tr[class*=border-top-] > th,
+.table > tbody > tr[class*=border-top-] > td,
+.table > tfoot > tr[class*=border-top-] > td {
+  border-top-color: inherit;
+}
+.table > thead > tr > th {
+  border-bottom: 1px solid #bbb;
+}
+.table > tfoot > tr > th {
+  border-top: 1px solid #bbb;
+}
+.table .table {
+  background-color: #fff;
+}
+.table-responsive + .table-responsive > .table:not(.table-bordered):not(.table-framed),
+.table:not(.table-bordered):not(.table-framed) + .table:not(.table-bordered):not(.table-framed) {
+  border-top: 1px solid #ddd;
+}
+.panel-body + .table > tbody:first-child > tr:first-child > td,
+.panel-body + .table-responsive > .table > tbody:first-child > tr:first-child > td,
+.panel-body + .table > tbody:first-child > tr:first-child > th,
+.panel-body + .table-responsive > .table > tbody:first-child > tr:first-child > th {
+  border-top: 0;
+}
+.modal-body + .table-responsive > .table,
+.modal-body + .table {
+  border-bottom: 1px solid #ddd;
+}
+.modal-body + .table-responsive {
+  border: 0;
+}
+.panel[class*=bg-] > .panel-body + .table,
+.panel[class*=bg-] > .panel-body + .table-responsive {
+  border-color: #fff;
+}
+.table > thead > tr.border-solid > th,
+.table > thead > tr.border-solid > td {
+  border-bottom-width: 2px;
+}
+.table > tbody > tr.border-solid > td,
+.table > tfoot > tr.border-solid > td,
+.table > tbody > tr.border-solid > th,
+.table > tfoot > tr.border-solid > th {
+  border-top-width: 2px;
+}
+.table-bordered > thead > tr.border-solid:first-child > th,
+.table-bordered > thead > tr.border-solid:first-child > td {
+  border-bottom-width: 2px;
+}
+.table > thead > tr.border-double > th,
+.table > thead > tr.border-double > td {
+  border-bottom-width: 3px;
+  border-bottom-style: double;
+}
+.table > tbody > tr.border-double > td,
+.table > tfoot > tr.border-double > td,
+.table > tbody > tr.border-double > th,
+.table > tfoot > tr.border-double > th {
+  border-top-width: 3px;
+  border-top-style: double;
+}
+.table-bordered > thead > tr.border-double:first-child > th,
+.table-bordered > thead > tr.border-double:first-child > td {
+  border-bottom-width: 3px;
+  border-bottom-style: double;
+}
+.table > tbody > tr.border-dashed > td,
+.table > tbody > tr.border-dashed > th {
+  border-top-style: dashed;
+}
+.table-framed,
+.panel > .table-framed,
+.panel > .table-responsive > .table-framed {
+  border: 1px solid #ddd;
+}
+@media screen and (max-width: 768px) {
+  .table-responsive > .table-framed {
+    border: 0;
+  }
+}
+.table-borderless > tbody > tr > td,
+.table-borderless > tbody > tr > th {
+  border: 0;
+}
+.table-columned > tbody > tr > td,
+.table-columned > tfoot > tr > td,
+.table-columned > tbody > tr > th,
+.table-columned > tfoot > tr > th {
+  border: 0;
+  border-left: 1px solid #ddd;
+}
+.table-columned > tbody > tr > td:first-child,
+.table-columned > tfoot > tr > td:first-child,
+.table-columned > tbody > tr > th:first-child,
+.table-columned > tfoot > tr > th:first-child {
+  border-left: 0;
+}
+.table-columned > thead > tr > th,
+.table-columned > thead > tr > td {
+  border-left: 1px solid #ddd;
+}
+.table-columned > thead > tr > th:first-child,
+.table-columned > thead > tr > td:first-child {
+  border-left: 0;
+}
+.table-xlg > thead > tr > th,
+.table-xlg > tbody > tr > th,
+.table-xlg > tfoot > tr > th,
+.table-xlg > thead > tr > td,
+.table-xlg > tbody > tr > td,
+.table-xlg > tfoot > tr > td {
+  padding: 20px;
+}
+.table-lg > thead > tr > th,
+.table-lg > tbody > tr > th,
+.table-lg > tfoot > tr > th,
+.table-lg > thead > tr > td,
+.table-lg > tbody > tr > td,
+.table-lg > tfoot > tr > td {
+  padding: 15px 20px;
+}
+.table-sm > thead > tr > th,
+.table-sm > tbody > tr > th,
+.table-sm > tfoot > tr > th,
+.table-sm > thead > tr > td,
+.table-sm > tbody > tr > td,
+.table-sm > tfoot > tr > td {
+  padding: 10px 20px;
+}
+.table-xs > thead > tr > th,
+.table-xs > tbody > tr > th,
+.table-xs > tfoot > tr > th,
+.table-xs > thead > tr > td,
+.table-xs > tbody > tr > td,
+.table-xs > tfoot > tr > td {
+  padding: 8px 20px;
+}
+.table-xxs > thead > tr > th,
+.table-xxs > tbody > tr > th,
+.table-xxs > tfoot > tr > th,
+.table-xxs > thead > tr > td,
+.table-xxs > tbody > tr > td,
+.table-xxs > tfoot > tr > td {
+  padding: 6px 15px;
+}
+.table-bordered tr:first-child > td,
+.table-bordered tr:first-child > th {
+  border-top-color: #bbb;
+}
+.table-bordered tr[class*=bg-] > th,
+.table-bordered tr[class*=bg-] > td,
+.table-bordered tr > th[class*=bg-],
+.table-bordered tr > td[class*=bg-] {
+  border-color: #fff;
+}
+.panel[class*=bg-] .table-striped > tbody > tr:nth-child(odd),
+.table-striped[class*=bg-] > tbody > tr:nth-child(odd) {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+.table-hover > tbody > tr:hover > th,
+.table-hover > tbody > tr:hover > td {
+  background-color: inherit;
+}
+.panel[class*=bg-] .table-hover > tbody > tr:hover,
+.table-hover[class*=bg-] > tbody > tr:hover {
+  background-color: rgba(0, 0, 0, 0.1);
+}
+.panel[class*=bg-] .panel-body > .table .active > th,
+.panel[class*=bg-] .panel-body > .table-responsive > .table .active > th,
+.table[class*=bg-] .active > th,
+.panel[class*=bg-] .panel-body > .table .active > td,
+.panel[class*=bg-] .panel-body > .table-responsive > .table .active > td,
+.table[class*=bg-] .active > td,
+.panel[class*=bg-] .panel-body > .table th.active,
+.panel[class*=bg-] .panel-body > .table-responsive > .table th.active,
+.table[class*=bg-] th.active,
+.panel[class*=bg-] .panel-body > .table td.active,
+.panel[class*=bg-] .panel-body > .table-responsive > .table td.active,
+.table[class*=bg-] td.active {
+  background-color: rgba(0, 0, 0, 0.15);
+}
+
+/*
+  Form controls
+*/
+.btn {
+  background-color: #15c0f1;
+  border-color: #15c0f1;
+  &:hover {
+    background-color: #fff;
+    border-color: #15c0f1;
+    color: #15c0f1;
+  }
+}
+h3 {
+  color: #333333;
+}

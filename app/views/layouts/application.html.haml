@@ -24,7 +24,7 @@
             %span.icon-bar
             %span.icon-bar
             %span.icon-bar
-          = link_to "Deal Hunter", root_path, class: "navbar-brand"
+          = link_to "DEAL HUNTER", root_path, class: "navbar-brand"
         #navbar.collapse.navbar-collapse
           %ul.nav.navbar-nav
             %li{:class => active_class(root_path)}
@@ -40,7 +40,7 @@
             %li.dropdown
               - if current_user.present?
                 %a.dropdown-toggle{"data-toggle" => "dropdown", :href => "#"}
-                  Welcome, #{current_user.email}
+                  #{current_user.email}
                   %b.caret
                 %ul.dropdown-menu
                   %li
@@ -53,9 +53,15 @@
                         %i.icon-user
                         Create new user
                   %li.divider
+                  - if current_user && current_user.admin?
+                    %li
+                      = link_to users_path do
+                        %i.icon-user-plus
+                        Users Management
+                    %li.divider
                   %li
                     = link_to destroy_user_session_path, method: :delete do
-                      %i.icon-off
+                      %i.icon-switch2
                       Logout
               - else
                 %ul.nav.navbar-nav
