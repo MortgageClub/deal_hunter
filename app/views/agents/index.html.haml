@@ -1,61 +1,41 @@
-.page-container{:style => "min-height:237px"}
-  / Page content
-  .page-content
-    / Main sidebar
-    .content-wrapper
-      / Page header
-      .page-header
-        .page-header-content
+.panel.panel-flat
+  .panel-heading
+    %h5.panel-title
+      Listing
+      %code Agents
+    .heading-elements
+      %ul.icons-list
+        %li
+          %a{"data-action" => "collapse"}
+        %li
+          %a{"data-action" => "reload"}
+        %li
+          %a{"data-action" => "close"}
+    %a.heading-elements-toggle
+      %i.icon-menu
+  .panel-body
+  #DataTables_Table_2_wrapper.dataTables_wrapper.no-footer
 
-      / /page header
-      / Content area
-      .content
-        / Basic datatable
-        .panel.panel-flat
-          .panel-heading
-            %h5.panel-title
-              Listing
-              %code Agents
-            .heading-elements
-              %ul.icons-list
-                %li
-                  %a{"data-action" => "collapse"}
-                %li
-                  %a{"data-action" => "reload"}
-                %li
-                  %a{"data-action" => "close"}
-            %a.heading-elements-toggle
-              %i.icon-menu
-          .panel-body
-          #DataTables_Table_2_wrapper.dataTables_wrapper.no-footer
+    .datatable-scroll
+      %table#DataTables_Table_2.table.table-responsive.datatable-save-state.dataTable.no-footer{"aria-describedby" => "DataTables_Table_2_info", :role => "grid"}
+        %thead
+          %tr{:role => "row"}
+            %th.sorting_asc{"aria-controls" => "DataTables_Table_2", "aria-label" => "First Name: activate to sort column descending", "aria-sort" => "ascending", :colspan => "1", :rowspan => "1", :tabindex => "0"} First Name
+            %th.sorting{"aria-controls" => "DataTables_Table_2", "aria-label" => "Last Name: activate to sort column ascending", :colspan => "1", :rowspan => "1", :tabindex => "0"} Last Name
+            %th.sorting{"aria-controls" => "DataTables_Table_2", "aria-label" => "Job Title: activate to sort column ascending", :colspan => "1", :rowspan => "1", :tabindex => "0"} Phone
+            %th.sorting{"aria-controls" => "DataTables_Table_2", "aria-label" => "DOB: activate to sort column ascending", :colspan => "1", :rowspan => "1", :tabindex => "0"} Email
+            %th.sorting{"aria-controls" => "DataTables_Table_2", "aria-label" => "Status: activate to sort column ascending", :colspan => "1", :rowspan => "1", :tabindex => "0"} Office Name
+            %th.sorting{"aria-controls" => "DataTables_Table_2", "aria-label" => "Status: activate to sort column ascending", :colspan => "1", :rowspan => "1", :tabindex => "0"} Action
+        %tbody
+          - @agents.each do |agent|
+            %tr{ role: "row" }
+              %td= agent.first_name
+              %td= agent.last_name
+              %td= agent.phone
+              %td= agent.email
+              %td= agent.office_name
+              %td= link_to 'Show', agent
 
-            .datatable-scroll
-              %table#DataTables_Table_2.table.table-responsive.datatable-save-state.dataTable.no-footer{"aria-describedby" => "DataTables_Table_2_info", :role => "grid"}
-                %thead
-                  %tr{:role => "row"}
-                    %th.sorting_asc{"aria-controls" => "DataTables_Table_2", "aria-label" => "First Name: activate to sort column descending", "aria-sort" => "ascending", :colspan => "1", :rowspan => "1", :tabindex => "0"} First Name
-                    %th.sorting{"aria-controls" => "DataTables_Table_2", "aria-label" => "Last Name: activate to sort column ascending", :colspan => "1", :rowspan => "1", :tabindex => "0"} Last Name
-                    %th.sorting{"aria-controls" => "DataTables_Table_2", "aria-label" => "Job Title: activate to sort column ascending", :colspan => "1", :rowspan => "1", :tabindex => "0"} Phone
-                    %th.sorting{"aria-controls" => "DataTables_Table_2", "aria-label" => "DOB: activate to sort column ascending", :colspan => "1", :rowspan => "1", :tabindex => "0"} Email
-                    %th.sorting{"aria-controls" => "DataTables_Table_2", "aria-label" => "Status: activate to sort column ascending", :colspan => "1", :rowspan => "1", :tabindex => "0"} Office Name
-                    %th.sorting{"aria-controls" => "DataTables_Table_2", "aria-label" => "Status: activate to sort column ascending", :colspan => "1", :rowspan => "1", :tabindex => "0"} Action
-                %tbody
-                  - @agents.each do |agent|
-                    %tr{ role: "row" }
-                      %td= agent.first_name
-                      %td= agent.last_name
-                      %td= agent.phone
-                      %td= agent.email
-                      %td= agent.office_name
-                      %td= link_to 'Show', agent
 
-        / Pagination types
-
-        / Footer
-        .footer.text-muted
-          © 2015.
-          = link_to "Deal Hunter", root_path
-          by
-          %a{:href => "#", :target => "_blank"} MortgageClub
 
 = will_paginate @agents, renderer: BootstrapPagination::Rails

@@ -1,46 +1,28 @@
-.page-container{:style => "min-height:237px"}
-  / Page content
-  .page-content
-    / Main sidebar
-    .content-wrapper
-      / Page header
-      .page-header
-        .page-header-content
+.panel.panel-flat
+  .panel-heading
+    %h5.panel-title Deal Information
 
-      / /page header
-      / Content area
-      .content
-        / Basic datatable
-        .panel.panel-flat
-          .panel-heading
-            %h5.panel-title Deal Information
+  .panel-body
+    .row
+      = link_to deals_path do
+        %button.btn.btn-primary.pull-right.back-btn
+          Back
+    .table-responsive.content-group
+      %table.table.table-framed
+        %thead
+          %tr
+            %th.col-xs-3 Deal information
 
-          .panel-body
-            .row
-              = link_to deals_path do
-                %button.btn.btn-primary.pull-right.back-btn
-                  Back
-            .table-responsive.content-group
-              %table.table.table-framed
-                %thead
-                  %tr
-                    %th.col-xs-3 Deal information
-
-                    %th Value
-                %tbody
-                  - @deal.attributes.each do |attr_name, attr_value|
-                    %tr
-                      - if attr_name == "agent_id"
-                        %td
-                          %span.text-semibold= "Agent"
-                        %td
-                          = link_to @deal.agent.full_name, agent_path(@deal.agent)
-                      - else
-                        %td
-                          %span.text-semibold= attr_name.humanize
-                        %td= attr_value
-        .footer.text-muted
-          © 2015.
-          = link_to "Deal Hunter", root_path
-          by
-          %a{:href => "#", :target => "_blank"} MortgageClub
+            %th Value
+        %tbody
+          - @deal.attributes.each do |attr_name, attr_value|
+            %tr
+              - if attr_name == "agent_id"
+                %td
+                  %span.text-semibold= "Agent"
+                %td
+                  = link_to @deal.agent.full_name, agent_path(@deal.agent)
+              - else
+                %td
+                  %span.text-semibold= attr_name.humanize
+                %td= attr_value

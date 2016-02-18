@@ -56,11 +56,5 @@
                       %td= link_to 'Destroy', message, data: { confirm: 'Are you sure?' }, method: :delete
         / Pagination types
 
-        / Footer
-        .footer.text-muted
-          © 2015.
-          %a{:href => "#"} Deal Hunter
-          by
-          %a{:href => "#", :target => "_blank"} MortgageClub
 
 = will_paginate @messages, renderer: BootstrapPagination::Rails
