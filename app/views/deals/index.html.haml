@@ -5,7 +5,6 @@
     %label Show only hot deals
     = submit_tag "Submit", class: "btn btn-primary"
 
-
 %div#dealsContent
   = render "deals_content"
 = will_paginate @deals, renderer: BootstrapPagination::Rails

@@ -5039,10 +5039,11 @@ a.thumbnail.active {
 .alert-dismissible .close {
   position: relative;
   top: -2px;
-  right: -21px;
+  right: -2px;
   color: inherit;
 }
 .alert-success {
+  top: 52px;
   background-color: #E8F5E9;
   border-color: #4CAF50;
   color: #43A047;
@@ -5054,6 +5055,7 @@ a.thumbnail.active {
   color: #347c37;
 }
 .alert-info {
+  top: 52px;
   background-color: #E0F7FA;
   border-color: #00BCD4;
   color: #00838F;
@@ -5065,6 +5067,7 @@ a.thumbnail.active {
   color: #00545c;
 }
 .alert-warning {
+  top: 52px;
   background-color: #FFF3E0;
   border-color: #FF9800;
   color: #EF6C00;
@@ -5076,6 +5079,7 @@ a.thumbnail.active {
   color: #bc5500;
 }
 .alert-danger {
+  top: 52px;
   background-color: #FBE9E7;
   border-color: #FF5722;
   color: #D84315;
