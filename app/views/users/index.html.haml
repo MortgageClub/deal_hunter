@@ -18,9 +18,18 @@
             %tr{ role: "row" }
               %td= user.email
               %td= user.created_at
-              %td= link_to 'Show', user
-              %td= link_to 'Edit', edit_user_path(user)
-              %td= link_to 'Destroy', user, data: { confirm: 'Are you sure?' }, method: :delete
+              %td
+                = link_to user, class: "text-primary-600" do
+                  %i.icon-info22
+                  Show
+              %td
+                = link_to edit_user_path(user), class: "text-success-600" do
+                  %i.icon-pencil7
+                  Edit
+              %td
+                = link_to user, data: { confirm: 'Are you sure?' }, method: :delete, class: "text-danger-600" do
+                  %i.icon-trash
+                  Delete
     .datatable-footer
       #DataTables_Table_2_info.dataTables_info{"aria-live" => "polite", :role => "status"}
       #DataTables_Table_2_paginate.dataTables_paginate.paging_simple_numbers

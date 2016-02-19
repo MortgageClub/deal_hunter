@@ -1,8 +1,8 @@
 <div class="page-container login-container">
   <div class="panel panel-body login-form">
     <div class="text-center">
-      <div class="icon-object border-success text-success"><i class="icon-plus3"></i></div>
-      <h5 class="content-group">Forgot your password? </h5>
+      <div class="icon-object border-success text-success"><i class="icon-reading"></i></div>
+      <h5 class="content-group">Forgot your password?  <small class="display-block">Enter your email below</small></h5>
     </div>
 
     <%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }) do |f| %>
@@ -12,21 +12,13 @@
         </p>
       </div>
 
-       <div class="form-group has-feedback has-feedback-left">
-        <%= f.password_field :password, class: "form-control", placeholder: "New password", autocomplete: "off" %>
+      <div class="form-group has-feedback has-feedback-left">
+        <%= f.email_field :email, class: "form-control", placeholder: "Email", autofocus: true %>
         <div class="form-control-feedback">
-          <i class="icon-user-lock text-muted"></i>
+          <i class="icon-user text-muted"></i>
         </div>
       </div>
-       <div class="form-group has-feedback has-feedback-left">
-        <%= f.password_field :password_confirmation, class: "form-control", placeholder: "Password confirmation", autocomplete: "off" %>
-        <div class="form-control-feedback">
-          <i class="icon-user-lock text-muted"></i>
-        </div>
-      </div>
-
-
-      <button type="submit" class="btn bg-teal btn-block btn-lg"> Change <i class="icon-circle-right2 position-right"></i></button>
+      <button type="submit" class="btn btn-primary btn-block btn-lg">Send me reset password instructions<i class="icon-circle-right2 position-right"></i></button>
     <% end %>
     <div class="text-center">
       <%= render "devise/shared/links" %>

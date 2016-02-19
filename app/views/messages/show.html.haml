@@ -1,23 +1,42 @@
-.page-header
-  = link_to messages_path, class: 'btn btn-default' do
-    %span.glyphicon.glyphicon-list-alt
-    Back
-  = link_to edit_message_path(@message), class: 'btn btn-primary' do
-    %span.glyphicon.glyphicon-pencil
-    Edit
-  %h1 Show message
+.panel.panel-flat
+  .panel-heading
+    %h5.panel-title Message Information
 
-%dl.dl-horizontal
-  %dt Content:
-  %dd= @message.content
-  %dt Reply:
-  %dd= @message.reply
-  %dt Sender:
-  - if @message.messageable_id
-    %dd= link_to @message.messageable.to_s, polymorphic_path(@message.messageable)
-  - else
-    %dd N/A
-  %dt Phone number:
-  %dd= @message.phone_number
-  %dt Status:
-  %dd= @message.status
+  .panel-body
+    .row
+      = link_to messages_path, class: 'btn btn-primary pull-right back-btn' do
+        %i.icon-circle-left2.position-left
+        Back
+    .table-responsive.content-group
+      %table.table.table-framed
+        %thead
+          %tr
+            %th.col-xs-3 Message information
+
+            %th Value
+        %tbody
+          %tr
+            %td
+              %span.text-semibold Content
+            %td= @message.content
+          %tr
+            %td
+              %span.text-semibold Reply
+            %td= @message.reply
+          %tr
+            %td
+              %span.text-semibold Sender
+            %td
+              - if @message.messageable_id
+                = link_to @message.messageable.to_s, polymorphic_path(@message.messageable)
+              - else
+                N/A
+          %tr
+            %td
+              %span.text-semibold Phone number
+            %td= @message.phone_number
+          %tr
+            %td
+              %span.text-semibold Status
+            %td
+              = @message.status

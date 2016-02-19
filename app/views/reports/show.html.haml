@@ -1,14 +1,26 @@
-.page-header
-  = link_to reports_path, class: 'btn btn-default' do
-    %span.glyphicon.glyphicon-list-alt
-    Back
-  = link_to edit_report_path(@report), class: 'btn btn-primary' do
-    %span.glyphicon.glyphicon-pencil
-    Edit
-  %h1 Show report
+.panel.panel-flat
+  .panel-heading
+    %h5.panel-title Report Information
 
-%dl.dl-horizontal
-  %dt Result:
-  %dd= @report.result
-  %dt Raw data:
-  %dd= @report.raw_data
+  .panel-body
+    .row
+      = link_to reports_path, class: 'btn btn-primary pull-right back-btn' do
+        %i.icon-circle-left2.position-left
+        Back
+    .table-responsive.content-group
+      %table.table.table-framed
+        %thead
+          %tr
+            %th.col-xs-3 Report information
+
+            %th Value
+        %tbody
+          %tr
+            %td
+              %span.text-semibold Result
+            %td= @report.result
+          %tr
+            %td
+              %span.text-semibold Raw Data
+            %td
+              = @report.raw_data
