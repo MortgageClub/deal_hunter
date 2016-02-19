@@ -1,7 +1,7 @@
-.page-header
-  = link_to users_path, class: 'btn btn-default' do
-    %span.glyphicon.glyphicon-list-alt
-    Back
-  %h1 New user
+.panel.panel-flat
+  .panel-heading
+    %h5.panel-title
+      New User
 
-= render 'form'
+  .panel-body
+    = render 'form'

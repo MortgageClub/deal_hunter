@@ -1,14 +1,16 @@
-.page-header
-  = link_to users_path, class: 'btn btn-default' do
-    %span.glyphicon.glyphicon-list-alt
-    Back
-  = link_to edit_user_path(@user), class: 'btn btn-primary' do
-    %span.glyphicon.glyphicon-pencil
-    Edit
-  %h1 Show user
+.panel.panel-flat
+  .panel-heading
+    %h5.panel-title.text-center
+      User Informations
 
-%dl.dl-horizontal
-  %dt Name:
-  %dd= @user.name
-  %dt Email:
-  %dd= @user.email
+  .panel-body
+    .row
+      = link_to users_path, class: 'btn btn-primary pull-right back-btn' do
+        %i.icon-circle-left2.position-left
+        Back
+      = link_to edit_user_path(@user), class: 'btn btn-primary pull-right' do
+        %span.glyphicon.glyphicon-pencil
+        Edit
+    %dl.dl-horizontal
+      %dt Email:
+      %dd= @user.email

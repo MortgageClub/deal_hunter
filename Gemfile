@@ -9,8 +9,6 @@ gem 'pg'
 gem 'sass-rails', '~> 4.0.3'
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '>= 1.3.0'
-# Use CoffeeScript for .js.coffee assets and views
-gem 'coffee-rails', '~> 4.0.0'
 # See https://github.com/sstephenson/execjs#readme for more supported runtimes
 # gem 'therubyracer',  platforms: :ruby
 
@@ -32,13 +30,11 @@ gem 'poltergeist'
 gem 'capybara'
 gem 'cucumber-rails', require: false
 gem 'devise', '~> 3.5'
-gem 'unicorn'
 gem 'mechanize', '~> 2.7.3'
 gem 'httparty'
 gem 'rollbar', '~> 2.2.1'
 gem 'bootstrap-generators'
 gem 'pundit'
-gem 'icomoon-rails'
 
 # Mina tasks for handle with Puma.
 gem 'mina-puma', :require => false
