@@ -1,5 +1,6 @@
 class MessagesController < BaseController
   before_action :set_message, only: [:show, :edit, :update, :destroy]
+  skip_before_action :authenticate_user!, only: [:receive_sms]
 
   # GET /messages
   # GET /messages.json
