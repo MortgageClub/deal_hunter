@@ -4,9 +4,9 @@
 
   .panel-body
     .row
-      = link_to deals_path do
-        %button.btn.btn-primary.pull-right.back-btn
-          Back
+      = link_to deals_path, class: 'btn btn-primary pull-right back-btn' do
+        %i.icon-circle-left2.position-left
+        Back
     .table-responsive.content-group
       %table.table.table-framed
         %thead
