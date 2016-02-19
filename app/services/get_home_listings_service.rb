@@ -17,7 +17,7 @@ class GetHomeListingsService
       @result = crawl_data
       log_off
     rescue Capybara::ElementNotFound => error
-      Rails.logger.error(error)
+      Rollbar.error(error)
     ensure
       close_crawler
     end
