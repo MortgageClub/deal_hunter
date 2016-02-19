@@ -1,28 +1,17 @@
 .panel.panel-flat
   .panel-heading
     %h5.panel-title
-      Listing
-      %code reports
-    .heading-elements
-      %ul.icons-list
-        %li
-          %a{"data-action" => "collapse"}
-        %li
-          %a{"data-action" => "reload"}
-        %li
-          %a{"data-action" => "close"}
-    %a.heading-elements-toggle
-      %i.icon-menu
+      Users
   .panel-body
   #DataTables_Table_2_wrapper.dataTables_wrapper.no-footer
     .datatable-scroll
       %table#DataTables_Table_2.table.table-responsive.datatable-save-state.dataTable.no-footer{"aria-describedby" => "DataTables_Table_2_info", :role => "grid"}
         %thead
           %tr{:role => "row"}
-            %th.sorting_asc{"aria-controls" => "DataTables_Table_2", "aria-label" => "First Name: activate to sort column descending", "aria-sort" => "ascending", :colspan => "1", :rowspan => "1", :tabindex => "0"} Email
-            %th.sorting_asc{"aria-controls" => "DataTables_Table_2", "aria-label" => "First Name: activate to sort column descending", "aria-sort" => "ascending", :colspan => "1", :rowspan => "1", :tabindex => "0"} Created at
-            %th.sorting{"aria-controls" => "DataTables_Table_2", "aria-label" => "Last Name: activate to sort column ascending", :colspan => "1", :rowspan => "1", :tabindex => "0"} Action
-            %th.sorting{"aria-controls" => "DataTables_Table_2", "aria-label" => "Status: activate to sort column ascending", :colspan => "1", :rowspan => "1", :tabindex => "0"}
+            %th.sorting_disabled{"aria-controls" => "DataTables_Table_2", "aria-label" => "First Name: activate to sort column descending", "aria-sort" => "ascending", :colspan => "1", :rowspan => "1", :tabindex => "0"} Email
+            %th.sorting_disabled{"aria-controls" => "DataTables_Table_2", "aria-label" => "First Name: activate to sort column descending", "aria-sort" => "ascending", :colspan => "1", :rowspan => "1", :tabindex => "0"} Created at
+            %th.sorting_disabled{"aria-controls" => "DataTables_Table_2", "aria-label" => "Last Name: activate to sort column ascending", :colspan => "1", :rowspan => "1", :tabindex => "0"} Action
+            %th.sorting_disabled{"aria-controls" => "DataTables_Table_2", "aria-label" => "Status: activate to sort column ascending", :colspan => "1", :rowspan => "1", :tabindex => "0"}
             %th.text-center.sorting_disabled{"aria-label" => "Actions", :colspan => "1", :rowspan => "1", :style => "width: 100px;"}
         %tbody
           - @users.each do |user|
@@ -32,6 +21,7 @@
               %td= link_to 'Show', user
               %td= link_to 'Edit', edit_user_path(user)
               %td= link_to 'Destroy', user, data: { confirm: 'Are you sure?' }, method: :delete
-
-/ Pagination types
-= will_paginate @users, renderer: BootstrapPagination::Rails
+    .datatable-footer
+      #DataTables_Table_2_info.dataTables_info{"aria-live" => "polite", :role => "status"}
+      #DataTables_Table_2_paginate.dataTables_paginate.paging_simple_numbers
+        = will_paginate @users, renderer: BootstrapPagination::Rails

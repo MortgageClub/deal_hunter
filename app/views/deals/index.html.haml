@@ -2,21 +2,9 @@
   .panel-heading
     %h5.panel-title
       Deals
-    .heading-elements
-      %ul.icons-list
-        %li
-          %a{"data-action" => "collapse"}
-        %li
-          %a{"data-action" => "reload"}
-        %li
-          %a{"data-action" => "close"}
-    %a.heading-elements-toggle
-      %i.icon-menu
   .panel-body
     = form_tag deals_path, method: "get", id: "search" do
       = check_box_tag 'hot_deal_only', 'true', @show_hotdeals_option, :onclick => "javascript: document.getElementById('search').submit();"
       %label Show only hot deals
   %div#dealsContent
     = render "deals_content"
-
-= will_paginate @deals, renderer: BootstrapPagination::Rails
