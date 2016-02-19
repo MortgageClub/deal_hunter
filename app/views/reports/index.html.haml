@@ -1,56 +1,36 @@
-.page-container{:style => "min-height:237px"}
-  / Page content
-  .page-content
-    / Main sidebar
-    .content-wrapper
-      / Page header
-      .page-header
-        .page-header-content
+.panel.panel-flat
+  .panel-heading
+    %h5.panel-title
+      Reports
+    .heading-elements
+      %ul.icons-list
+        %li
+          %a{"data-action" => "collapse"}
+        %li
+          %a{"data-action" => "reload"}
+        %li
+          %a{"data-action" => "close"}
+    %a.heading-elements-toggle
+      %i.icon-menu
+  .panel-body
+  #DataTables_Table_2_wrapper.dataTables_wrapper.no-footer
+    .datatable-scroll
+      %table#DataTables_Table_2.table.table-responsive.datatable-save-state.dataTable.no-footer{"aria-describedby" => "DataTables_Table_2_info", :role => "grid"}
+        %thead
+          %tr{:role => "row"}
+            %th.sorting_asc{"aria-controls" => "DataTables_Table_2", "aria-label" => "First Name: activate to sort column descending", "aria-sort" => "ascending", :colspan => "1", :rowspan => "1", :tabindex => "0"} Result
+            %th.sorting{"aria-controls" => "DataTables_Table_2", "aria-label" => "Last Name: activate to sort column ascending", :colspan => "1", :rowspan => "1", :tabindex => "0"} Created at
+            %th.sorting{"aria-controls" => "DataTables_Table_2", "aria-label" => "Status: activate to sort column ascending", :colspan => "1", :rowspan => "1", :tabindex => "0"} Show
+            %th.text-center.sorting_disabled{"aria-label" => "Actions", :colspan => "1", :rowspan => "1", :style => "width: 100px;"} Delete
+        %tbody
+          - @reports.each do |report|
+            %tr{ role: "row" }
+              %td= report.result
+              %td= report.created_at
+              %td= link_to 'Show', report
+              %td= link_to 'Destroy', report, data: { confirm: 'Are you sure?' }, method: :delete
 
-      / /page header
-      / Content area
-      .content
-        / Basic datatable
-        .panel.panel-flat
-          .panel-heading
-            %h5.panel-title
-              Listing
-              %code reports
-            .heading-elements
-              %ul.icons-list
-                %li
-                  %a{"data-action" => "collapse"}
-                %li
-                  %a{"data-action" => "reload"}
-                %li
-                  %a{"data-action" => "close"}
-            %a.heading-elements-toggle
-              %i.icon-menu
-          .panel-body
-          #DataTables_Table_2_wrapper.dataTables_wrapper.no-footer
-            .datatable-scroll
-              %table#DataTables_Table_2.table.table-responsive.datatable-save-state.dataTable.no-footer{"aria-describedby" => "DataTables_Table_2_info", :role => "grid"}
-                %thead
-                  %tr{:role => "row"}
-                    %th.sorting_asc{"aria-controls" => "DataTables_Table_2", "aria-label" => "First Name: activate to sort column descending", "aria-sort" => "ascending", :colspan => "1", :rowspan => "1", :tabindex => "0"} Result
-                    %th.sorting{"aria-controls" => "DataTables_Table_2", "aria-label" => "Last Name: activate to sort column ascending", :colspan => "1", :rowspan => "1", :tabindex => "0"} Created at
-                    %th.sorting{"aria-controls" => "DataTables_Table_2", "aria-label" => "Status: activate to sort column ascending", :colspan => "1", :rowspan => "1", :tabindex => "0"} Show
-                    %th.text-center.sorting_disabled{"aria-label" => "Actions", :colspan => "1", :rowspan => "1", :style => "width: 100px;"} Delete
-                %tbody
-                  - @reports.each do |report|
-                    %tr{ role: "row" }
-                      %td= report.result
-                      %td= report.created_at
-                      %td= link_to 'Show', report
-                      %td= link_to 'Destroy', report, data: { confirm: 'Are you sure?' }, method: :delete
+/ Pagination types
 
-        / Pagination types
-
-        / Footer
-        .footer.text-muted
-          © 2015.
-          %a{:href => "#"} Deal Hunter
-          by
-          %a{:href => "#", :target => "_blank"} MortgageClub
 
 = will_paginate @reports, renderer: BootstrapPagination::Rails
