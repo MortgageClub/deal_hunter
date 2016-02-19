@@ -17,8 +17,14 @@
             %tr{ role: "row" }
               %td= report.result
               %td= report.created_at
-              %td= link_to 'Show', report
-              %td= link_to 'Destroy', report, data: { confirm: 'Are you sure?' }, method: :delete
+              %td
+                = link_to report, class: "text-primary-600" do
+                  %i.icon-info22
+                  Show
+              %td
+                = link_to report, data: { confirm: 'Are you sure?' }, method: :delete, class: "text-danger-600" do
+                  %i.icon-trash
+                  Delete
     .datatable-footer
       #DataTables_Table_2_info.dataTables_info{"aria-live" => "polite", :role => "status"}
       #DataTables_Table_2_paginate.dataTables_paginate.paging_simple_numbers

@@ -29,7 +29,11 @@
             %td= deal.city
             %td= deal.bedroom
             %td= deal.bathroom
-            %td= link_to 'Show'.freeze, deal
+            %td
+              = link_to deal, class: "text-primary-600" do
+                %i.icon-info22
+                Show
+
 
       / Scrollable datatable
   .datatable-footer

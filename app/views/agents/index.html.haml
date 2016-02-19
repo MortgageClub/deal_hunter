@@ -23,7 +23,10 @@
               %td= agent.phone
               %td= agent.email
               %td= agent.office_name
-              %td= link_to 'Show', agent
+              %td
+                = link_to agent, class: "text-primary-600" do
+                  %i.icon-info22
+                  Show
     .datatable-footer
       #DataTables_Table_2_info.dataTables_info{"aria-live" => "polite", :role => "status"}
       #DataTables_Table_2_paginate.dataTables_paginate.paging_simple_numbers
