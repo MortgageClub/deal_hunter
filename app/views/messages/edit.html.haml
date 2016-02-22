@@ -1,10 +1,13 @@
-.page-header
-  = link_to messages_path, class: 'btn btn-default' do
-    %span.glyphicon.glyphicon-list-alt
-    Back
-  = link_to @message, class: 'btn btn-primary' do
-    %span.glyphicon.glyphicon-info-sign
-    Show
-  %h1 Reply message
-
-= render 'form'
+.panel.panel-flat
+  .panel-heading
+    %h5.panel-title
+      Reply message
+  .panel-body
+    .row
+      = link_to messages_path, class: 'btn btn-primary pull-right back-btn' do
+        %i.icon-circle-left2.position-left
+        Back
+      = link_to @message, class: 'btn btn-primary pull-right' do
+        %span.glyphicon.glyphicon-info-sign
+        Show
+    = render 'form'

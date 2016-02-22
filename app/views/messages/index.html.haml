@@ -15,8 +15,7 @@
             %th.sorting_disabled{"aria-controls" => "DataTables_Table_2", "aria-label" => "DOB: activate to sort column ascending", :colspan => "1", :rowspan => "1", :tabindex => "0"} Phone number
             %th.sorting_disabled{"aria-controls" => "DataTables_Table_2", "aria-label" => "Status: activate to sort column ascending", :colspan => "1", :rowspan => "1", :tabindex => "0"} Status
             %th.sorting_disabled{"aria-controls" => "DataTables_Table_2", "aria-label" => "Status: activate to sort column ascending", :colspan => "1", :rowspan => "1", :tabindex => "0"} Created at
-            %th.sorting_disabled{"aria-controls" => "DataTables_Table_2", "aria-label" => "Status: activate to sort column ascending", :colspan => "1", :rowspan => "1", :tabindex => "0"} Action
-            %th.text-center.sorting_disabled{"aria-label" => "Actions", :colspan => "1", :rowspan => "1", :style => "width: 100px;"}
+            %th.text-center.sorting_disabled{"aria-controls" => "DataTables_Table_2", "aria-label" => "Status: activate to sort column ascending", :colspan => "3", :rowspan => "1", :tabindex => "0"} Action
         %tbody
           - @messages.each do |message|
             %tr{ role: "row" }
@@ -33,6 +32,10 @@
                 = link_to message, class: "text-primary-600" do
                   %i.icon-info22
                   Show
+              %td
+                = link_to edit_message_path(message), class: "text-success-600" do
+                  %i.icon-reply
+                  Reply
               %td
                 = link_to message, data: { confirm: 'Are you sure?' }, method: :delete, class: "text-danger-600" do
                   %i.icon-trash
