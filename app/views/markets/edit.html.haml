@@ -1,0 +1,13 @@
+.panel.panel-flat
+  .panel-heading
+    %h5.panel-title.text-center
+      Edit Market
+  .panel-body
+    .row
+      = link_to markets_path, class: 'btn btn-primary pull-right back-btn' do
+        %i.icon-circle-left2.position-left
+        Back
+      = link_to @market, class: 'btn btn-primary pull-right' do
+        %span.glyphicon.glyphicon-info-sign
+        Show
+    = render 'form'

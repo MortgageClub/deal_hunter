@@ -1,0 +1,37 @@
+.panel.panel-flat
+  .panel-heading
+    %h5.panel-title.text-center
+      Market Informations
+
+  .panel-body
+    .row
+      = link_to markets_path, class: 'btn btn-primary pull-right back-btn' do
+        %i.icon-circle-left2.position-left
+        Back
+      = link_to edit_market_path(@market), class: 'btn btn-primary pull-right' do
+        %span.glyphicon.glyphicon-pencil
+        Edit
+    %dl.dl-horizontal
+      %dt Name:
+      %dd= @market.name
+    %dl.dl-horizontal
+      %dt Portal Url:
+      %dd= link_to @market.portal_url, @market.portal_url, target: "_blank"
+    %dl.dl-horizontal
+      %dt Rehab Cost:
+      %dd= @market.rehab_cost
+    %dl.dl-horizontal
+      %dt Percent of ARV:
+      %dd= @market.arv_percent
+    %dl.dl-horizontal
+      %dt Weight of Comps:
+      %dd= @market.comps_weight
+    %dl.dl-horizontal
+      %dt Weight of Zestimate:
+      %dd= @market.zestimate_weight
+    %dl.dl-horizontal
+      %dt From Email:
+      %dd= @market.from_email
+    %dl.dl-horizontal
+      %dt To Email:
+      %dd= @market.to_email

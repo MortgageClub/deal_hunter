@@ -1,0 +1,42 @@
+.panel.panel-flat
+  .panel-heading
+    %h5.panel-title
+      Markets
+  .panel-body
+  #DataTables_Table_2_wrapper.dataTables_wrapper.no-footer
+    .datatable-scroll
+      %table#DataTables_Table_2.table.table-responsive.datatable-save-state.dataTable.no-footer{"aria-describedby" => "DataTables_Table_2_info", :role => "grid"}
+        %thead
+          %tr{:role => "row"}
+            %th.sorting_disabled{"aria-controls" => "DataTables_Table_2", "aria-label" => "Name: activate to sort column descending", "aria-sort" => "ascending", :colspan => "1", :rowspan => "1", :tabindex => "0"} Name
+            %th.sorting_disabled{"aria-controls" => "DataTables_Table_2", "aria-label" => "Rehab cost: activate to sort column descending", "aria-sort" => "ascending", :colspan => "1", :rowspan => "1", :tabindex => "0"} Rehab cost
+            %th.sorting_disabled{"aria-controls" => "DataTables_Table_2", "aria-label" => "Percent of ARV: activate to sort column ascending", "aria-sort" => "ascending", :colspan => "1", :rowspan => "1", :tabindex => "0"} Percent of ARV
+            %th.sorting_disabled{"aria-controls" => "DataTables_Table_2", "aria-label" => "Weight of comps: activate to sort column ascending", "aria-sort" => "ascending", :colspan => "1", :rowspan => "1", :tabindex => "0"} Weight of comps
+            %th.sorting_disabled{"aria-controls" => "DataTables_Table_2", "aria-label" => "Weight of Zestimate: activate to sort column ascending", "aria-sort" => "ascending", :colspan => "1", :rowspan => "1", :tabindex => "0"} Weight of Zestimate
+            %th.sorting_disabled{"aria-controls" => "DataTables_Table_2", "aria-label" => "Last Name: activate to sort column ascending", :colspan => "1", :rowspan => "1", :tabindex => "0"} Action
+            %th.sorting_disabled{"aria-controls" => "DataTables_Table_2", "aria-label" => "Status: activate to sort column ascending", :colspan => "1", :rowspan => "1", :tabindex => "0"}
+            %th.text-center.sorting_disabled{"aria-label" => "Actions", :colspan => "1", :rowspan => "1", :style => "width: 100px;"}
+        %tbody
+          - @markets.each do |market|
+            %tr{ role: "row" }
+              %td= market.name
+              %td= market.rehab_cost
+              %td= market.arv_percent
+              %td= market.comps_weight
+              %td= market.zestimate_weight
+              %td
+                = link_to market, class: "text-primary-600" do
+                  %i.icon-info22
+                  Show
+              %td
+                = link_to edit_market_path(market), class: "text-success-600" do
+                  %i.icon-pencil7
+                  Edit
+              %td
+                = link_to market, data: { confirm: 'Are you sure?' }, method: :delete, class: "text-danger-600" do
+                  %i.icon-trash
+                  Delete
+    .datatable-footer
+      #DataTables_Table_2_info.dataTables_info{"aria-live" => "polite", :role => "status"}
+      #DataTables_Table_2_paginate.dataTables_paginate.paging_simple_numbers
+        = will_paginate @markets, renderer: BootstrapPagination::Rails
