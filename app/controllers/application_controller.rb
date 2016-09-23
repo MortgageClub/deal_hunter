@@ -7,6 +7,7 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
   before_action :authenticate_user!
   before_action :configure_permitted_parameters, if: :devise_controller?
+  before_action :get_markets
   # before_action :authenticate_user!
   # before_action :authenticate_admin
   protected
@@ -25,4 +26,7 @@ class ApplicationController < ActionController::Base
     redirect_to (request.referrer||root_path)
   end
 
+  def get_markets
+    @markets_top = Market.all
+  end
 end

@@ -27,6 +27,9 @@
           = link_to "DEAL HUNTER", root_path, class: "navbar-brand"
         #navbar.collapse.navbar-collapse
           %ul.nav.navbar-nav
+            - @markets_top.each do |market|
+              %li{:class => active_class(market_listings_path(market))}
+                = link_to market.name, market_listings_path(market)
             %li{:class => active_class(root_path)}
               = link_to "Deals", root_path
             %li{:class => active_class(agents_path)}

@@ -16,6 +16,7 @@ module ZillowService
         'count' => NUMBER_OF_RESULTS,
         'zws-id' => 'X1-ZWz1aylbpp3aiz_98wrk'
       }
+
       response = get('http://www.zillow.com/webservice/GetDeepComps.htm', query: params)
       return {} unless ok?(response)
 
@@ -30,13 +31,22 @@ module ZillowService
       comparables = comps['response'].try(:[], 'properties').try(:[], 'comparables').try(:[], 'comp')
       comparables = [comparables] if comparables.is_a? Hash
       sum, max = 0, 0
+      count = 0
 
       comparables.each do |comp|
-        sum += comp['lastSoldPrice']['__content__'].to_f
-        max = comp['lastSoldPrice']['__content__'].to_f if comp['lastSoldPrice']['__content__'].to_f > max
+        if comp['lastSoldPrice']
+          count += 1
+          sum += comp['lastSoldPrice']['__content__'].to_f
+          max = comp['lastSoldPrice']['__content__'].to_f if comp['lastSoldPrice']['__content__'].to_f > max
+        end
       end
-      sum -= max
-      sum / (NUMBER_OF_RESULTS - 1)
+
+      if count == 1
+        sum
+      else
+        sum -= max
+        sum / (count - 1)
+      end
     end
 
     def self.ok?(response)

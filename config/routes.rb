@@ -3,8 +3,14 @@ Rails.application.routes.draw do
   devise_for :users
   scope "/admin" do
     resources :users
-    resources :markets
   end
+
+  resources :markets do
+    resources :listings do
+      get 'send_email'
+    end
+  end
+
 
   resources :messages do
     get 'receive_sms', on: :collection
