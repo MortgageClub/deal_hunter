@@ -26,11 +26,11 @@ class ListingsController < ApplicationController
   end
 
   def send_email
-    OfferMailer.notify_customer(Listing.find(params[:listing_id])).deliver_later
+    listing = Listing.find(params[:listing_id])
+    OfferMailer.notify_customer(listing).deliver_now
 
-    respond_to do |format|
-      format.json { head :no_content }
-    end
+    flash[:notice] = "Sent email successfully."
+    redirect_to market_listings_path(listing.market)
   end
 
   private

@@ -32,7 +32,7 @@
             %td= listing.bath_rooms
             %td= listing.added_date.utc.strftime("%m/%d/%Y")
             %td
-              = link_to market_listing_send_email_path(@market, listing), remote: true, class: "text-primary-600" do
+              = link_to market_listing_send_email_path(@market, listing), class: "text-primary-600" do
                 %i.icon-envelop
                 Email
 
