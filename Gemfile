@@ -32,7 +32,7 @@ gem 'cucumber-rails', require: false
 gem 'devise', '~> 3.5'
 gem 'mechanize', '~> 2.7.3'
 gem 'httparty'
-gem 'rollbar', '~> 2.2.1'
+gem 'rollbar'
 gem 'bootstrap-generators'
 gem 'pundit'
 

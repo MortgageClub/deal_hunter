@@ -18,6 +18,8 @@ module ZillowService
       }
 
       response = get('http://www.zillow.com/webservice/GetDeepComps.htm', query: params)
+      Rollbar.debug(response['comps'].to_s)
+
       return {} unless ok?(response)
 
       { zestimate: get_zestimate(response['comps']), avg_score: self.get_average_score(response['comps']) }
@@ -52,7 +54,7 @@ module ZillowService
     end
 
     def self.ok?(response)
-      response['comps']['message'].present? && response['comps']['message']['code'] == '0'
+      response['comps'].present? && response['comps']['message'].present? && response['comps']['message']['code'] == '0'
     end
   end
 end
