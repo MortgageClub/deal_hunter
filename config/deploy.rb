@@ -26,9 +26,9 @@ set :branch, 'master'
 set :shared_paths, ['config/database.yml', 'config/secrets.yml', 'log', 'tmp/pids', 'tmp/sockets']
 
 # Optional settings:
-  set :user, 'deploy'    # Username in the server to SSH to.
+set :user, 'deploy'    # Username in the server to SSH to.
 #   set :port, '30000'     # SSH port number.
-  set :forward_agent, true     # SSH forward_agent.
+set :forward_agent, true     # SSH forward_agent.
 
 set_default :delayed_job_pid_dir, lambda { "#{deploy_to}/#{shared_path}/tmp/pids" }
 
