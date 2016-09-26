@@ -8,7 +8,7 @@ env :PATH, ENV['PATH']
 #   rake "db:clear_report"
 # end
 
-every 1.hours do
+every 2.hours do
   rake "crawler:get_fallas", output: "./log/fallas.log"
 end
 

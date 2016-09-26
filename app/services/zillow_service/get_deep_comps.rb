@@ -18,7 +18,6 @@ module ZillowService
       }
 
       response = get('http://www.zillow.com/webservice/GetDeepComps.htm', query: params)
-      Rollbar.debug(response['comps'].to_s)
 
       return {} unless ok?(response)
 
