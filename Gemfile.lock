@@ -242,7 +242,8 @@ GEM
       http-cookie (>= 1.0.2, < 2.0)
       mime-types (>= 1.16, < 3.0)
       netrc (~> 0.7)
-    rollbar (2.2.1)
+    rollbar (2.13.1)
+      multi_json
     ruby_parser (3.7.1)
       sexp_processor (~> 4.1)
     rubyzip (1.1.7)
@@ -339,7 +340,7 @@ DEPENDENCIES
   pundit
   rails (~> 4.2)
   rails_12factor
-  rollbar (~> 2.2.1)
+  rollbar
   sass-rails (~> 4.0.3)
   sdoc (~> 0.4.0)
   selenium-webdriver
@@ -352,5 +353,8 @@ DEPENDENCIES
   will_paginate
   will_paginate-bootstrap
 
+RUBY VERSION
+   ruby 2.2.2p95
+
 BUNDLED WITH
-   1.11.2
+   1.12.5
