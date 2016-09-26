@@ -27,6 +27,9 @@
           = link_to "DEAL HUNTER", root_path, class: "navbar-brand"
         #navbar.collapse.navbar-collapse
           %ul.nav.navbar-nav
+            - @markets_top.each do |market|
+              %li{:class => active_class(market_listings_path(market))}
+                = link_to market.name, market_listings_path(market)
             %li{:class => active_class(root_path)}
               = link_to "Deals", root_path
             %li{:class => active_class(agents_path)}
@@ -52,12 +55,20 @@
                       = link_to new_user_path do
                         %i.icon-user
                         Create new user
+                    %li
+                      = link_to new_market_path do
+                        %i.icon-plus3
+                        Create new market
                   %li.divider
                   - if current_user && current_user.admin?
                     %li
                       = link_to users_path do
                         %i.icon-user-plus
                         Users Management
+                    %li
+                      = link_to markets_path do
+                        %i.icon-gallery
+                        Markets Management
                     %li.divider
                   %li
                     = link_to destroy_user_session_path, method: :delete do

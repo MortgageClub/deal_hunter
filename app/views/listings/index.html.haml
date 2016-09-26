@@ -1,0 +1,10 @@
+.panel.panel-flat
+  .panel-heading
+    %h5.panel-title
+      Deals
+  .panel-body
+    = form_tag market_listings_path(@market), method: "get", id: "search" do
+      = check_box_tag 'hot_deal_only', 'true', @show_hotdeals_option, :onclick => "javascript: document.getElementById('search').submit();"
+      %label Show only hot deals
+  %div#dealsContent
+    = render "listings_content"

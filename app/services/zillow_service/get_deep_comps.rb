@@ -1,7 +1,7 @@
 module ZillowService
   class GetDeepComps
     include HTTParty
-    NUMBER_OF_RESULTS = 6
+    NUMBER_OF_RESULTS = 25
 
     def self.call(address, citystatezip)
       zpid = ZillowService::GetZpid.call(address, citystatezip)
@@ -16,6 +16,7 @@ module ZillowService
         'count' => NUMBER_OF_RESULTS,
         'zws-id' => 'X1-ZWz1aylbpp3aiz_98wrk'
       }
+
       response = get('http://www.zillow.com/webservice/GetDeepComps.htm', query: params)
       return {} unless ok?(response)
 
@@ -30,13 +31,24 @@ module ZillowService
       comparables = comps['response'].try(:[], 'properties').try(:[], 'comparables').try(:[], 'comp')
       comparables = [comparables] if comparables.is_a? Hash
       sum, max = 0, 0
+      count = 0
 
       comparables.each do |comp|
-        sum += comp['lastSoldPrice']['__content__'].to_f
-        max = comp['lastSoldPrice']['__content__'].to_f if comp['lastSoldPrice']['__content__'].to_f > max
+        if comp['lastSoldPrice'] || comp['zestimate']
+          price = comp['lastSoldPrice'] ? comp['lastSoldPrice']['__content__'].to_f : comp['zestimate']['amount']['__content__'].to_f
+
+          count += 1
+          sum += price
+          max = price if price > max
+        end
       end
-      sum -= max
-      sum / (NUMBER_OF_RESULTS - 1)
+
+      if count == 1
+        sum
+      else
+        sum -= max
+        sum / (count - 1)
+      end
     end
 
     def self.ok?(response)

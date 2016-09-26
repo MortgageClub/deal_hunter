@@ -11,32 +11,33 @@
           %th.sorting_disabled{"aria-controls" => "DataTables_Table_2", "aria-label" => "Status: activate to sort column ascending", :colspan => "1", :rowspan => "1", :tabindex => "0"} City
           %th.sorting_disabled{"aria-controls" => "DataTables_Table_2", "aria-label" => "Status: activate to sort column ascending", :colspan => "1", :rowspan => "1", :tabindex => "0"} Bed
           %th.sorting_disabled{"aria-controls" => "DataTables_Table_2", "aria-label" => "Status: activate to sort column ascending", :colspan => "1", :rowspan => "1", :tabindex => "0"} Bath
+          %th.sorting_disabled{"aria-controls" => "DataTables_Table_2", "aria-label" => "Status: activate to sort column ascending", :colspan => "1", :rowspan => "1", :tabindex => "0"} Added Date
           %th.text-center.sorting_disabled{"aria-label" => "Actions", :colspan => "1", :rowspan => "1", :style => "width: 100px;"} Action
       %tbody
-        - @deals.each do |deal|
+        - @listings.each do |listing|
           %tr{ role: "row" }
-            - if deal.hot_deal
+            - if listing.hot_deal
               %td
                 %span.label.label-danger= "Hot Deal"
             - else
               %td
                 %span
 
-            %td= format_currency(deal.price)
-            %td= format_currency(deal.comp)
-            %td= format_currency(deal.zestimate)
-            %td= deal.address
-            %td= deal.city
-            %td= deal.bedroom
-            %td= deal.bathroom
+            %td= format_currency(listing.price)
+            %td= format_currency(listing.comp)
+            %td= format_currency(listing.zestimate)
+            %td= listing.address
+            %td= listing.city
+            %td= listing.bed_rooms
+            %td= listing.bath_rooms
+            %td= listing.added_date.utc.strftime("%m/%d/%Y")
             %td
-              = link_to deal, class: "text-primary-600" do
-                %i.icon-info22
-                Show
-
+              = link_to market_listing_send_email_path(@market, listing), remote: true, class: "text-primary-600" do
+                %i.icon-envelop
+                Email
 
       / Scrollable datatable
   .datatable-footer
     #DataTables_Table_2_info.dataTables_info{"aria-live" => "polite", :role => "status"}
     #DataTables_Table_2_paginate.dataTables_paginate.paging_simple_numbers
-      = will_paginate @deals, renderer: BootstrapPagination::Rails
+      = will_paginate @listings, renderer: BootstrapPagination::Rails

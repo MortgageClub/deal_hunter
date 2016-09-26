@@ -5,6 +5,13 @@ Rails.application.routes.draw do
     resources :users
   end
 
+  resources :markets do
+    resources :listings do
+      get 'send_email'
+    end
+  end
+
+
   resources :messages do
     get 'receive_sms', on: :collection
   end

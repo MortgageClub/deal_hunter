@@ -10,4 +10,14 @@ class OfferMailer < ActionMailer::Base
       subject: "Offer for #{@property_address}"
     )
   end
+
+  def notify_customer(listing)
+    @listing = listing
+
+    mail(
+      from: "Billy Tran <#{listing.market.from_email}>",
+      to: listing.market.to_email,
+      subject: "Make an offer for #{listing.address}"
+    )
+  end
 end

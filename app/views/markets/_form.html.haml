@@ -1,0 +1,47 @@
+= form_for @market, html: { class: "form-horizontal", role: "form" } do |f|
+  -if @market.errors.any?
+    .alert.alert-danger.alert-dismissable{role: "alert"}
+      %button.close{type: "button", data: {dismiss: "alert"} }
+        %span{aria: {hidden: "true"} } &times;
+        %span.sr-only Close
+      %h4= "#{pluralize(@market.errors.count, "error")} prohibited this market from being saved:"
+
+      %ul
+        - @market.errors.full_messages.each do |msg|
+          %li= msg
+
+  .form-group
+    = f.label :name, class: 'col-sm-2 control-label'
+    .col-sm-10
+      = f.text_field :name, class: 'form-control'
+  .form-group
+    = f.label :portal_url, class: 'col-sm-2 control-label'
+    .col-sm-10
+      = f.text_field :portal_url, class: 'form-control'
+  .form-group
+    = f.label :rehab_cost, class: 'col-sm-2 control-label'
+    .col-sm-10
+      = f.text_field :rehab_cost, class: 'form-control'
+  .form-group
+    = f.label :arv_percent, class: 'col-sm-2 control-label'
+    .col-sm-10
+      = f.text_field :arv_percent, class: 'form-control'
+  .form-group
+    = f.label :comps_weight, class: 'col-sm-2 control-label'
+    .col-sm-10
+      = f.text_field :comps_weight, class: 'form-control'
+  .form-group
+    = f.label :zestimate_weight, class: 'col-sm-2 control-label'
+    .col-sm-10
+      = f.text_field :zestimate_weight, class: 'form-control'
+  .form-group
+    = f.label :from_email, class: 'col-sm-2 control-label'
+    .col-sm-10
+      = f.text_field :from_email, class: 'form-control'
+  .form-group
+    = f.label :to_email, class: 'col-sm-2 control-label'
+    .col-sm-10
+      = f.text_field :to_email, class: 'form-control'
+  .form-group
+    .col-sm-offset-2.col-sm-10
+      = f.submit class: 'btn btn-primary'

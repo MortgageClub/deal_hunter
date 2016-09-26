@@ -30,4 +30,8 @@ namespace :crawler do
   task :matrix_agents => :environment do
     GetMatrixAgentsService.call
   end
+
+  task :get_fallas => :environment do
+    GetFallasListingsService.new.call
+  end
 end
