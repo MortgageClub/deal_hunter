@@ -10,9 +10,9 @@ class ListingsController < ApplicationController
     @show_hotdeals_option = false
     if show_hotdeal_params.present?
       @show_hotdeals_option = show_hotdeal_params == "true"
-      @listings = Listing.where(hot_deal: @show_hotdeals_option, market: @market).order('updated_at DESC').paginate(:page => params[:page], :per_page => Setting.i(:default_per_page))
+      @listings = Listing.where(hot_deal: @show_hotdeals_option, market: @market).order('added_date DESC').paginate(:page => params[:page], :per_page => Setting.i(:default_per_page))
     else
-      @listings = Listing.where(market: @market).order('updated_at DESC').paginate(:page => params[:page], :per_page => Setting.i(:default_per_page))
+      @listings = Listing.where(market: @market).order('added_date DESC').paginate(:page => params[:page], :per_page => Setting.i(:default_per_page))
     end
 
     respond_with(@listings)
@@ -26,6 +26,11 @@ class ListingsController < ApplicationController
   end
 
   def send_email
+    OfferMailer.notify_customer(Listing.find(params[:listing_id])).deliver_later
+
+    respond_to do |format|
+      format.json { head :no_content }
+    end
   end
 
   private

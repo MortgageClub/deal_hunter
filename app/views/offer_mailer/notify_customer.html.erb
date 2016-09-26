@@ -1,0 +1,30 @@
+<p>Hello,</p>
+<p>I'm interested in the below listing. Can you please help me make a cash offer? Thank you!</p>
+<table border="1" width="100%" style="border-collapse: collapse;text-align: center;">
+  <thead>
+    <tr>
+      <th>MLS</th>
+      <th>Address</th>
+      <th>City</th>
+      <th>SqFt</th>
+      <th>Yr Blt</th>
+      <th>Beds</th>
+      <th>Baths</th>
+      <th>Lot Sz</th>
+      <th>List Price</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><%= @listing.mls %></td>
+      <td><%= @listing.address %></td>
+      <td><%= @listing.city %></td>
+      <td><%= @listing.sq_ft %></td>
+      <td><%= @listing.year_built %></td>
+      <td><%= @listing.bed_rooms %></td>
+      <td><%= @listing.bath_rooms %></td>
+      <td><%= @listing.lot_sz %></td>
+      <td><%= ActionController::Base.helpers.number_to_currency(@listing.price, precision: 0) %></td>
+    </tr>
+  </tbody>
+</table>
