@@ -34,5 +34,6 @@ namespace :crawler do
   desc "Get Fallas"
   task :get_fallas => :environment do
     GetFallasListingsService.new.call
+    GetOrlandoListingsService.new.call
   end
 end

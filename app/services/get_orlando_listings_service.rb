@@ -1,8 +1,8 @@
-class GetFallasListingsService
+class GetOrlandoListingsService
   attr_reader :market
 
   def initialize
-    @market = Market.find_by_name("Dallas-Fort Worth")
+    @market = Market.find_by_name("Orlando")
   end
 
   def call
@@ -19,12 +19,13 @@ class GetFallasListingsService
 
   def parse(response)
     rows = response.search("div.singleLineDisplay")
+
     rows.each do |row|
-      mls = row.search("td.d5m10").text
+      mls = row.search("td.d5m13").text
       price = row.search("td.d5m21").text.gsub!(",", "").gsub!("$", "").to_f
-      address = row.search("td.d5m12").text
-      city = row.search("td.d5m13").text
-      deep_comps = ZillowService::GetDeepComps.call(address, "#{city}, TX")
+      address = row.search("td.d5m15").text.match(",").pre_match
+      city = row.search("td.d5m15").text.match(",").post_match
+      deep_comps = ZillowService::GetDeepComps.call(address, city)
       hot_deal = is_hot_deal?(price, deep_comps[:avg_score].to_f, deep_comps[:zestimate].to_f)
 
       if deep_comps.present?
@@ -33,13 +34,11 @@ class GetFallasListingsService
         listing.mls = mls
         listing.address = address
         listing.city = city
-        listing.added_date = format_time(row.search("td.d5m6").text)
-        listing.chg_type = row.search("td.d5m7").text
-        listing.sq_ft = row.search("td.d5m15").text.gsub!(",", "").to_f
-        listing.year_built = row.search("td.d5m16").text.to_i
-        listing.bed_rooms = row.search("td.d5m17").text.to_i
-        listing.bath_rooms = row.search("td.d5m19").text.to_f
-        listing.lot_sz = row.search("td.d5m20").text.to_f
+        listing.added_date = format_time(row.search("td.d5m9").text)
+        listing.chg_type = row.search("td.d5m10").text
+        listing.sq_ft = row.search("td.d5m20").text.gsub!(",", "").to_f
+        listing.bed_rooms = row.search("td.d5m16").text.to_i
+        listing.bath_rooms = row.search("td.d5m18").text.to_f
         listing.price = price
         listing.market = market
         listing.hot_deal = hot_deal
