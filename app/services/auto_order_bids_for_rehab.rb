@@ -28,12 +28,17 @@ class AutoOrderBidsForRehab
   end
 
   def new_project_chrome
+    is_error = false
     crawler.visit("https://www.buildzoom.com/project/new")
     sleep(3)
 
     begin
       crawler.find("#service_request_zipcode")
     rescue Exception => e
+      is_error = true
+    end
+
+    if is_error
       #set project name
       crawler.execute_script("$('#service_request_title').val('Home remodel')")
       crawler.execute_script("$('#service_request_title').trigger('change')")
@@ -66,12 +71,10 @@ class AutoOrderBidsForRehab
 
       crawler.execute_script("$('div.description-content button:last').trigger('click')")
       sleep(1)
-
-      return
+    else
+      close_crawler
+      raise Capybara::ElementNotFound
     end
-
-    close_crawler
-    raise Capybara::ElementNotFound
   end
 
   def new_project_firefox
