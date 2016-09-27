@@ -2,7 +2,6 @@ require 'capybara'
 require 'capybara/poltergeist'
 
 class GetAgentsService
-  include Capybara::DSL
   TD_COLUMN    = "td".freeze
   BLANK_SPACE  = "".freeze
   WHITE_SPACE  = " ".freeze
