@@ -33,6 +33,14 @@ class ListingsController < ApplicationController
     redirect_to market_listings_path(listing.market)
   end
 
+  def rehab
+    listing = Listing.find(params[:listing_id])
+    AutoOrderBidsForRehab.new(listing).call
+
+    flash[:notice] = "Rehab successfully."
+    redirect_to market_listings_path(listing.market)
+  end
+
   private
 
   def set_listing
