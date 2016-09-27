@@ -35,7 +35,7 @@ gem 'httparty'
 gem 'rollbar'
 gem 'bootstrap-generators'
 gem 'pundit'
-gem 'delayed_job_active_record'
+# gem 'delayed_job_active_record'
 
 # Mina tasks for handle with Puma.
 gem 'mina-puma', :require => false

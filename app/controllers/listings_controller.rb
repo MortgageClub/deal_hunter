@@ -27,7 +27,7 @@ class ListingsController < ApplicationController
 
   def send_email
     listing = Listing.find(params[:listing_id])
-    OfferMailer.notify_customer(listing).deliver_now
+    OfferMailer.notify_customer(listing).deliver_later
 
     flash[:notice] = "Sent email successfully."
     redirect_to market_listings_path(listing.market)
