@@ -30,7 +30,7 @@
             %td= format_currency(listing.comp)
             %td= format_currency(listing.zestimate)
             %td= format_currency(listing.arv.to_f)
-            %td= number_to_percentage(listing.arv_percentage.to_f * 100)
+            %td= number_to_percentage((listing.arv_percentage.to_f * 100), precision: 0)
             %td= format_currency(listing.rent.to_f)
             %td= listing.address
             %td= listing.city
