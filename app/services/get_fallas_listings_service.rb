@@ -25,9 +25,11 @@ class GetFallasListingsService
       address = row.search("td.d5m12").text
       city = row.search("td.d5m13").text
       deep_comps = ZillowService::GetDeepComps.call(address, "#{city}, TX")
+      hot_deal = is_hot_deal?(price, deep_comps[:avg_score].to_f, deep_comps[:zestimate].to_f)
 
       if deep_comps.present?
         listing = Listing.find_or_initialize_by(mls: mls)
+
         listing.mls = mls
         listing.address = address
         listing.city = city
@@ -39,9 +41,17 @@ class GetFallasListingsService
         listing.lot_sz = row.search("td.d5m20").text.to_f
         listing.price = price
         listing.market = market
-        listing.hot_deal = is_hot_deal?(price, deep_comps[:avg_score].to_f, deep_comps[:zestimate].to_f)
+        listing.hot_deal = hot_deal
         listing.comp = deep_comps[:avg_score].to_f
         listing.zestimate = deep_comps[:zestimate].to_f
+        listing.arv = market.comps_weight * deep_comps[:avg_score].to_f + market.zestimate_weight * deep_comps[:zestimate].to_f
+        listing.arv_percentage = (price + market.rehab_cost) / listing.arv
+        listing.rent = deep_comps[:rent_zestimate].to_f
+
+        if (listing.is_sent == nil || listing.is_sent == false) && hot_deal
+          listing.is_sent = true
+          OfferMailer.notify_customer(listing).deliver_now
+        end
 
         listing.save
       end
