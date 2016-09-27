@@ -2,8 +2,6 @@ require 'capybara'
 require 'capybara/poltergeist'
 
 class GetMatrixAgentsService
-  include Capybara::DSL
-
   def self.call
     set_up_crawler
     login
