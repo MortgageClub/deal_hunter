@@ -14,8 +14,9 @@
           %th.sorting_disabled{"aria-controls" => "DataTables_Table_2", "aria-label" => "Status: activate to sort column ascending", :colspan => "1", :rowspan => "1", :tabindex => "0"} City
           %th.sorting_disabled{"aria-controls" => "DataTables_Table_2", "aria-label" => "Status: activate to sort column ascending", :colspan => "1", :rowspan => "1", :tabindex => "0"} Bed
           %th.sorting_disabled{"aria-controls" => "DataTables_Table_2", "aria-label" => "Status: activate to sort column ascending", :colspan => "1", :rowspan => "1", :tabindex => "0"} Bath
+          %th.sorting_disabled{"aria-controls" => "DataTables_Table_2", "aria-label" => "Status: activate to sort column ascending", :colspan => "1", :rowspan => "1", :tabindex => "0"} Sq Ft
           %th.sorting_disabled{"aria-controls" => "DataTables_Table_2", "aria-label" => "Status: activate to sort column ascending", :colspan => "1", :rowspan => "1", :tabindex => "0"} Added Date
-          %th.text-center.sorting_disabled{"aria-label" => "Actions", :colspan => "1", :rowspan => "1", :style => "width: 100px;"} Action
+          %th.text-center.sorting_disabled{"aria-label" => "Actions", :colspan => "2", :rowspan => "1", :style => "width: 100px;"} Action
       %tbody
         - @listings.each do |listing|
           %tr{ role: "row" }
@@ -36,11 +37,16 @@
             %td= listing.city
             %td= listing.bed_rooms
             %td= listing.bath_rooms
+            %td= listing.sq_ft
             %td= listing.added_date.utc.strftime("%m/%d/%Y")
             %td
               = link_to market_listing_send_email_path(@market, listing), class: "text-primary-600" do
                 %i.icon-envelop
                 Email
+            %td
+              = link_to market_listing_rehab_path(@market, listing), class: "text-primary-600" do
+                %i.icon-circle
+                Rehab
 
       / Scrollable datatable
   .datatable-footer

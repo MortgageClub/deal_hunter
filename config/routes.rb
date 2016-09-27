@@ -8,6 +8,7 @@ Rails.application.routes.draw do
   resources :markets do
     resources :listings do
       get 'send_email'
+      get 'rehab'
     end
   end
 
