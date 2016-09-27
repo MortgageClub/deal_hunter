@@ -35,9 +35,14 @@ class ListingsController < ApplicationController
 
   def rehab
     listing = Listing.find(params[:listing_id])
-    AutoOrderBidsForRehab.new(listing).call
 
-    flash[:notice] = "Rehab successfully."
+    begin
+      AutoOrderBidsForRehab.new(listing).call
+      flash[:notice] = "Rehab successfully."
+    rescue
+      flash[:notice] = "Rehad fail. Please try again!"
+    end
+
     redirect_to market_listings_path(listing.market)
   end
 

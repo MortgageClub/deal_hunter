@@ -12,14 +12,9 @@ class AutoOrderBidsForRehab
   def call
     result = []
 
-    begin
-      login
-      new_project_chrome
-    rescue Capybara::ElementNotFound => error
-      Rollbar.error(error)
-    ensure
-      close_crawler
-    end
+    login
+    new_project_chrome
+    close_crawler
 
     result
   end
@@ -36,38 +31,47 @@ class AutoOrderBidsForRehab
     crawler.visit("https://www.buildzoom.com/project/new")
     sleep(3)
 
-    #set project name
-    crawler.execute_script("$('#service_request_title').val('Home remodel')")
-    crawler.execute_script("$('#service_request_title').trigger('change')")
-    crawler.execute_script("$('div.title-content button:last').trigger('click')")
+    begin
+      crawler.find("#service_request_zipcode")
+    rescue Exception => e
+      #set project name
+      crawler.execute_script("$('#service_request_title').val('Home remodel')")
+      crawler.execute_script("$('#service_request_title').trigger('change')")
+      crawler.execute_script("$('div.title-content button:last').trigger('click')")
 
-    #select time
-    crawler.execute_script("$('div.urgency-content div.answer-button[tabindex=4]').trigger('click')")
+      #select time
+      crawler.execute_script("$('div.urgency-content div.answer-button[tabindex=4]').trigger('click')")
 
-    #select bids
-    crawler.execute_script("$('div.expected-responses-content div.answer-button[tabindex=9]').trigger('click')")
+      #select bids
+      crawler.execute_script("$('div.expected-responses-content div.answer-button[tabindex=9]').trigger('click')")
 
-    #set address
-    crawler.execute_script("$($('input.project-location')[0]).val('#{listing.address}, #{listing.city}')")
-    crawler.execute_script("$($('input.project-location')[0]).trigger('change')")
-    sleep(3)
-    crawler.execute_script("$($('.uib-typeahead-match')[0]).trigger('click')")
-    crawler.execute_script("$('div.location-content button:last').trigger('click')")
+      #set address
+      crawler.execute_script("$($('input.project-location')[0]).val('#{listing.address}, #{listing.city}')")
+      crawler.execute_script("$($('input.project-location')[0]).trigger('change')")
+      sleep(3)
+      crawler.execute_script("$($('.uib-typeahead-match')[0]).trigger('click')")
+      crawler.execute_script("$('div.location-content button:last').trigger('click')")
 
-    #select square feet
-    crawler.execute_script("$('div.job-site-content div.answer-button:nth(3)').trigger('click')")
+      #select square feet
+      crawler.execute_script("$('div.job-site-content div.answer-button:nth(3)').trigger('click')")
 
-    #select buget
-    crawler.execute_script("$('#budget').val('string:5000-20000')")
-    crawler.execute_script("$('#budget').trigger('change')")
-    crawler.execute_script("$('div.budget-content button:last').trigger('click')")
+      #select buget
+      crawler.execute_script("$('#budget').val('string:5000-20000')")
+      crawler.execute_script("$('#budget').trigger('change')")
+      crawler.execute_script("$('div.budget-content button:last').trigger('click')")
 
-    #set description
-    crawler.execute_script("$($('div.description-content textarea')[0]).val('Hello, my name is Billy. I am looking for a professional to perform a total home remodel on a home that we recently purchased. The remodel will include interior and exterior paint, new laminate flooring, renovate bathrooms, renovate kitchen, and other miscellaneous items. \\nIf you are interested please contact me. Thanks.')")
-    crawler.execute_script("$($('div.description-content textarea')[0]).trigger('change')")
+      #set description
+      crawler.execute_script("$($('div.description-content textarea')[0]).val('Hello, my name is Billy. I am looking for a professional to perform a total home remodel on a home that we recently purchased. The remodel will include interior and exterior paint, new laminate flooring, renovate bathrooms, renovate kitchen, and other miscellaneous items. \\nIf you are interested please contact me. Thanks.')")
+      crawler.execute_script("$($('div.description-content textarea')[0]).trigger('change')")
 
-    crawler.execute_script("$('div.description-content button:last').trigger('click')")
-    sleep(1)
+      crawler.execute_script("$('div.description-content button:last').trigger('click')")
+      sleep(1)
+
+      return
+    end
+
+    close_crawler
+    raise Capybara::ElementNotFound
   end
 
   def new_project_firefox
