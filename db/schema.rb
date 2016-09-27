@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160926022506) do
+ActiveRecord::Schema.define(version: 20160926234924) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -79,19 +79,23 @@ ActiveRecord::Schema.define(version: 20160926022506) do
     t.string   "mls"
     t.string   "address"
     t.string   "city"
-    t.decimal  "sq_ft",      precision: 15, scale: 3
+    t.decimal  "sq_ft",          precision: 15, scale: 3
     t.integer  "year_built"
     t.integer  "bed_rooms"
-    t.decimal  "bath_rooms", precision: 15, scale: 3
-    t.decimal  "price",      precision: 15, scale: 3
-    t.decimal  "lot_sz",     precision: 15, scale: 3
+    t.decimal  "bath_rooms",     precision: 15, scale: 3
+    t.decimal  "price",          precision: 15, scale: 3
+    t.decimal  "lot_sz",         precision: 15, scale: 3
     t.integer  "market_id"
-    t.datetime "created_at",                          null: false
-    t.datetime "updated_at",                          null: false
+    t.datetime "created_at",                              null: false
+    t.datetime "updated_at",                              null: false
     t.boolean  "hot_deal"
-    t.decimal  "zestimate",  precision: 15, scale: 3
-    t.decimal  "comp",       precision: 15, scale: 3
+    t.decimal  "zestimate",      precision: 15, scale: 3
+    t.decimal  "comp",           precision: 15, scale: 3
     t.datetime "added_date"
+    t.decimal  "rent",           precision: 15, scale: 3
+    t.decimal  "arv",            precision: 15, scale: 3
+    t.decimal  "arv_percentage", precision: 15, scale: 4
+    t.boolean  "is_sent"
   end
 
   add_index "listings", ["market_id"], name: "index_listings_on_market_id", using: :btree

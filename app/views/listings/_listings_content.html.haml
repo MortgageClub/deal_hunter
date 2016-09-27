@@ -7,6 +7,9 @@
           %th.sorting_disabled{"aria-controls" => "DataTables_Table_2", "aria-label" => "Last Name: activate to sort column ascending", :colspan => "1", :rowspan => "1", :tabindex => "0"} Price
           %th.sorting_disabled{"aria-controls" => "DataTables_Table_2", "aria-label" => "Job Title: activate to sort column ascending", :colspan => "1", :rowspan => "1", :tabindex => "0"} Comps
           %th.sorting_disabled{"aria-controls" => "DataTables_Table_2", "aria-label" => "DOB: activate to sort column ascending", :colspan => "1", :rowspan => "1", :tabindex => "0"} Zestimate
+          %th.sorting_disabled{"aria-controls" => "DataTables_Table_2", "aria-label" => "Status: activate to sort column ascending", :colspan => "1", :rowspan => "1", :tabindex => "0"} ARV
+          %th.sorting_disabled{"aria-controls" => "DataTables_Table_2", "aria-label" => "Status: activate to sort column ascending", :colspan => "1", :rowspan => "1", :tabindex => "0"} %ARV
+          %th.sorting_disabled{"aria-controls" => "DataTables_Table_2", "aria-label" => "Status: activate to sort column ascending", :colspan => "1", :rowspan => "1", :tabindex => "0"} Rent
           %th.sorting_disabled{"aria-controls" => "DataTables_Table_2", "aria-label" => "Status: activate to sort column ascending", :colspan => "1", :rowspan => "1", :tabindex => "0"} Address
           %th.sorting_disabled{"aria-controls" => "DataTables_Table_2", "aria-label" => "Status: activate to sort column ascending", :colspan => "1", :rowspan => "1", :tabindex => "0"} City
           %th.sorting_disabled{"aria-controls" => "DataTables_Table_2", "aria-label" => "Status: activate to sort column ascending", :colspan => "1", :rowspan => "1", :tabindex => "0"} Bed
@@ -26,6 +29,9 @@
             %td= format_currency(listing.price)
             %td= format_currency(listing.comp)
             %td= format_currency(listing.zestimate)
+            %td= format_currency(listing.arv.to_f)
+            %td= number_to_percentage(listing.arv_percentage.to_f * 100)
+            %td= format_currency(listing.rent.to_f)
             %td= listing.address
             %td= listing.city
             %td= listing.bed_rooms

@@ -14,18 +14,28 @@ module ZillowService
       params = {
         'zpid' => zpid,
         'count' => NUMBER_OF_RESULTS,
-        'zws-id' => 'X1-ZWz1aylbpp3aiz_98wrk'
+        'zws-id' => 'X1-ZWz1aylbpp3aiz_98wrk',
+        'rentzestimate' => 'true'
       }
 
       response = get('http://www.zillow.com/webservice/GetDeepComps.htm', query: params)
 
       return {} unless ok?(response)
 
-      { zestimate: get_zestimate(response['comps']), avg_score: self.get_average_score(response['comps']) }
+      {
+        zestimate: get_zestimate(response['comps']),
+        avg_score: get_average_score(response['comps']),
+        rent_zestimate: get_rent_zestimate(response['comps'])
+      }
     end
 
     def self.get_zestimate(comps)
       comps['response'].try(:[], 'properties').try(:[], 'principal').try(:[], 'zestimate').try(:[], 'amount')['__content__'].to_f
+    end
+
+    def self.get_rent_zestimate(comps)
+      rent = comps['response'].try(:[], 'properties').try(:[], 'principal').try(:[], 'rentzestimate').try(:[], 'amount')
+      rent ? rent['__content__'].to_f : 0.0
     end
 
     def self.get_average_score(comps)
