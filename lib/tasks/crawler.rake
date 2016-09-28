@@ -33,7 +33,8 @@ namespace :crawler do
 
   desc "Get Fallas"
   task :get_fallas => :environment do
-    GetFallasListingsService.new.call
-    GetOrlandoListingsService.new.call
+    MarketServices::FallasListings.new.call
+    MarketServices::OrlandoListings.new.call
+    MarketServices::SanJoseListings.new.call
   end
 end
