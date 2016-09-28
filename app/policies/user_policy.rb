@@ -34,6 +34,10 @@ class UserPolicy
     admin?
   end
 
+  def get_listing?
+    admin?
+  end
+
   private
 
   def admin?

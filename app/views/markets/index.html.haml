@@ -14,8 +14,9 @@
             %th.sorting_disabled{"aria-controls" => "DataTables_Table_2", "aria-label" => "Weight of comps: activate to sort column ascending", "aria-sort" => "ascending", :colspan => "1", :rowspan => "1", :tabindex => "0"} Weight of comps
             %th.sorting_disabled{"aria-controls" => "DataTables_Table_2", "aria-label" => "Weight of Zestimate: activate to sort column ascending", "aria-sort" => "ascending", :colspan => "1", :rowspan => "1", :tabindex => "0"} Weight of Zestimate
             %th.sorting_disabled{"aria-controls" => "DataTables_Table_2", "aria-label" => "Last Name: activate to sort column ascending", :colspan => "1", :rowspan => "1", :tabindex => "0"} Action
-            %th.sorting_disabled{"aria-controls" => "DataTables_Table_2", "aria-label" => "Status: activate to sort column ascending", :colspan => "1", :rowspan => "1", :tabindex => "0"}
-            %th.text-center.sorting_disabled{"aria-label" => "Actions", :colspan => "1", :rowspan => "1", :style => "width: 100px;"}
+            %th.text-center.sorting_disabled{"aria-label" => "Actions", :colspan => "1", :rowspan => "1"}
+            %th.text-center.sorting_disabled{"aria-label" => "Actions", :colspan => "1", :rowspan => "1"}
+            %th.text-center.sorting_disabled{"aria-label" => "Actions", :colspan => "1", :rowspan => "1"}
         %tbody
           - @markets.each do |market|
             %tr{ role: "row" }
@@ -24,6 +25,10 @@
               %td= market.arv_percent
               %td= market.comps_weight
               %td= market.zestimate_weight
+              %td
+                = link_to market_get_listing_path(market), class: "text-primary-600" do
+                  %span.glyphicon.glyphicon-thumbs-up
+                  Crawl
               %td
                 = link_to market, class: "text-primary-600" do
                   %i.icon-info22
