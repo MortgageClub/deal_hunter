@@ -2,8 +2,8 @@ module MarketServices
   class OrlandoListings
     attr_reader :market
 
-    def initialize
-      @market = Market.find_by_name("Orlando")
+    def initialize(market = nil)
+      @market = market || Market.find_by_name("Orlando")
     end
 
     def call

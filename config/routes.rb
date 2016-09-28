@@ -6,6 +6,8 @@ Rails.application.routes.draw do
   end
 
   resources :markets do
+    get 'get_listing'
+
     resources :listings do
       get 'send_email'
       get 'rehab'

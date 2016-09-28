@@ -2,8 +2,8 @@ module MarketServices
   class FallasListings
     attr_reader :market
 
-    def initialize
-      @market = Market.find_by_name("Dallas-Fort Worth")
+    def initialize(market = nil)
+      @market = market || Market.find_by_name("Dallas-Fort Worth")
     end
 
     def call

@@ -1,6 +1,6 @@
 class MarketsController < ApplicationController
   before_action :authorize_user!
-  before_action :set_market, only: [:show, :edit, :update, :destroy]
+  before_action :set_market, only: [:show, :edit, :update, :destroy, :get_listings]
 
   def index
     @markets = Market.paginate(:page => params[:page], :per_page => Setting.i(:default_per_page))
@@ -25,6 +25,25 @@ class MarketsController < ApplicationController
   end
 
   def show
+  end
+
+  def get_listing
+    market = Market.find(params[:market_id])
+    if market
+      case market.name
+      when "Dallas-Fort Worth"
+        MarketServices::FallasListings.new(market).call
+      when "Orlando"
+        MarketServices::OrlandoListings.new(market).call
+      when "San Jose"
+        MarketServices::SanJoseListings.new(market).call
+      else
+      end
+    end
+
+    respond_to do |format|
+      format.html { redirect_to markets_path, notice: "#{market.name}\'s listings updated." }
+    end
   end
 
   def edit
