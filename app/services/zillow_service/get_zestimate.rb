@@ -13,8 +13,9 @@ module ZillowService
       params = {
         'address' => address,
         'citystatezip' => citystatezip,
-        'zws-id' => 'X1-ZWz1aylbpp3aiz_98wrk',
+        'zws-id' => ManageZillowKey.get_zillow_key
       }
+
       response = get('http://www.zillow.com/webservice/GetDeepSearchResults.htm', query: params)
       response.try(:[], 'searchresults').try(:[], 'response').try(:[], 'results').try(:[], 'result')
     end

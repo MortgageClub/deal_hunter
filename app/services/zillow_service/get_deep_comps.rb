@@ -5,16 +5,23 @@ module ZillowService
 
     def self.call(address, citystatezip)
       zpid = ZillowService::GetZpid.call(address, citystatezip)
+
+      if zpid.nil?
+        zpid = ZillowService::GetZpid.call(address, citystatezip)
+      end
+
       get_scores(zpid)
     end
 
     private
 
     def self.get_scores(zpid)
+      return {} unless zpid
+
       params = {
         'zpid' => zpid,
         'count' => NUMBER_OF_RESULTS,
-        'zws-id' => 'X1-ZWz1aylbpp3aiz_98wrk',
+        'zws-id' => ManageZillowKey.get_zillow_key,
         'rentzestimate' => 'true'
       }
 
