@@ -41,6 +41,8 @@ class MarketsController < ApplicationController
         MarketServices::FortLauderdaleListings.new(market).call
       when "Sacramento"
         MarketServices::SacramentoListings.new(market).call
+      when "Tampa"
+        MarketServices::TampaListings.new(market).call
       else
       end
     end

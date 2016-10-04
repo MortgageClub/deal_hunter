@@ -38,5 +38,6 @@ namespace :crawler do
     MarketServices::SanJoseListings.new.call
     MarketServices::FortLauderdaleListings.new.call
     MarketServices::SacramentoListings.new.call
+    MarketServices::TampaListings.new.call
   end
 end
