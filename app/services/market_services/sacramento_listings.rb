@@ -14,9 +14,9 @@ module MarketServices
         return unless response.iframe.src
 
         response = agent.get response.iframe.src
-        return unless response.iframes.last.src
+        return unless response.iframe_with(id: "WebTab_Frame0")
 
-        response = agent.get response.iframes.last.src
+        response = agent.get response.iframe_with(id: "WebTab_Frame0").src
 
         if response.code == "200"
           parse(response)
