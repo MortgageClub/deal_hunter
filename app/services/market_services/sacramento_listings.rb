@@ -60,7 +60,7 @@ module MarketServices
 
           if (listing.is_sent == nil || listing.is_sent == false) && hot_deal
             listing.is_sent = true
-            OfferMailer.notify_customer(listing).deliver_later
+            OfferMailer.notify_customer(listing).deliver_now
           end
 
           listing.save
