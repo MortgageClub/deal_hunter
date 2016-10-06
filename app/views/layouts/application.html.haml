@@ -26,52 +26,53 @@
             %span.icon-bar
           = link_to "DEAL HUNTER", root_path, class: "navbar-brand"
         #navbar.collapse.navbar-collapse
-          %ul.nav.navbar-nav
-            - @markets_top.each do |market|
-              %li{:class => active_class(market_listings_path(market))}
-                = link_to market.name, market_listings_path(market)
-          %ul.nav.navbar-nav.pull-right
-            %li.dropdown
-              - if current_user.present?
-                %a.dropdown-toggle{"data-toggle" => "dropdown", :href => "#"}
-                  #{current_user.email}
-                  %b.caret
-                %ul.dropdown-menu
-                  %li
-                    = link_to edit_user_registration_path do
-                      %i.icon-cog
-                      Profile
-                  - if current_user.admin?
+          %div
+            %ul.nav.navbar-nav.pull-right
+              %li.dropdown
+                - if current_user.present?
+                  %a.dropdown-toggle{"data-toggle" => "dropdown", :href => "#"}
+                    #{current_user.email}
+                    %b.caret
+                  %ul.dropdown-menu
                     %li
-                      = link_to new_user_path do
-                        %i.icon-user
-                        Create new user
-                    %li
-                      = link_to new_market_path do
-                        %i.icon-plus3
-                        Create new market
-                  %li.divider
-                  - if current_user && current_user.admin?
-                    %li
-                      = link_to users_path do
-                        %i.icon-user-plus
-                        Users Management
-                    %li
-                      = link_to markets_path do
-                        %i.icon-gallery
-                        Markets Management
+                      = link_to edit_user_registration_path do
+                        %i.icon-cog
+                        Profile
+                    - if current_user.admin?
+                      %li
+                        = link_to new_user_path do
+                          %i.icon-user
+                          Create new user
+                      %li
+                        = link_to new_market_path do
+                          %i.icon-plus3
+                          Create new market
                     %li.divider
-                  %li
-                    = link_to destroy_user_session_path, method: :delete do
-                      %i.icon-switch2
-                      Logout
-              - else
-                %ul.nav.navbar-nav
-                  %li
-                    = link_to "Log in", new_user_session_path
-    .page-container
+                    - if current_user && current_user.admin?
+                      %li
+                        = link_to users_path do
+                          %i.icon-user-plus
+                          Users Management
+                      %li
+                        = link_to markets_path do
+                          %i.icon-gallery
+                          Markets Management
+                      %li.divider
+                    %li
+                      = link_to destroy_user_session_path, method: :delete do
+                        %i.icon-switch2
+                        Logout
+                - else
+                  %ul.nav.navbar-nav
+                    %li
+                      = link_to "Log in", new_user_session_path
+          %div
+            %ul.nav.navbar-nav
+              - @markets_top.each do |market|
+                %li{:class => active_class(market_listings_path(market))}
+                  = link_to market.name, market_listings_path(market)
+    .page-container{style: "margin-top: 40px"}
       .page-content
-
         .content-wrapper
           / Page header
           .page-header
@@ -89,7 +90,7 @@
             = yield
             / Footer
             .footer.text-muted
-              © 2015.
+              © 2016.
               = link_to "Deal Hunter", root_path
               by
               %a{:href => "http://www.mortgageclub.co", :target => "_blank"} MortgageClub
