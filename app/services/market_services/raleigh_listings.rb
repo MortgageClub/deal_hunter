@@ -1,0 +1,73 @@
+module MarketServices
+  class RaleighListings
+    attr_reader :market
+
+    def initialize(market = nil)
+      @market = market || Market.find_by_name("Raleigh-Durham")
+    end
+
+    def call
+      if market
+        agent = Mechanize.new
+
+        response = agent.get market.portal_url
+        data = agent.post "/ClientConnect/Irene_Mistretta/Listings/GetSavedSearches/0?orderId=0"
+
+        if data.body
+          parse(data.body)
+        end
+      end
+    end
+
+    private
+
+    def parse(data)
+      data = JSON.load data
+
+      data.each do |row|
+        mls = row["ListingID"]
+        price = row["CurrentPrice"]
+        address = row["AddressLine"]
+        city = row["City"]
+        state = row["State"]
+
+        deep_comps = ZillowService::GetDeepComps.call(address, "#{city}, #{state}")
+        hot_deal = is_hot_deal?(price, deep_comps[:avg_score].to_f, deep_comps[:zestimate].to_f)
+
+        if deep_comps.present?
+          listing = Listing.find_or_initialize_by(mls: mls)
+
+          listing.mls = mls
+          listing.address = address
+          listing.city = city
+          listing.added_date = row["UpdateDate"].to_datetime
+          listing.chg_type = nil
+          listing.sq_ft = row["SquareFeet"].to_f
+          listing.year_built = nil
+          listing.bed_rooms = row["Beds"].to_f
+          listing.bath_rooms = row["Baths"].to_f
+          listing.lot_sz = nil
+          listing.price = price
+          listing.market = market
+          listing.hot_deal = hot_deal
+          listing.comp = deep_comps[:avg_score].to_f
+          listing.zestimate = deep_comps[:zestimate].to_f
+          listing.arv = market.comps_weight * deep_comps[:avg_score].to_f + market.zestimate_weight * deep_comps[:zestimate].to_f
+          listing.arv_percentage = (price + market.rehab_cost) / listing.arv
+          listing.rent = deep_comps[:rent_zestimate].to_f
+
+          if (listing.is_sent == nil || listing.is_sent == false) && hot_deal
+            listing.is_sent = true
+            OfferMailer.notify_customer(listing).deliver_now
+          end
+
+          listing.save
+        end
+      end
+    end
+
+    def is_hot_deal?(price, comp, zestimate)
+      price + market.rehab_cost <= market.arv_percent * (market.comps_weight * comp + market.zestimate_weight * zestimate)
+    end
+  end
+end
