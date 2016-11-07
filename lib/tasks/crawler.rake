@@ -42,5 +42,6 @@ namespace :crawler do
     MarketServices::HoustonListings.new.call
     MarketServices::CharlotteListings.new.call
     MarketServices::RaleighListings.new.call
+    MarketServices::SeattleListings.new.call
   end
 end
