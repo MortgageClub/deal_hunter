@@ -25,7 +25,9 @@ module MarketServices
         price = row.search("td.d1085m15").text.gsub(",", "").gsub("$", "").to_f
         address = row.search("td.d1085m13").text
         city = row.search("td.d1085m22").text
-        deep_comps = ZillowService::GetDeepComps.call(address, "#{city}, CA")
+        city = "#{city}, CA"
+
+        deep_comps = ZillowService::GetDeepComps.call(address, city)
         hot_deal = is_hot_deal?(price, deep_comps[:avg_score].to_f, deep_comps[:zestimate].to_f)
 
         if deep_comps.present?

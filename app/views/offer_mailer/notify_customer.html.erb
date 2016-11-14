@@ -17,8 +17,8 @@
   <tbody>
     <tr>
       <td><%= @listing.mls %></td>
-      <td><%= @listing.address %></td>
-      <td><%= @listing.city %></td>
+      <td><%= @listing.address.to_s.titleize %></td>
+      <td><%= @listing.city.to_s.titleize %></td>
       <td><%= @listing.sq_ft %></td>
       <td><%= @listing.year_built %></td>
       <td><%= @listing.bed_rooms %></td>

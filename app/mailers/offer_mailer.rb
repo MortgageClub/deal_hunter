@@ -17,7 +17,7 @@ class OfferMailer < ActionMailer::Base
     mail(
       from: "Billy Tran <#{listing.market.from_email}>",
       to: listing.market.to_email,
-      subject: "Make an offer for #{listing.address}"
+      subject: "Make an offer for #{listing.address.to_s.titleize}, #{listing.city.to_s.titleize}"
     )
   end
 end
