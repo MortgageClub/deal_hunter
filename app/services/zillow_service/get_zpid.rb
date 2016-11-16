@@ -7,7 +7,7 @@ module ZillowService
       params = {
         'address' => address,
         'citystatezip' => citystatezip,
-        'zws-id' => ManageZillowKey.get_zillow_key
+        'zws-id' => "X1-ZWz1a4mphgfggb_7zykg"
       }
 
       response = get('http://www.zillow.com/webservice/GetDeepSearchResults.htm', query: params)
@@ -16,6 +16,9 @@ module ZillowService
         property_info = response['searchresults']['response']['results']['result']
         return property_info[0]['zpid'] if property_info[0]
         property_info['zpid']
+      else
+        ap "Get zpid errors"
+        ap response
       end
     end
   end

@@ -6,9 +6,9 @@ module ZillowService
     def self.call(address, citystatezip)
       zpid = ZillowService::GetZpid.call(address, citystatezip)
 
-      if zpid.nil?
-        zpid = ZillowService::GetZpid.call(address, citystatezip)
-      end
+      # if zpid.nil?
+      #   zpid = ZillowService::GetZpid.call(address, citystatezip)
+      # end
 
       get_scores(zpid)
     end

@@ -7,7 +7,8 @@ class ManageZillowKey
     "X1-ZWz1fgkdqvgxl7_8nu8h": 0,
     "X1-ZWz19jy37k5zwr_8p8sy": 0,
     "X1-ZWz1fgkhoxp1jf_8qndf": 0,
-    "X1-ZWz19jxz9hxvyj_8s1xw": 0
+    "X1-ZWz19jxz9hxvyj_8s1xw": 0,
+    "X1-ZWz1a4mphgfggb_7zykg": 0
   }
 
   def self.set_zillow_key(key)
@@ -34,7 +35,8 @@ class ManageZillowKey
       "X1-ZWz1fgkdqvgxl7_8nu8h": 0,
       "X1-ZWz19jy37k5zwr_8p8sy": 0,
       "X1-ZWz1fgkhoxp1jf_8qndf": 0,
-      "X1-ZWz19jxz9hxvyj_8s1xw": 0
+      "X1-ZWz19jxz9hxvyj_8s1xw": 0,
+      "X1-ZWz1a4mphgfggb_7zykg": 0
     }
   end
 end
