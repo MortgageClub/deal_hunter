@@ -19,13 +19,13 @@ module MarketServices
     private
 
     def parse(response)
-      rows = response.search("div.singleLineDisplay")
+      rows = response.search("#_ctl0_m_divAsyncPagedDisplays .multiLineDisplay")
+
       rows.each do |row|
-        mls = row.search("td.d5m10").text
-        price = row.search("td.d5m21").text.gsub(",", "").gsub("$", "").to_f
-        address = row.search("td.d5m12").text
-        city = row.search("td.d5m13").text
-        city = "#{city}, TX"
+        mls = row.search(".d-fontWeight--bold").first.text
+        price = row.search(".d-fontSize--largest").first.text.gsub(",", "").gsub("$", "").to_f
+        address = row.search(".d-text").first.text.delete!('\n')
+        city = row.search(".J_formula").last.text
 
         deep_comps = ZillowService::GetDeepComps.call(address, city)
         hot_deal = is_hot_deal?(price, deep_comps[:avg_score].to_f, deep_comps[:zestimate].to_f)
@@ -36,13 +36,13 @@ module MarketServices
           listing.mls = mls
           listing.address = address
           listing.city = city
-          listing.added_date = format_time(row.search("td.d5m6").text)
-          listing.chg_type = row.search("td.d5m7").text
-          listing.sq_ft = row.search("td.d5m15").text.gsub(",", "").to_f
-          listing.year_built = row.search("td.d5m16").text.to_i
-          listing.bed_rooms = row.search("td.d5m17").text.to_i
-          listing.bath_rooms = row.search("td.d5m19").text.to_f
-          listing.lot_sz = row.search("td.d5m20").text.to_f
+          listing.added_date = Time.now
+          listing.chg_type = ''
+          listing.sq_ft = row.search(".d-fontWeight--bold")[3].text.gsub(",", "").to_f
+          listing.year_built = row.search(".d-fontWeight--bold")[4].text.to_i
+          listing.bed_rooms = row.search(".d-fontWeight--bold")[1].text
+          listing.bath_rooms = row.search(".d-fontWeight--bold")[2].text
+          listing.lot_sz = ''
           listing.price = price
           listing.market = market
           listing.hot_deal = hot_deal
