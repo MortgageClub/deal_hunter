@@ -24,8 +24,8 @@ module MarketServices
       rows.each do |row|
         mls = row.search(".d-fontWeight--bold").first.text
         price = row.search(".d-fontSize--largest").first.text.gsub(",", "").gsub("$", "").to_f
-        address = row.search(".d-text").first.text.delete!('\n')
-        city = row.search(".J_formula").last.text
+        address = row.search(".d-fontSize--largest").last.text.strip
+        city = row.search(".d-fontSize--small").first.text.strip
 
         deep_comps = ZillowService::GetDeepComps.call(address, city)
         hot_deal = is_hot_deal?(price, deep_comps[:avg_score].to_f, deep_comps[:zestimate].to_f)
@@ -53,8 +53,8 @@ module MarketServices
           listing.rent = deep_comps[:rent_zestimate].to_f
 
           if (listing.is_sent == nil || listing.is_sent == false) && hot_deal
-            listing.is_sent = true
-            OfferMailer.notify_customer(listing).deliver_now
+            # listing.is_sent = true
+            # OfferMailer.notify_customer(listing).deliver_now
           end
 
           listing.save
