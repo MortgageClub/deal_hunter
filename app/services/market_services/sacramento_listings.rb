@@ -9,8 +9,8 @@ module MarketServices
     def call
       if market
         agent = Mechanize.new
-        response = agent.get market.portal_url
 
+        response = agent.get market.portal_url
         return unless response.iframe.src
 
         response = agent.get response.iframe.src
@@ -21,34 +21,39 @@ module MarketServices
         if response.code == "200"
           parse(response)
         end
+
+        p "Done"
+      else
+        p "Market is not exist"
       end
     end
 
     private
 
     def parse(response)
-      rows_info = response.search("#divListingContainer table tr[style*='white-space: nowrap']")
+      rows_info = response.search("#divListingContainer table tr.search-result-row")
       rows_address = response.search("#divListingContainer table tr[id*='trRow2']")
 
       rows_info.each_with_index do |row, index|
-        mls = row.search("td:nth(2)").text.strip
-        price = row.search("td:nth(4)").text.strip.gsub(",", "").gsub("$", "").to_f
-        address = rows_address[index].search("table tr td:nth(3) tr:nth(1) td:nth(2) span:first").text.strip + " " + rows_address[index].search("table tr td:nth(3) tr:nth(1) td:nth(2) span:last").text.strip
-        city = rows_address[index].search("table tr td:nth(3) tr:nth(2) td:nth(1) span").text.strip
+        mls = row.search("span.listingNum").text[9..-1]
+        price = row.search("h4.rapIDXSearchResultsPriceTop").text.strip.gsub(",", "").gsub("$", "").to_f
+        address = row.search("h4.address div").first.text.strip
+        city = row.search("h4.address div").last.text.strip
         deep_comps = ZillowService::GetDeepComps.call(address, city)
         hot_deal = is_hot_deal?(price, deep_comps[:avg_score].to_f, deep_comps[:zestimate].to_f)
 
         if deep_comps.present?
           listing = Listing.find_or_initialize_by(mls: mls)
-
           listing.mls = mls
           listing.address = address
           listing.city = city
-          listing.added_date = format_time(row.search("td:nth(12)").text.strip)
-          listing.chg_type = row.search("td:nth(11)").text.strip
-          listing.sq_ft = row.search("td:nth(7)").text.strip.gsub(",", "").to_f
-          listing.bed_rooms = row.search("td:nth(5)").text.strip.to_i
-          listing.bath_rooms = row.search("td:nth(6)").text.strip.to_f
+          listing.added_date = format_time(row.search("span[id$=spnDateUpdated]").text.strip[14..-1])
+          listing.chg_type = row.search(".listingSubtype div.display-label").text.strip
+          listing.sq_ft = row.search(".listingSqFt div.display-label").text.strip.gsub(",", "").to_f
+          listing.bed_rooms = row.search(".listingBeds div.display-label").text.strip.to_i
+          listing.bath_rooms = row.search(".listingBaths div.display-label").text.strip
+          listing.year_built = row.search(".listingYrBuilt div.display-label").text.strip
+          listing.lot_sz = row.search(".listingLotz div.display-label").text.strip
           listing.price = price
           listing.market = market
           listing.hot_deal = hot_deal
@@ -59,8 +64,8 @@ module MarketServices
           listing.rent = deep_comps[:rent_zestimate].to_f
 
           if (listing.is_sent == nil || listing.is_sent == false) && hot_deal
-            listing.is_sent = true
-            OfferMailer.notify_customer(listing).deliver_now
+            # listing.is_sent = true
+            # OfferMailer.notify_customer(listing).deliver_now
           end
 
           listing.save
@@ -73,7 +78,11 @@ module MarketServices
     end
 
     def format_time(str)
-      str.sub(eval('%r_(?<!\d)(\d{1,2})/(\d{1,2})/(\d{4}|\d{2})(?!\d)_').freeze){|m| "#$3-#$1-#$2"}.to_datetime
+      if str
+        str.sub(eval('%r_(?<!\d)(\d{1,2})/(\d{1,2})/(\d{4}|\d{2})(?!\d)_').freeze){|m| "#$3-#$1-#$2"}.to_datetime
+      else
+        DateTime.now
+      end
     end
   end
 end

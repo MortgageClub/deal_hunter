@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161006001209) do
+ActiveRecord::Schema.define(version: 20171028054929) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -79,12 +79,12 @@ ActiveRecord::Schema.define(version: 20161006001209) do
     t.string   "mls"
     t.string   "address"
     t.string   "city"
-    t.decimal  "sq_ft",          precision: 15, scale: 3
+    t.text     "sq_ft"
     t.integer  "year_built"
     t.integer  "bed_rooms"
-    t.decimal  "bath_rooms",     precision: 15, scale: 3
+    t.text     "bath_rooms"
     t.decimal  "price",          precision: 15, scale: 3
-    t.decimal  "lot_sz",         precision: 15, scale: 3
+    t.text     "lot_sz"
     t.integer  "market_id"
     t.datetime "created_at",                              null: false
     t.datetime "updated_at",                              null: false
