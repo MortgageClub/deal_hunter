@@ -53,8 +53,8 @@ module MarketServices
           listing.rent = deep_comps[:rent_zestimate].to_f
 
           if (listing.is_sent == nil || listing.is_sent == false) && hot_deal
-            # listing.is_sent = true
-            # OfferMailer.notify_customer(listing).deliver_now
+            listing.is_sent = true
+            OfferMailer.notify_customer(listing).deliver_now
           end
 
           listing.save
