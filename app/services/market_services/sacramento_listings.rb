@@ -32,9 +32,8 @@ module MarketServices
 
     def parse(response)
       rows_info = response.search("#divListingContainer table tr.search-result-row")
-      rows_address = response.search("#divListingContainer table tr[id*='trRow2']")
 
-      rows_info.each_with_index do |row, index|
+      rows_info.reverse.each do |row|
         mls = row.search("span.listingNum").text[9..-1]
         price = row.search("h4.rapIDXSearchResultsPriceTop").text.strip.gsub(",", "").gsub("$", "").to_f
         address = row.search("h4.address div").first.text.strip

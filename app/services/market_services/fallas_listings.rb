@@ -21,12 +21,11 @@ module MarketServices
     def parse(response)
       rows = response.search("#_ctl0_m_divAsyncPagedDisplays .multiLineDisplay")
 
-      rows.each do |row|
+      rows.reverse.each do |row|
         mls = row.search(".d-fontWeight--bold").first.text
         price = row.search(".d-fontSize--largest").first.text.gsub(",", "").gsub("$", "").to_f
         address = row.search(".d-fontSize--largest").last.text.strip
         city = row.search(".d-fontSize--small").first.text.strip
-
         deep_comps = ZillowService::GetDeepComps.call(address, city)
         hot_deal = is_hot_deal?(price, deep_comps[:avg_score].to_f, deep_comps[:zestimate].to_f)
 
